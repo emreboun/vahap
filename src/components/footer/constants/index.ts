@@ -1,0 +1,57 @@
+
+export const SECTIONS = [  
+  {
+  title: "Hızlı Erişim",
+  links: [
+    {
+      href: "/egitimler",
+      title: "Eğitimler",
+    },
+    {
+      href: "/hakkımda",
+      title: "Hakkımda",
+    },
+    {
+      href: "/sepet",
+      title: "Sepetim",
+    },
+    
+  ],
+},
+  {
+    title: "Kurumsal",
+    links: [
+      {
+        href: "/uyelik-sozlemesi",
+        title: "Üyelik Sözleşmesi",
+      },
+      { href: "/satis-sozlesmesi", 
+        title: "Satış Sözleşmesi" }, 
+      {
+        href: "/gizlilik-ve-guvenlik",
+        title: "Gizlilik ve Güvenlik",
+      },
+      {
+        href: "/kvkk",
+        title: "KVKK",
+      },
+     
+    ],
+  },
+
+  /* {
+    title: "Dökümanlar",
+    links: [
+      { href: "/yenisoru", title: "Yeni Soru Oluştur" },
+      { href: "/sorular", title: "Tüm Sorular" },
+      {
+        href: "https://www.elektromarketim.com/uye-girisi-sayfasi",
+        title: "Hesabım",
+      },
+      {
+        href: "https://www.elektromarketim.com/uye-siparisleri",
+        title: "Siparişlerim",
+      },
+    ],
+  }, */
+];

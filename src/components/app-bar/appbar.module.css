@@ -1,0 +1,113 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+  width: 100%;
+  transition: top 0.2s ease-in-out;
+  position: fixed;
+  z-index: 1000;
+}
+
+.toolbar {
+  /* width: 100%; */
+  flex-direction: row;
+  align-items: stretch;
+  /* max-height: 46px; */
+
+  /* @media screen and (min-width: 900px) {
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 600px) {
+    margin-left: 20px;
+  } */
+}
+
+.logo {
+  
+  @media screen and (max-width: 900px) {
+    /* margin-left: 16px; */
+    transform: scale(90%);
+  }
+  
+  @media screen and (max-width: 600px) {
+    margin-left: 0px;
+    transform: scale(80%);
+  }
+
+}
+
+.menu {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  margin-left: 80px;
+}
+
+.button {
+  display: flex;
+  margin: 0 8px;
+  text-transform: none !important;
+}
+
+.signup {
+  color: #fff !important;
+}
+
+.separator {
+  margin: 0 2px 0 0 !important;
+  height: 66% !important;
+  align-self: center !important;
+}
+
+.authContainer {
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+}
+
+.authContainer .button {
+  display: flex;
+  margin: 0 0 0 8px;
+  text-transform: none !important;
+}
+
+.mainButton {
+  
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 25px 8px 18px;
+  text-align: center;
+  transition: all 0.3s linear;
+  text-transform: none;
+  display: flex;
+  justify-content: space-around;
+  border-width: 1px;
+  border-style: solid;
+ /*  border-color: #ee750e;
+  background-color: #fff; */
+}
+
+.mainButton:hover {
+  /* background: #ee750e; */
+  color: #fff;
+}
+
+.cartIcon {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.navButton {
+  margin: 0px;
+  line-height: 1.1;
+}
+
+.dropdown {
+  position: fixed;
+  top: 62px;
+  right: 0px;
+  z-index: 999;
+  width: 100%;
+}
