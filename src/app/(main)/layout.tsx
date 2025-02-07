@@ -11,12 +11,18 @@ export default function RootLayout({
   return (
     <>
       <AppBar />
+
       <Box
-        sx={{ boxShadow: 1, position: "relative", zIndex: 1 }}
+        sx={{
+          boxShadow: "1px 1px rgb(128,128,128,0.5)",
+          position: "relative",
+          zIndex: 1,
+        }}
         className={styles.layout}
       >
         {children}
       </Box>
+
       <Footer />
     </>
   );

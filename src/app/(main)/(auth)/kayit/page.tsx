@@ -1,8 +1,20 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { Button, Typography, TextField, FormControl } from "@mui/material";
+import {
+  Button,
+  Typography,
+  TextField,
+  FormControl,
+  Box,
+  Alert,
+  Collapse,
+} from "@mui/material";
 import { validateEmail, validatePassword } from "@/utils/auth";
+import { signup } from "@/api/firebase";
+import { createUser } from "@/api/firebase/user";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface FormField {
   name: string;
@@ -52,15 +64,18 @@ export default function SignupForm() {
 }
 
 const SignupFormClient = () => {
+  const router = useRouter();
+
   const [formState, setFormState] = useState<
     Record<string, { value: string; error?: string }>
+    //Record<"values" | "errors", string[]>
   >(
     Object.fromEntries(
       formFields.map((field) => [field.name, { value: "", error: undefined }])
     )
   );
   const [submitted, setSubmitted] = useState<boolean>(false);
-
+  const [error, setError] = useState<boolean>(false);
   const isFormValid = useMemo(() => {
     return formFields.every((field) => {
       if (field.required && !formState[field.name].value) return false;
@@ -102,8 +117,9 @@ const SignupFormClient = () => {
     }));
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     setSubmitted(true);
+
     let hasError = false;
 
     const newFormState = { ...formState };
@@ -118,23 +134,48 @@ const SignupFormClient = () => {
       newFormState[field.name].error = error;
     });
 
-    setFormState(newFormState);
-
     if (!hasError) {
       // Submit the form
+      let signUpResult;
+      try {
+        signUpResult = await signup(
+          formState.email.value,
+          formState.password.value
+        );
+      } catch (e: any) {
+        setError(e.message.includes("already-in-use"));
+        return;
+      }
+
+      let userSaved;
+      if (signUpResult) {
+        userSaved = await createUser({
+          id: signUpResult.user.uid,
+          firstName: formState.firstName.value,
+          lastName: formState.lastName.value,
+          email: formState.email.value,
+          phone: formState.phone.value,
+        });
+      } //else {}
+      if (userSaved) {
+        router.push("/");
+      } // else {}
+
       console.log(
         "Form Submitted",
         Object.fromEntries(
           Object.entries(formState).map(([key, val]) => [key, val.value])
         )
       );
+    } else {
+      setFormState(newFormState);
     }
   };
 
   return (
     <>
       <Typography component='h2' variant='h4'>
-        Üye Kayıt
+        {"Üye Kayıt"}
       </Typography>
 
       <FormControl
@@ -156,7 +197,8 @@ const SignupFormClient = () => {
             label={field.label}
             type={field.type}
             variant='standard'
-            value={formState[field.name].value}
+            //value={formState[field.name].value}
+            defaultValue={""}
             onChange={handleInputChange}
             onBlur={() => validateField(field.name)}
             required={field.required}
@@ -166,15 +208,60 @@ const SignupFormClient = () => {
         ))}
       </FormControl>
 
+      <Collapse in={error}>
+        <Alert
+          severity='error'
+          sx={{
+            //py: 0.8,
+            py: 0.2,
+            mx: "auto",
+            mb: 2,
+            width: "76%",
+            boxShadow: 1,
+            border: "1px solid rgb(128,128,128,0.05)",
+          }}
+        >
+          {"Bu hesap zaten mevcut."}
+        </Alert>
+      </Collapse>
+
       <Button
         variant='contained'
         color='primary'
-        sx={{ py: 0.8, width: "76%", textTransform: "none" }}
+        sx={{
+          py: 0.8,
+          width: "76%",
+          textTransform: "none",
+          "&hover": { boxShadow: 4 },
+        }}
         disabled={!isFormValid && submitted}
         onClick={handleSignup}
       >
         Kayıt Ol
       </Button>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "baseline",
+          justifyContent: "center",
+          fontSize: 13,
+        }}
+      >
+        {"Zaten üye misin?"}
+        <Link
+          style={{
+            padding: "3.2px 3.2px 0px",
+            color: "#0000EE",
+            fontWeight: "500",
+            fontSize: 13,
+            textTransform: "none",
+          }}
+          href='/giris'
+        >
+          {"Giriş Yap"}
+        </Link>
+      </Box>
     </>
   );
 };

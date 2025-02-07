@@ -1,11 +1,9 @@
 import styles from "./appbar.module.css";
-import { Box, Button, Toolbar } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 
 import React from "react";
 import { AppLogo } from "./logo";
 import { NavigationBar } from "./navigation";
-import { NavigationLink } from "./link";
-import { ShoppingCartRounded as CartIcon } from "@mui/icons-material";
 import { AppBarWrapper } from "./wrapper";
 import { Dropdown } from "./dropdown";
 import { Membership } from "./membership";
@@ -24,11 +22,6 @@ export const AppBar: React.FC<AppBarProps> = ({}) => {
           sx={{
             justifyContent: { xs: "space-between" },
             gap: { md: "8px", lg: "64px", xl: "100px" },
-            //alignItems: "center",
-            //mr: { xs: "64px", sm: 0, xl: 8 },
-            //ml: { xs: "32px", sm: 0.5, xl: 8 },
-            // position: "relative",
-            //borderBottom: "1px solid red",
           }}
         >
           <AppLogo />
@@ -43,43 +36,21 @@ export const AppBar: React.FC<AppBarProps> = ({}) => {
               alignItems: "center",
             }}
           >
-            <NavigationLink
-              href={"https:elektromarketim.com"}
-              title={"Sepetim"}
-              passHref
-            >
-              <Button
-                variant='outlined'
-                className={styles.mainButton}
-                sx={{ "&:hover": { bgcolor: "primary.main" } }}
-              >
-                <CartIcon className={styles.cartIcon} />
-                {"Sepetim"}
-              </Button>
-            </NavigationLink>
-
             <Membership />
           </Box>
         </Toolbar>
 
         <Box sx={{ display: { xs: "block", md: "none" }, zIndex: 0 }}>
           <Dropdown>
-            <NavigationLink
-              href={"https:elektromarketim.com"}
-              title={"Sepetim"}
-              passHref
+            <Box
+              sx={{
+                px: 2,
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
             >
-              <Button
-                variant='outlined'
-                className={styles.mainButton}
-                style={{
-                  marginLeft: 24,
-                }}
-              >
-                <CartIcon className={styles.cartIcon} />
-                {"Sepetim"}
-              </Button>
-            </NavigationLink>
+              <Membership />
+            </Box>
           </Dropdown>
         </Box>
       </AppBarWrapper>

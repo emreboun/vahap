@@ -1,8 +1,10 @@
-import Image from "next/image";
+import { Box, Paper } from "@mui/material";
 
-import { Box, Paper, Button } from "@mui/material";
-
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Box
@@ -11,14 +13,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           display: "flex",
           justifyContent: "center",
           textAlign: "center",
-          pb: 8,
+          py: { xs: 2, sm: 4, md: 8 },
+          px: { xs: 2, sm: 0 },
         }}
       >
         <Paper
           elevation={2}
           sx={{
-            mt: 8,
-            px: 4,
+            px: 1,
             py: 8,
             flexGrow: 1,
             maxWidth: 500,
@@ -37,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-const OrSepator = () => (
+/* const OrSepator = () => (
   <Box
     component='span'
     sx={{
@@ -96,3 +98,4 @@ const SocialLogin = () => {
     </Box>
   );
 };
+ */

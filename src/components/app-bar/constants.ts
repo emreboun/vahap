@@ -2,11 +2,11 @@ export const NAV_LINKS = [
   {
     title: "Eğitimler",
     href: "/egitimler",
-    external: false
+    external: false,
   },
   {
     title: "Hakkımda",
-    href: "/hakkımda",
-    external: false
-  }
+    href: "/hakkimda",
+    external: false,
+  },
 ];

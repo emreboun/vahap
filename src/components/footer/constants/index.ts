@@ -1,41 +1,37 @@
-
-export const SECTIONS = [  
+export const SECTIONS = [
   {
-  title: "Hızlı Erişim",
-  links: [
-    {
-      href: "/egitimler",
-      title: "Eğitimler",
-    },
-    {
-      href: "/hakkımda",
-      title: "Hakkımda",
-    },
-    {
-      href: "/sepet",
-      title: "Sepetim",
-    },
-    
-  ],
-},
+    title: "Hızlı Erişim",
+    links: [
+      {
+        href: "/egitimler",
+        title: "Eğitimler",
+      },
+      {
+        href: "/hakkimda",
+        title: "Hakkımda",
+      },
+      {
+        href: "/sepet",
+        title: "Sepetim",
+      },
+    ],
+  },
   {
     title: "Kurumsal",
     links: [
       {
-        href: "/uyelik-sozlemesi",
+        href: "/uyelik-sozlesmesi",
         title: "Üyelik Sözleşmesi",
       },
-      { href: "/satis-sozlesmesi", 
-        title: "Satış Sözleşmesi" }, 
+      { href: "/satis-sozlesmesi", title: "Satış Sözleşmesi" },
       {
         href: "/gizlilik-ve-guvenlik",
         title: "Gizlilik ve Güvenlik",
       },
-      {
+      /* {
         href: "/kvkk",
         title: "KVKK",
-      },
-     
+      }, */
     ],
   },
 

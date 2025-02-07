@@ -1,9 +1,10 @@
-import { Typography } from "@mui/material";
+import { Article } from "@/components/article";
+import { GIZLILIK_VE_GUVENLIK } from "@/constants/misc";
 
 export default function Page() {
   return (
     <>
-      <Typography></Typography>
+      <Article {...GIZLILIK_VE_GUVENLIK} />
     </>
   );
 }

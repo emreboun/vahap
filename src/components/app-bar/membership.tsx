@@ -1,8 +1,9 @@
 "use client";
 
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Button, darken, IconButton, Tooltip } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface MembershipProps {
   children?: React.ReactNode;
@@ -30,32 +31,51 @@ export const Membership: React.FC<MembershipProps> = ({
     <>
       {!auth ? (
         <>
-          <Button
-            sx={{
-              textTransform: "none",
-              paddingX: 2,
-              ml: 1,
-              bgcolor: "#fff",
-            }}
-            href={"/giris"}
-            variant='outlined'
-          >
-            {"Giriş Yap"}
-          </Button>
+          <Link href={"/giris"} passHref>
+            <Button
+              variant='outlined'
+              sx={{
+                textTransform: "none",
+                paddingX: 2,
+                ml: 1,
+                bgcolor: "#fff",
+                border: "1px solid",
+                borderColor: "primary.main",
+                transition: "all 0.2s linear",
+                "&:hover": {
+                  color: "#fff",
+                  bgcolor: darken("#D3B26B", 0.24),
+                  borderColor: darken("#D3B26B", 0.08),
+                  boxShadow: 4,
+                },
+              }}
+            >
+              {"Giriş Yap"}
+            </Button>
+          </Link>
 
-          {/* <Link href={"/kayit"} passHref> */}
-          <Button
-            sx={{
-              textTransform: "none",
-              paddingX: 2,
-              marginX: 1,
-            }}
-            href={"/kayit"}
-            variant={"contained"}
-          >
-            {"Kayıt Ol"}
-          </Button>
-          {/* </Link> */}
+          <Link href={"/kayit"} passHref>
+            <Button
+              variant={"contained"}
+              sx={{
+                textTransform: "none",
+                paddingX: 2,
+                marginX: 1,
+                border: "1px solid",
+                transition: "all 0.2s linear",
+                borderColor: "primary.main",
+                "&:hover": {
+                  color: "#fff",
+                  bgcolor: darken("#D3B26B", 0.24),
+                  borderColor: darken("#D3B26B", 0.08),
+                  boxShadow: 4,
+                },
+              }}
+              //href={"/kayit"}
+            >
+              {"Kayıt Ol"}
+            </Button>
+          </Link>
         </>
       ) : (
         <>

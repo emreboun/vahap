@@ -48,7 +48,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ children }) => {
         <Collapse in={active} timeout='auto' unmountOnExit>
           <Box
             style={{
-              paddingTop: 4,
+              paddingTop: 12,
               backgroundColor: "#fff",
               paddingBottom: 20,
             }}
