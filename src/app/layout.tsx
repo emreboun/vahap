@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Lexend, Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
-import Providers from "./Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,8 +33,13 @@ export default function RootLayout({
     <html lang='tr'>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${lexend.variable}`}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100dvh",
+        }}
       >
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   );

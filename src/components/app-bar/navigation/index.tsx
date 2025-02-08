@@ -7,7 +7,10 @@ type NavigationBarProps = {
   onClose?: () => void;
 };
 
-export const NavigationBar: React.FC<NavigationBarProps> = ({ style, onClose }) => {
+export const NavigationBar: React.FC<NavigationBarProps> = ({
+  style,
+  onClose,
+}) => {
   return (
     <Box
       component={"nav"}
@@ -15,7 +18,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ style, onClose }) 
         flex: 1,
         display: "flex",
         height: "100%",
-        pb: { xs: 1.2, md: 0 },
+        pb: { xs: 1, md: 0 },
         pl: { xs: 0.6, md: 0 },
         flexDirection: { xs: "column", md: "row" },
         alignItems: "stretch",
@@ -26,15 +29,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ style, onClose }) 
           textWrap: "nowrap",
           flex: 1,
           "&:hover": {
-            color: "primary.main",
+            color: "secondary.main",
           },
         },
       }}
       style={style}
     >
       {NAV_LINKS.map((page) => (
-        <NavLink key={page.href} href={`${page.href}`} external={page.external} >
-          {!page.external ? 
+        <NavLink key={page.href} href={`${page.href}`} external={page.external}>
+          {!page.external ? (
             <Button onClick={onClose}>
               <Typography
                 component={"h2"}
@@ -55,12 +58,12 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ style, onClose }) 
               >
                 {page.title}
               </Typography>
-            </Button>  
-            :
+            </Button>
+          ) : (
             <Button
               href={page.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target='_blank'
+              rel='noopener noreferrer'
               onClick={onClose}
             >
               <Typography
@@ -80,9 +83,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ style, onClose }) 
                   pl: { xs: 3, md: 0 },
                 }}
               >
-              <>{page.title}</></Typography>
+                <>{page.title}</>
+              </Typography>
             </Button>
-          }
+          )}
         </NavLink>
       ))}
     </Box>

@@ -16,12 +16,15 @@
     "@firebase/database": "^1.0.11",
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.3",
+    "@mui/x-data-grid": "^7.26.0",
     "@next/font": "^14.2.15",
     "@u-wave/react-vimeo": "^0.9.12",
+    "jose": "^5.9.6",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-social-icons": "^6.22.0"
+    "react-social-icons": "^6.22.0",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

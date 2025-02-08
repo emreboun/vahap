@@ -1,0 +1,10 @@
+
+.body {
+  padding-top: 56px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh !important;
+  /* maxHeight: "100dvh", */
+
+  overflow-y: hidden;
+}

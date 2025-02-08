@@ -7,12 +7,16 @@ import { NavigationBar } from "./navigation";
 import { AppBarWrapper } from "./wrapper";
 import { Dropdown } from "./dropdown";
 import { Membership } from "./membership";
+import { cookies } from "next/headers";
 
 interface AppBarProps {
   user?: unknown;
 }
 
-export const AppBar: React.FC<AppBarProps> = ({}) => {
+export const AppBar: React.FC<AppBarProps> = async ({}) => {
+  const cookieStore = await cookies();
+  const auth = cookieStore.get("token");
+
   return (
     <>
       <AppBarWrapper>
@@ -36,7 +40,7 @@ export const AppBar: React.FC<AppBarProps> = ({}) => {
               alignItems: "center",
             }}
           >
-            <Membership />
+            <Membership auth={!!auth} />
           </Box>
         </Toolbar>
 
@@ -49,7 +53,7 @@ export const AppBar: React.FC<AppBarProps> = ({}) => {
                 justifyContent: "flex-end",
               }}
             >
-              <Membership />
+              <Membership auth={!!auth} />
             </Box>
           </Dropdown>
         </Box>

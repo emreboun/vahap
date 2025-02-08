@@ -11,7 +11,7 @@ interface ProvidersProps {
 const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <>
-      <ThemeProvider>
+      <ThemeProvider theme='light'>
         <>{children} </>
       </ThemeProvider>
     </>

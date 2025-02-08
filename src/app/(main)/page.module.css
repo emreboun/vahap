@@ -1,5 +1,5 @@
 .page {
-  --gray-rgb: 0, 0, 0;
+  /* --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
   --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
 
@@ -13,7 +13,7 @@
   min-height: 100svh;
   padding: 80px;
   gap: 64px;
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-geist-sans); */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,20 +29,11 @@
 
 
 
-.layout {
-  padding-top: 64px;
-
-  @media (min-width: 900px) {
-    /* Medium devices (md) */
-    padding-top: 100px;
-  }
-}
-
 .main {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  /* gap: 32px;
+  grid-row-start: 2; */
 }
 
 .main ol {

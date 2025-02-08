@@ -1,33 +1,50 @@
-// /models/ProductEntity.ts
+// /models/LectureEntity.ts
 
-export interface ProductEntity {
+interface Video {
+  url: string;
+  thumbnail: string;
+}
+
+export interface LectureEntity {
   id: string;
-  title?: string;
+  slug: string;
+  status: boolean;
+  title: string;
   name: string;
   description?: string;
-  brand?: string;
-  imageUrl: string;
-  imageUrls: string[];
-  categoryName?: string;
-  categorySlug?: string;
-  categoryNames?: string;
-  categorySlugs?: string;
+
+  //imageUrl: string;
+  //imageUrls?: string[];
+
+  introThumbnail: string;
+  introUrl: string;
+  videoThumbnail: string;
+  videoUrl: string;
+  //intro?: Video;
+  //video: Video;
+  /* introUrl?: string;
+  videoUrl: string; */
+
   price: number;
-  priceCurrency?: string;
   priceText?: string;
-  rating: number;
-  stockQuantity: number;
-  features?: Array<Record<string, string>>;
-  specifications?: Record<string, string>;
-  reviews?: Review[];
-  isAvailable?: boolean;
+
+  rating?: number;
+
   initTime?: Date;
   editTime?: Date;
-  popularity?: number;
-  sellCount?: number;
-  url?: string;
-  asin?: string;
-  product_details?: {
+
+  /* categoryName?: string;
+  categorySlug?: string;
+  categoryNames?: string;
+  categorySlugs?: string; */
+
+  //popularity?: number;
+
+  //sellCount?: number;
+
+  //url?: string;
+  //asin?: string;
+  /* product_details?: {
     packageDimensions?: string;
     dateFirstAvailable?: string;
     manufacturer?: string;
@@ -36,8 +53,8 @@ export interface ProductEntity {
     department?: string;
   };
   breadcrumbs?: string;
-  relatedProducts?: ProductEntity[]; // Suggesting related products
-  seoMeta?: Record<string, string>; // SEO meta tags
+  relatedProducts?: LectureEntity[]; // Suggesting related products
+  seoMeta?: Record<string, string>; // SEO meta tags */
 }
 
 // /models/Price.ts
@@ -71,7 +88,7 @@ export interface ProductSample {
 
 // /models/Product.ts
 
-export interface Product extends ProductEntity {
+export interface Product extends LectureEntity {
   userUtils?: ProductUtils;
 }
 
@@ -132,7 +149,7 @@ export interface StructuredAddress {
 
 export interface CartItem {
   id?: string;
-  product: ProductEntity;
+  product: LectureEntity;
   quantity: number;
   selectedOptions?: Record<string, any>; // Options like size, color, etc.
 }
@@ -286,7 +303,7 @@ export interface MainSiteOptions {
 
 export interface AppBarCustomization {
   color: string;
-  position: 'fixed' | 'absolute' | 'relative';
+  position: "fixed" | "absolute" | "relative";
   elevation: number;
   logo: string;
 }
@@ -294,7 +311,7 @@ export interface AppBarCustomization {
 // /site/index.ts/UIElement.ts
 
 export interface UIElement {
-  type: 'slideshow' | 'grid' | 'stack' | 'item';
+  type: "slideshow" | "grid" | "stack" | "item";
   content: any[];
   styles: object;
 }

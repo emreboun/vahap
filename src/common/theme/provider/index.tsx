@@ -1,10 +1,13 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import {
-  ThemeProvider as MuiThemeProvider,
-  CssBaseline,
-} from "@mui/material";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
 import { darkTheme, lightTheme, themeCookie } from "..";
 
 interface ThemeContextProps {
@@ -25,11 +28,13 @@ export const useThemeContext = () => {
 interface ThemeProviderProps {
   children: React.ReactNode;
   theme?: string;
+  active?: boolean;
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   theme = "light",
+  active = false,
 }) => {
   const [value, setTheme] = useState(theme);
   const themeVal = value === "dark" ? darkTheme : lightTheme;
@@ -37,11 +42,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   const handleTheme = useCallback((val: string) => {
     setTheme(val);
     localStorage.setItem(themeCookie, val);
-  },[]);
+  }, []);
 
   useEffect(() => {
-    setTheme((prev) => localStorage.getItem(themeCookie) ?? prev);
-  }, []);
+    if (active) setTheme((prev) => localStorage.getItem(themeCookie) ?? prev);
+  }, [active]);
 
   return (
     <ThemeContext.Provider value={{ theme: value, onTheme: handleTheme }}>

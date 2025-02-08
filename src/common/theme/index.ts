@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { createTheme } from "@mui/material/styles";
 
@@ -7,7 +7,8 @@ import { createTheme } from "@mui/material/styles";
 export const themeCookie = "theme";
 
 export const darkTheme = {
-  name: "dark", ...createTheme({
+  name: "dark",
+  ...createTheme({
     palette: {
       mode: "dark",
       primary: {
@@ -95,7 +96,7 @@ export const darkTheme = {
         `,
       },
     },
-  })
+  }),
 };
 
 //1976d2
@@ -111,7 +112,7 @@ export const lightTheme = {
         main: "#D3B26B",
       },
       text: {
-        primary: "rgba(0,0,0,0.9)",//'rgba(0, 0, 0, 0.87)',
+        primary: "rgba(0,0,0,0.9)", //'rgba(0, 0, 0, 0.87)',
         secondary: "rgba(0, 0, 0, 0.7)",
       },
       divider: "rgba(0, 0, 0, 0.23)",

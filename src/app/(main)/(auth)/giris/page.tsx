@@ -16,6 +16,7 @@ import {
 import { validateEmail, validatePassword } from "@/utils/auth";
 import { login } from "@/api/firebase";
 import { getUser } from "@/api/firebase/user";
+import { loginApi } from "@/app/admin/giris/actions";
 
 type ErrorType = "email" | "password" | "main" | "" | undefined;
 
@@ -86,7 +87,9 @@ const LoginPageClient = () => {
     let loginResult;
     try {
       loginResult = await login(form.email, form.password);
-    } catch (e) {
+      await loginApi(loginResult.user.uid);
+    } catch (error: unknown) {
+      console.error(error);
       setDisabled(true);
       return;
     }
@@ -95,8 +98,9 @@ const LoginPageClient = () => {
     if (loginResult) {
       try {
         userResult = await getUser(loginResult.user.uid);
-        localStorage.setItem("account", JSON.stringify(loginResult));
-      } catch (e) {
+        //localStorage.setItem("account", JSON.stringify(loginResult));
+      } catch (error: unknown) {
+        console.error(error);
         setDisabled(true);
         return;
       }
