@@ -1,23 +1,19 @@
 "use client";
-import styles from "./dropdown.module.css";
 
-import { useState } from "react";
-import { Box, ButtonBase, Collapse, IconButton, Paper } from "@mui/material";
+import { Box, Collapse, IconButton } from "@mui/material";
 import { NavigationBar } from "../navigation";
 import { useScrollHandler } from "@/hooks/scroll";
 import { Close, Menu } from "@mui/icons-material";
+import { Membership } from "../membership";
+import { useSidebar } from "../sidebars/SidebarProvider";
 
 interface DropdownProps {
-  children?: React.ReactNode;
+  auth?: boolean;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ children }) => {
+export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
   const { scrollY, direction } = useScrollHandler();
-
-  const [active, setActive] = useState(false);
-  const handleDropdown = () => {
-    setActive(!active);
-  };
+  const { dropdown, handleDropdown } = useSidebar();
 
   return (
     <>
@@ -27,20 +23,18 @@ export const Dropdown: React.FC<DropdownProps> = ({ children }) => {
         }}
       >
         <IconButton
-          onClick={handleDropdown}
+          onClick={() => handleDropdown()}
           sx={{
-            color: active ? "#fff" : "primary.main",
-            position: "absolute",
+            color: dropdown ? "#fff" : "primary.main",
             height: "54px",
             aspectRatio: 1,
             zIndex: 3,
-            right: 16,
-            top: -28,
+            mr: 2,
           }}
         >
           <Box
             sx={{
-              bgcolor: active ? "primary.main" : "transparent",
+              bgcolor: dropdown ? "primary.main" : "transparent",
               borderRadius: "50%",
               aspectRatio: 1,
               display: "flex",
@@ -53,74 +47,42 @@ export const Dropdown: React.FC<DropdownProps> = ({ children }) => {
               sx={{
                 cursor: "pointer",
                 transition: "all 0.3s linear",
-                opacity: active ? 1 : 0,
+                opacity: dropdown ? 1 : 0,
                 position: "absolute",
-                transform: active ? "rotate(0deg)" : "rotate(180deg)",
+                transform: dropdown ? "rotate(0deg)" : "rotate(180deg)",
               }}
-              onClick={handleDropdown}
             />
 
             <Menu
               sx={{
                 cursor: "pointer",
                 transition: "all 0.3s linear",
-                opacity: active ? 0 : 1,
-                transform: !active ? "rotate(0deg)" : "rotate(180deg)",
+                opacity: dropdown ? 0 : 1,
+                transform: !dropdown ? "rotate(0deg)" : "rotate(180deg)",
               }}
-              onClick={handleDropdown}
             />
           </Box>
         </IconButton>
-        {/* <Box
-          className={`${styles.btn} ${active ? styles.active : styles.inactive}`}
-          onClick={handleDropdown}
-          sx={{
-            zIndex: 2,
-            pt: 1,
-            bgcolor: active ? "primary.main" : "transparent",
-
-            "& .MuiBox-root": {
-              bgcolor: active ? "#fff" : "#666",
-              transition: "all 0.3s",
-            },
-          }}
-          style={{
-            transform: active
-              ? "translate(-50%, -50%) scale(0.9)"
-              : "translate(-50%, -50%)",
-          }}
-        >
-          <Box component={"span"} style={{ zIndex: 1 }} />
-          <Box component={"span"} style={{ marginTop: 6, zIndex: 1 }} />
-          <Box component={"span"} style={{ marginTop: 6, zIndex: 1 }} />
-        </Box> */}
-        {/* <Close
-          sx={{
-            position: "absolute",
-            zIndex: 3,
-            top: -12,
-            right: 20,
-            color: active ? "#fff" : "transparent",
-            cursor: "pointer",
-            transition: "all 0.3s ease-in-out",
-          }}
-          onClick={handleDropdown}
-        /> */}
       </Box>
 
       <Box
-        className={`${styles.dropdown} transition3`}
         style={{
+          position: "absolute",
+          right: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 2,
           paddingTop: 16,
           backgroundColor: "#fff",
           top: direction === "up" || scrollY < 64 ? 32 : 48,
-          opacity: active ? 1 : 0,
+          opacity: dropdown ? 1 : 0,
           transition:
             "top 0.3s ease-in-out, " +
-            (active ? "opacity 0.1s" : "opacity 0.1s linear 0.2s"),
+            (dropdown ? "opacity 0.1s" : "opacity 0.1s linear 0.2s"),
         }}
+        sx={{}}
       >
-        <Collapse in={active} timeout='auto' mountOnEnter unmountOnExit>
+        <Collapse in={dropdown} timeout='auto' mountOnEnter unmountOnExit>
           <Box
             style={{
               paddingTop: 12,
@@ -128,13 +90,35 @@ export const Dropdown: React.FC<DropdownProps> = ({ children }) => {
               paddingBottom: 12,
             }}
           >
-            <NavigationBar onClose={handleDropdown} />
-            {children}
+            <NavigationBar />
+            <Box
+              sx={{
+                px: 2,
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Membership auth={!!auth} />
+            </Box>
           </Box>
         </Collapse>
       </Box>
 
-      {active && <span className={styles.overlay} onClick={handleDropdown} />}
+      {dropdown && (
+        <Box
+          component={"span"}
+          sx={{
+            position: "fixed",
+            top: "64px",
+            right: 0,
+            bottom: "-64px",
+            left: 0,
+            zIndex: 0,
+            bgcolor: "rgba(0, 0, 0, 0.25)",
+          }}
+          onClick={() => handleDropdown()}
+        />
+      )}
     </>
   );
 };

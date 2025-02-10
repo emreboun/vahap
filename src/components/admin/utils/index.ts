@@ -43,3 +43,67 @@ export const generateUrlSlug = (text: string) => {
   // Convert all letters to lowercase
   return formatted.toLowerCase();
 };
+
+export const formatText = (text: string) => {
+  let formatted = text.trim();
+
+  formatted = formatted.replace(/\s+/g, " ");
+  formatted = formatted.replace(/\n+/g, "\n");
+
+  return formatted;
+};
+
+export const formatUrl = (text: string) => {
+  let formatted = text.trim();
+
+  formatted = formatted.replace(/\s+/g, "");
+  //formatted = formatted.replace(/\s/g, "-");
+  formatted = formatted.replace(/-+/g, "-");
+  formatted = formatted.replace(/\n+/g, "");
+  formatted = convertTurkishChars(formatted).toLowerCase();
+
+  return formatted;
+};
+
+export const turkish_chars = [
+  "ş",
+  "Ş",
+  "ç",
+  "Ç",
+  "ı",
+  "İ",
+  "ö",
+  "Ö",
+  "ü",
+  "Ü",
+  "ğ",
+  "Ğ",
+];
+
+export function isAlphanumeric(str: string): boolean {
+  return /^[a-zA-Z0-9]+$/.test(str);
+}
+
+export const turkishCharMap: Record<string, string> = {
+  ç: "c",
+  Ç: "C",
+  ğ: "g",
+  Ğ: "G",
+  ı: "i",
+  I: "I",
+  i: "i",
+  İ: "I",
+  ö: "o",
+  Ö: "O",
+  ş: "s",
+  Ş: "S",
+  ü: "u",
+  Ü: "U",
+};
+
+export function convertTurkishChars(text: string): string {
+  return text
+    .split("")
+    .map((char) => turkishCharMap[char] || char)
+    .join("");
+}

@@ -1,3 +1,9 @@
+export interface NavLinkProps {
+  title: string;
+  href: string;
+  external?: boolean;
+}
+
 export const NAV_LINKS = [
   {
     title: "Eğitimler",

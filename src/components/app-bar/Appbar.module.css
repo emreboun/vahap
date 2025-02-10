@@ -1,4 +1,4 @@
-.container {
+/* .container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -7,7 +7,7 @@
   transition: top 0.2s ease-in-out;
   position: fixed;
   z-index: 1000;
-}
+} */
 
 .toolbar {
   /* width: 100%; */

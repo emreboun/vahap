@@ -14,20 +14,21 @@ import {
 import { Modal, Paper } from "@mui/material";
 
 import { columnsDefinitions } from "./constants";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { CustomToolbar } from "./toolbar";
 import { EmptyData } from "./empty";
 import { GridProvider, useGridContext } from "./hooks";
 import {
   CancelRounded,
   DeleteOutline,
+  Description,
   EditRounded,
   SaveRounded,
 } from "@mui/icons-material";
 import { DeleteForm } from "./form/delete";
 import { useParams } from "next/navigation";
-import { updateLecture } from "@/api/firebase/lecture";
-import { dropProperty } from "@/utils";
+import { updateProduct } from "@/api/products";
+import { updateLecture } from "@/api/lectures";
 
 interface GridProps {
   type: string;
@@ -124,38 +125,44 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   };
 
   const handleSubmit = async (value: any) => {
-    const { id } = value;
-    const req = dropProperty(dropProperty(value, "id"), "isNew");
+    const {
+      id,
+      name,
+      description,
+      mainVideo,
+      mainThumbnail,
+      introVideo,
+      introThumbnail,
+      price,
+      status,
+    } = value;
+    const req: any = {
+      name,
+      description,
+      mainVideo,
+      mainThumbnail,
+      introVideo,
+      introThumbnail,
+      price,
+      status,
+    };
+    const existingItem = data.find((item) => item.id === id);
+    Object.keys(req).forEach((key) => {
+      if (req[key] === existingItem[key]) {
+        req[key] = undefined;
+      }
+    });
 
     try {
       let result;
       switch (table) {
-        /* case "kategoriler":
-          result = await updateKatById(id, req);
-          break;
-        case "sorular":
-          result = await updateSoruById(id, {
-            title: req.title,
-            detail: req.detail,
-            full_name: req.full_name,
-            email: req.email,
-            phone: req.phone,
-            status: req.status,
-            category_id: req.category_id,
-          });
-          break;
-        case "cevaplar":
-          result = await updateCevapById(id, req);
-          break;
-        case "urunler":
-          result = await updateProductById(id, req);
-          break;
-        case "yonlendirmeler":
-          result = await editRedirection(id, req);
-          break; */
         case "lectures":
-          const result = await updateLecture(id, req);
+          result = await updateLecture(id, req);
           console.log(result);
+          break;
+        case "products":
+          result = await updateProduct(id, req);
+          break;
       }
       return result;
     } catch (e) {
@@ -224,41 +231,24 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
     },
   };
 
-  /*   const categoryColDef: GridColDef = {
-    field: "category",
-    headerName: "Kategori",
-    width: 140,
-    valueGetter: (e: any) => e.name,
-    editable: true,
-    type: "singleSelect",
-    valueOptions: categories.map((c) => c.name),
-  }; */
-
-  /* const getColumnDefinitions = useCallback(
-    (typeValue: string) => {
-      console.log("a");
-      return [editFieldColDef, ...columnsDefinitions[type]];
-    },
-    [type, editFieldColDef]
-  ); */
-
   const resultColDef = [editFieldColDef, ...columnsDefinitions[type]];
 
   return (
     <>
       <Paper
-        sx={
-          {
-            /* flex: 1, height: "100%" */
-          }
-        }
+        sx={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+          boxShadow: 4,
+        }}
       >
         <DataGrid
           style={{
             height: "100%",
             width: "100%",
           }}
-          //sx={{ bgcolor: "background.paper" }}
           rows={value}
           columns={resultColDef}
           hideFooterSelectedRowCount
@@ -267,6 +257,13 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
             toolbar: () => <CustomToolbar data={data} />,
           }}
           slotProps={{
+            /* root: {
+              style: {
+                backgroundColor: "red",
+                height: "100%",
+                minHeight: "100%",
+              },
+            }, */
             toolbar: {
               style: {
                 display: "flex",
@@ -283,6 +280,8 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
           onProcessRowUpdateError={(e) => console.log(e)}
+          onRowDoubleClick={() => {}}
+          onCellDoubleClick={() => {}}
           localeText={{
             toolbarColumns: "Sütunlar",
             columnsManagementSearchTitle: "Ara",
@@ -324,6 +323,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
             MuiTablePagination: {
               labelRowsPerPage: "Sayfada Göster",
             },
+            columnsManagementReset: "Sıfırla",
           }}
         />
 

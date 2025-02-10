@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./login.module.css";
+import styles from "./Login.module.css";
 import React, { useEffect, useRef, useState, MouseEvent } from "react";
 import { Button, TextField, FormControl } from "@mui/material";
 export type FormProps = {
@@ -44,14 +44,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
   return (
     <>
-      {/* <Typography
-        component={"h2"}
-        variant={"h4"}
-        sx={{ textAlign: "center", mb: 3 }}
-      >
-        {"Üye Girişi"}
-      </Typography> */}
-
       <FormControl component={"form"} className={styles.form}>
         <TextField
           inputRef={inputRef}

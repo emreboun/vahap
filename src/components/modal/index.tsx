@@ -1,5 +1,5 @@
 import { Paper } from "@mui/material";
-import styles from "./modal.module.css";
+import styles from "./Modal.module.css";
 
 import React from "react";
 

@@ -1,10 +1,9 @@
 "use client";
 import { useRouting } from "@/hooks/router";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { ModalWrapper } from "../wrapper";
 
 interface ModalContextProps {
-  //modals: ModalWindow[];
   modal?: string | null;
   onModal: (modal?: string) => void;
 }

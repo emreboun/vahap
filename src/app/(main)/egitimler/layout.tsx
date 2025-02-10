@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-export default function LecturesLayout({
+export default async function LecturesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

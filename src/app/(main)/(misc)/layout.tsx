@@ -9,7 +9,7 @@ export default function MiscLayout({
     <Box
       className='responsive'
       sx={{
-        py: { xs: 2, sm: 8, md: 12 },
+        //py: { xs: 2, sm: 8, md: 12 },
         whiteSpace: "break-spaces",
         fontFamily: "Lexend, sans-serif",
       }}

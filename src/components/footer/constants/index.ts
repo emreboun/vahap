@@ -1,5 +1,23 @@
 export const SECTIONS = [
   {
+    title: "Kurumsal",
+    links: [
+      {
+        href: "/uyelik-sozlesmesi",
+        title: "Üyelik Sözleşmesi",
+      },
+      { href: "/satis-sozlesmesi", title: "Satış Sözleşmesi" },
+      {
+        href: "/gizlilik-ve-guvenlik",
+        title: "Gizlilik ve Güvenlik",
+      },
+      {
+        href: "/kvkk",
+        title: "KVKK",
+      },
+    ],
+  },
+  {
     title: "Hızlı Erişim",
     links: [
       {
@@ -14,24 +32,6 @@ export const SECTIONS = [
         href: "/sepet",
         title: "Sepetim",
       },
-    ],
-  },
-  {
-    title: "Kurumsal",
-    links: [
-      {
-        href: "/uyelik-sozlesmesi",
-        title: "Üyelik Sözleşmesi",
-      },
-      { href: "/satis-sozlesmesi", title: "Satış Sözleşmesi" },
-      {
-        href: "/gizlilik-ve-guvenlik",
-        title: "Gizlilik ve Güvenlik",
-      },
-      /* {
-        href: "/kvkk",
-        title: "KVKK",
-      }, */
     ],
   },
 

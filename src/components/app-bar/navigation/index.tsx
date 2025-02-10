@@ -1,16 +1,23 @@
+"use client";
 import { Box, Button, Typography } from "@mui/material";
 import { NavLink } from "../link";
-import { NAV_LINKS } from "../constants";
+import { NAV_LINKS, NavLinkProps } from "../constants";
+import { useSidebar } from "../sidebars/SidebarProvider";
 
 type NavigationBarProps = {
+  links?: NavLinkProps[];
   style?: React.CSSProperties;
-  onClose?: () => void;
 };
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({
   style,
-  onClose,
+  links = NAV_LINKS,
 }) => {
+  const { handleDropdown } = useSidebar();
+  const closeDropdown = () => {
+    handleDropdown(false);
+  };
+
   return (
     <Box
       component={"nav"}
@@ -18,8 +25,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         flex: 1,
         display: "flex",
         height: "100%",
-        pb: { xs: 1, md: 0 },
-        pl: { xs: 0.6, md: 0 },
+        //pb: { xs: 1, md: 0 },
+        //pl: { xs: 0.6, md: 0 },
         flexDirection: { xs: "column", md: "row" },
         alignItems: "stretch",
         "& .MuiButton-root": {
@@ -35,10 +42,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
       }}
       style={style}
     >
-      {NAV_LINKS.map((page) => (
+      {links.map((page) => (
         <NavLink key={page.href} href={`${page.href}`} external={page.external}>
           {!page.external ? (
-            <Button onClick={onClose}>
+            <Button onClick={closeDropdown}>
               <Typography
                 component={"h2"}
                 sx={{
@@ -64,7 +71,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               href={page.href}
               target='_blank'
               rel='noopener noreferrer'
-              onClick={onClose}
+              onClick={closeDropdown}
             >
               <Typography
                 component={"h2"}

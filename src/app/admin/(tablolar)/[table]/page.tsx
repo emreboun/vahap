@@ -1,7 +1,8 @@
-import { getAllLectures } from "@/api/firebase/lecture";
+import { getAllLecturesAdmin } from "@/api/lectures";
+import { getAllProducts } from "@/api/products";
 import { Grid } from "@/components/admin/grid";
 
-const TABLES = ["lectures"];
+const TABLES = ["lectures", "products"];
 
 export async function generateStaticParams() {
   return TABLES.map((table) => ({
@@ -9,17 +10,16 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function TablePage({
-  params,
-}: {
-  params: { table: string };
-}) {
+export default async function TablePage({ params }: { params: any }) {
   const { table } = await params;
 
   let data: any[] = [];
   switch (table) {
     case "lectures":
-      data = await getAllLectures();
+      data = await getAllLecturesAdmin();
+      break;
+    case "products":
+      data = await getAllProducts();
       break;
     /*  case "cevaplar":
       data = await getAllCevaplar();

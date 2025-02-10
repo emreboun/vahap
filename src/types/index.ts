@@ -1,9 +1,11 @@
 // /models/LectureEntity.ts
 
-interface Video {
+import { Product } from "@prisma/client";
+
+/* interface Video {
   url: string;
   thumbnail: string;
-}
+} */
 
 export interface LectureEntity {
   id: string;
@@ -57,6 +59,14 @@ export interface LectureEntity {
   seoMeta?: Record<string, string>; // SEO meta tags */
 }
 
+export interface CartItem {
+  id?: string;
+  //lecture: LectureEntity;
+  product: Product;
+  //quantity: number;
+  selectedOptions?: Record<string, any>; // Options like size, color, etc.
+}
+
 // /models/Price.ts
 
 export interface Price {
@@ -64,33 +74,12 @@ export interface Price {
   text?: string;
   currency: string;
 }
-
-// /models/ProductSample.ts
-
-export interface ProductSample {
-  url: string;
-  title: string;
-  asin: string;
-  price: string;
-  brand: string;
-  productDetails: {
-    packageDimensions?: string;
-    dateFirstAvailable?: string;
-    manufacturer?: string;
-    asin?: string;
-    itemModelNumber?: string;
-    department?: string;
-  };
-  breadcrumbs: string;
-  imagesList: string[];
-  features: Array<Record<string, string>>;
-}
-
+/* 
 // /models/Product.ts
 
 export interface Product extends LectureEntity {
   userUtils?: ProductUtils;
-}
+} */
 
 // /models/ProductUtils.ts
 
@@ -149,8 +138,10 @@ export interface StructuredAddress {
 
 export interface CartItem {
   id?: string;
-  product: LectureEntity;
-  quantity: number;
+  product: Product;
+  duration: number;
+  //lecture: LectureEntity;
+  //quantity: number;
   selectedOptions?: Record<string, any>; // Options like size, color, etc.
 }
 

@@ -1,13 +1,13 @@
-import styles from "./appbar.module.css";
 import { Box, Toolbar } from "@mui/material";
 
 import React from "react";
 import { AppLogo } from "./logo";
 import { NavigationBar } from "./navigation";
 import { AppBarWrapper } from "./wrapper";
-import { Dropdown } from "./dropdown";
+import { Dropdown } from "./dropdown/Dropdown";
 import { Membership } from "./membership";
 import { cookies } from "next/headers";
+import { DropdownButton } from "./dropdown/DropdownButton";
 
 interface AppBarProps {
   user?: unknown;
@@ -22,40 +22,45 @@ export const AppBar: React.FC<AppBarProps> = async ({}) => {
       <AppBarWrapper>
         <Toolbar
           variant='dense'
-          className={`${styles.toolbar} responsive`}
+          className={`responsive`}
           sx={{
-            justifyContent: { xs: "space-between" },
+            display: "flex",
+            alignItems: "stretch",
+            justifyContent: "space-between",
             gap: { md: "8px", lg: "64px", xl: "100px" },
+            zIndex: 4,
           }}
         >
-          <AppLogo />
-
-          <Box sx={{ flex: 1, display: { xs: "none", md: "block" } }}>
-            <NavigationBar />
+          <Box sx={{ zIndex: 2 }}>
+            <AppLogo />
           </Box>
 
           <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              alignItems: "center",
-            }}
+            sx={{ flex: 1, display: { xs: "none", md: "block" }, zIndex: 2 }}
           >
-            <Membership auth={!!auth} />
+            <NavigationBar />
           </Box>
-        </Toolbar>
 
-        <Box sx={{ display: { xs: "block", md: "none" }, zIndex: 0 }}>
-          <Dropdown>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.1 }}>
             <Box
               sx={{
-                px: 2,
-                display: "flex",
-                justifyContent: "flex-end",
+                display: { xs: !auth ? "none" : "flex", md: "flex" },
+                alignItems: "center",
+                zIndex: 2,
               }}
             >
               <Membership auth={!!auth} />
             </Box>
-          </Dropdown>
+
+            <Box sx={{ display: { xs: "block", md: "none" }, zIndex: 1 }}>
+              <DropdownButton />
+              {/*  <Dropdown auth={!!auth} /> */}
+            </Box>
+          </Box>
+        </Toolbar>
+
+        <Box sx={{ display: { xs: "block", md: "none" } }}>
+          <Dropdown auth={!!auth} />
         </Box>
       </AppBarWrapper>
     </>

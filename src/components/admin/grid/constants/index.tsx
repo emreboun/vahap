@@ -1,5 +1,4 @@
-import { LectureEntity } from "@/types";
-import { turkcetarih_formati } from "@/utils";
+import { formatDuration } from "@/utils/data";
 import {
   PendingRounded,
   VerifiedRounded,
@@ -77,29 +76,20 @@ export const statusColumnDef: GridColDef = {
     } else {
       return params.value;
     }
-    //return params.value === 1 ? <VerifiedRounded /> : <PendingRounded />;
   },
 };
 
 export const idColumnDef: GridColDef = {
   field: "id",
-  headerName: "ID",
-  width: 70,
+  headerName: "",
+  width: 1,
+  minWidth: 1,
+  maxWidth: 1,
   disableColumnMenu: true,
-};
-
-export const categoryColDef: GridColDef = {
-  field: "category_id",
-  headerName: "Kategori",
-  width: 140,
-
-  renderCell: (params) => (
-    // Optionally customize the cell rendering
-    <>{params.value}</>
-  ),
-  editable: true,
-  type: "singleSelect",
-  //valueOptions: categories.map((c) => c.name),
+  disableExport: true,
+  disableReorder: true,
+  sortable: false,
+  renderCell: () => <span />,
 };
 
 export const lectureColumns: GridColDef[] = [
@@ -137,40 +127,46 @@ export const lectureColumns: GridColDef[] = [
   statusColumnDef,
   idColumnDef,
   {
-    field: "title",
+    field: "name",
     headerName: "Başlık",
-    width: 140,
+    width: 240,
     //valueGetter: (e: LectureEntity) => e.title,
     editable: true,
   },
-  { field: "name", headerName: "Ad", width: 200, editable: true },
-
-  { field: "description", headerName: "Açıklama", width: 180, editable: true },
+  //{ field: "name", headerName: "Ad", width: 200, editable: true },
+  { field: "description", headerName: "Açıklama", width: 240, editable: true },
   {
     field: "introThumbnail",
     headerName: "Giriş Resmi",
-    width: 150,
+    width: 200,
     editable: true,
   },
   {
-    field: "introUrl",
+    field: "introVideo",
     headerName: "Giriş Videosu",
-    width: 150,
+    width: 200,
     editable: true,
   },
   {
-    field: "videoThumbnail",
+    field: "mainThumbnail",
     headerName: "Video Resmi",
-    width: 150,
+    width: 200,
     editable: true,
   },
   {
-    field: "videoUrl",
+    field: "mainVideo",
     headerName: "Eğitim Videosu",
-    width: 150,
+    width: 320,
     editable: true,
   },
-  { field: "price", headerName: "Fiyat", width: 160, editable: true },
+  {
+    field: "duration",
+    headerName: "Eğitim Süresi",
+    width: 320,
+    editable: true,
+    valueFormatter: (value) => formatDuration(value),
+  },
+  //{ field: "price", headerName: "Fiyat", width: 160, editable: true },
   //{ field: "category_id", headerName: "Kat ID", width: 100 },
 
   /* { field: "question_id", headerName: "Soru ID", width: 100 },
@@ -185,16 +181,16 @@ export const lectureColumns: GridColDef[] = [
   }, */
 ];
 
-export const soruColumns: GridColDef[] = [
+const productColumns: GridColDef[] = [
   {
     field: "slug",
     headerName: "Sayfa",
     width: 60,
     resizable: false,
+    sortable: false,
     filterable: false,
-    //hideable: false,
-    hideSortIcons: true,
     disableColumnMenu: true,
+    hideSortIcons: true,
     renderCell: (params) => {
       return (
         <>
@@ -209,7 +205,7 @@ export const soruColumns: GridColDef[] = [
             }}
             target='_blank'
             rel='noopener noreferrer'
-            href={`/sorular/${params.row.category?.slug}/${params.value}`}
+            href={`/egitimler/${params.value}`}
           >
             <LinkRounded sx={{ color: "cyan", fontSize: 21 }} />
           </Button>
@@ -219,98 +215,23 @@ export const soruColumns: GridColDef[] = [
   },
   statusColumnDef,
   idColumnDef,
-  categoryColDef,
-
-  { field: "title", headerName: "Başlık", width: 240, editable: true },
-  { field: "detail", headerName: "Detay", width: 240, editable: true },
-
-  { field: "full_name", headerName: "Ad Soyad", width: 150, editable: true },
-  { field: "email", headerName: "Eposta", width: 150, editable: true },
-  { field: "phone", headerName: "Telefon", width: 120, editable: true },
   {
-    field: "date_time",
-    headerName: "Oluşturulma Tarihi",
-    width: 260,
-    //valueGetter: (value: any) => turkcetarih_formati("j F Y l", value),
-    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
-    //editable: false,
-  },
-
-  //{ field: "category_id", headerName: "Kat ID", width: 80 },
-  //{ field: "slug", headerName: "Url Dizini", width: 200, editable: true },
-];
-
-export const kategoriColumns: GridColDef[] = [
-  statusColumnDef,
-  idColumnDef,
-  { field: "name", headerName: "Kategori Adı", width: 200, editable: true },
-  {
-    field: "description",
-    headerName: "Açıklama",
-    width: 400,
+    field: "name",
+    headerName: "Başlık",
+    width: 320,
+    //valueGetter: (e: LectureEntity) => e.title,
     editable: true,
   },
-  { field: "slug", headerName: "Url Dizini", width: 200, editable: true },
-  { field: "image", headerName: "Kategori Resmi", width: 200, editable: true },
-];
-
-export const yonlendirmeColumns: GridColDef[] = [
-  idColumnDef,
-  { field: "sourceUrl", headerName: "Kaynak Url", width: 240, editable: true },
-  { field: "targetUrl", headerName: "Hedef Url", width: 240, editable: true },
-];
-
-export const urunColumns: GridColDef[] = [
+  { field: "price", headerName: "Fiyat", width: 160, editable: true },
   {
-    field: "slug",
-    headerName: "Sayfa",
-    width: 60,
-    resizable: false,
-    filterable: false,
-    //hideable: false,
-    hideSortIcons: true,
-    disableColumnMenu: true,
-    renderCell: (params) => {
-      return (
-        <>
-          <Button
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              width: "100%",
-              ml: "-12px",
-            }}
-            target='_blank'
-            rel='noopener noreferrer'
-            href={`/urunler/${params.value}`}
-            disabled={params.row.status === 0}
-          >
-            <LinkRounded sx={{ color: "cyan", fontSize: 21 }} />
-          </Button>
-        </>
-      );
-    },
-  },
-  statusColumnDef,
-  idColumnDef,
-  { field: "category_name", headerName: "Kategori", width: 200 },
-  { field: "name", headerName: "Ürün Adı", width: 640 },
-  {
-    field: "date_time",
-    headerName: "Oluşturulma Tarihi",
-    width: 260,
-    //valueGetter: (value: any) => turkcetarih_formati("j F Y l", value),
-    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
-    //editable: false,
+    field: "imgUrl",
+    headerName: "Resim Dizini",
+    width: 240,
+    editable: true,
   },
 ];
 
 export const columnsDefinitions: { [key: string]: GridColDef[] } = {
   lectures: lectureColumns,
-  sorular: soruColumns,
-  kategoriler: kategoriColumns,
-  yonlendirmeler: yonlendirmeColumns,
-  urunler: urunColumns,
+  products: productColumns,
 };

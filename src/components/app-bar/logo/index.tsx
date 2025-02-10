@@ -1,9 +1,8 @@
-import styles from "../appbar.module.css";
+import styles from "../Appbar.module.css";
 import Image from "next/image";
 import { NavigationLink } from "../link";
 
 type AppLogoProps = {
-  //children: React.ReactNode;
   title?: string;
 };
 

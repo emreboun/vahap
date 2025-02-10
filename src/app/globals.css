@@ -14,6 +14,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  /* overflow-y: hidden; */
 }
 
 body {
@@ -102,4 +103,25 @@ a {
     padding-left: 180px; */
     width: 1200px;
   }
+}
+
+
+.limitedLine{
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  line-clamp: 1; 
+  -webkit-box-orient: vertical;
+}
+
+.limitedLine2{
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  line-clamp: 2; 
+  -webkit-box-orient: vertical;
 }

@@ -2,8 +2,9 @@ import React from "react";
 import { Box } from "@mui/material";
 import GridItem from "./GridItem";
 import { LectureEntity } from "@/types";
+import { Lecture } from "@prisma/client";
 
-const ResponsiveGrid: React.FC<{ items: LectureEntity[] }> = ({ items }) => {
+const ResponsiveGrid: React.FC<{ items: Lecture[] }> = ({ items }) => {
   return (
     <Box
       sx={{
@@ -11,7 +12,6 @@ const ResponsiveGrid: React.FC<{ items: LectureEntity[] }> = ({ items }) => {
         gridTemplateColumns: {
           md: "repeat(3,1fr)",
           sm: "repeat(2,1fr)",
-          //sm: "repeat(,1fr)",
           xs: "repeat(1,1fr)",
         },
         gap: 4,
@@ -21,13 +21,11 @@ const ResponsiveGrid: React.FC<{ items: LectureEntity[] }> = ({ items }) => {
       {items.map((item, index) => (
         <Box key={index}>
           <GridItem
-            imgUrl={item.videoThumbnail}
-            title={item.title}
+            imgUrl={item.mainThumbnail}
+            title={item.name}
             href={`/egitimler/${item.slug}`}
+            description={item.description}
           />
-          {/* <Paper elevation={3} sx={{ padding: 2, textAlign: "center" }}>
-            <Typography variant='h6'>{item.title}</Typography>
-          </Paper> */}
         </Box>
       ))}
     </Box>

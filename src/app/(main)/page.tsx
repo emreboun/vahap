@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <Box
-        component={"main"}
+        //component={"main"}
         className={`${styles.main} responsive`}
         sx={{
           //py: { xs: 2, sm: 8, md: 12 },
@@ -17,7 +17,7 @@ export default function Home() {
           <Typography
             sx={{
               whiteSpace: "break-spaces",
-              fontFamily: "Lexend, sans-serif",
+              fontFamily: "Roboto, sans-serif, Lexend",
               fontSize: 16,
               textAlign: "justify",
               letterSpacing: 0.2,

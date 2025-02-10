@@ -26,10 +26,6 @@
   transition: all 0.3s;
   position: relative; 
 }
-/* 
-.btn span + .btn span {
-  margin-top: 14px;
-} */
 
 .active span:nth-child(1) {
   animation: ease 0.3s top forwards;

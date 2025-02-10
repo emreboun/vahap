@@ -6,9 +6,15 @@ export interface GridItemProps {
   imgUrl: string;
   href: string;
   title: string;
+  description?: string;
 }
 
-const GridItem: React.FC<GridItemProps> = ({ imgUrl, href, title }) => {
+const GridItem: React.FC<GridItemProps> = ({
+  imgUrl,
+  href,
+  title,
+  description,
+}) => {
   return (
     <>
       <Link href={href}>
@@ -16,59 +22,86 @@ const GridItem: React.FC<GridItemProps> = ({ imgUrl, href, title }) => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            borderTopRadius: 1.5,
-            borderBottomRadius: 1,
+            borderTopLeftRadius: 6,
+            borderTopRightRadius: 6,
+            borderBottomLeftRadius: 4,
+            borderBottomRightRadius: 4,
             overflow: "hidden",
             transition: "all 0.2s ease-in-out",
             boxShadow: 3,
             borderWidth: "1px",
             borderStyle: "solid",
-            borderColor: "rgb(211,178,107, 0.4)", //"secondary.main",
+            borderColor: "rgb(211,178,107, 0.4)",
             "&:hover": {
               boxShadow: 5,
-              //borderWidth: "2px",
               borderColor: "rgb(211,178,107, 0.6)",
               transform: "scale(1.05)",
-              "& .MuiBox-root": {
-                // bgcolor: "secondary.main",
-                //bgcolor: "primary.main",
-              },
-              "& .MuiTypography-root": {
-                //color: "primary.main",
-                //color: "#fff",
-              },
+              "& .MuiBox-root": {},
+              "& .MuiTypography-root": {},
             },
+            height: "100%",
           }}
         >
-          <Box sx={{ borderTopRadius: 1.5, borderBottomRadius: 1, pb: 0.5 }}>
-            <Box
-              sx={{
-                borderTopRadius: 1.5,
-                borderBottomRadius: 0, //px: 2,
-                //py: 2,
+          <Box
+            sx={{
+              flex: 0,
+              display: "flex",
+              alignItems: "flex-end",
+              bgcolor: "rgb(128,128,128,0.4)", //"secondary.main",
+            }}
+          >
+            <Image
+              src={imgUrl}
+              alt={`${title} Resim - Thumbnail`}
+              height={180}
+              width={320}
+              style={{
+                width: "100%",
+                height: "auto",
               }}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              py: 0.5,
+              minHeight: 48,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <Typography
+              component={"h2"}
+              sx={{
+                fontFamily: "Roboto, sans-serif",
+                //fontFamily: "__Inter_e66fe9",
+                fontWeight: 600,
+                fontSize: 15,
+                letterSpacing: -0.2,
+                px: 1,
+                py: 0.2,
+                opacity: 0.97,
+              }}
+              className={"limitedLine"}
             >
-              <Image
-                src={imgUrl}
-                alt={""}
-                height={192}
-                width={384}
-                style={{ width: "100%", height: "auto" }}
-              />
-            </Box>
+              {title}
+            </Typography>
 
             <Typography
               sx={{
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 600,
-                fontSize: 16,
-                py: 0.5,
+                fontFamily: "Lexend, sans-serif",
+                fontSize: 14,
+                letterSpacing: -0.2,
+                color: "text.secondary",
                 px: 1,
-
-                //color: "primary.main",
+                wordBreak: "normal",
+                //textAlign: "justify",
+                //whiteSpace: "break-spaces",
               }}
+              className='limitedLine2'
             >
-              {title}
+              {description}
             </Typography>
           </Box>
         </Paper>

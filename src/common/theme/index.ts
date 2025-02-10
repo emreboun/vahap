@@ -112,8 +112,14 @@ export const lightTheme = {
         main: "#D3B26B",
       },
       text: {
-        primary: "rgba(0,0,0,0.9)", //'rgba(0, 0, 0, 0.87)',
+        primary: "rgba(0,0,0,0.9)",
         secondary: "rgba(0, 0, 0, 0.7)",
+      },
+      success: {
+        main: "#388E3C",
+      },
+      error: {
+        main: "#B73232",
       },
       divider: "rgba(0, 0, 0, 0.23)",
       //border: "rgba(0, 0, 0, 0.12)",

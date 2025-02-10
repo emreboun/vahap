@@ -1,5 +1,3 @@
-//import { addKat, addRedirection } from "@/app/Y/actions";
-//import { Category, Redirection } from "@/components/types";
 import {
   Box,
   Button,
@@ -12,25 +10,24 @@ import {
 import React, { useCallback, useState } from "react";
 import { useGridContext } from "../hooks";
 import { Replay5Rounded } from "@mui/icons-material";
+//import { useDebounceWithTimeout } from "@/hooks/debounce";
+import {
+  formatText,
+  formatUrl,
+  generateUrlSlug,
+  turkish_chars,
+} from "../../utils";
+import { createLecture, getLectureSlugPrefix } from "@/api/lectures";
+import { createProduct } from "@/api/products";
 import { useDebounceWithTimeout } from "@/hooks/debounce";
-import { generateUrlSlug } from "../../utils";
-import { createLecture } from "@/api/firebase/lecture";
-import { LectureEntity } from "@/types";
 
 interface FormProps {
-  //categories?: Category[];
   onClose: () => void;
 }
 
-export const AddLectureForm: React.FC<FormProps> = ({
-  //categories = [],
-  onClose,
-}) => {
-  const [form, setForm] = useState<any>({
-    slug: "",
-    name: "",
-    description: "",
-  });
+export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
+  const [form, setForm] = useState<any>({ slug: "" });
+  const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   const { setValue } = useGridContext();
@@ -39,23 +36,65 @@ export const AddLectureForm: React.FC<FormProps> = ({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setForm((prev: object) => ({ ...prev, [name]: value }));
+    let val = value;
+    setErrors((prev) => prev.filter((p) => p !== name));
+    if (name === "slug") {
+      setSlugError(false);
+      val = formatUrl(val);
+    }
+    setForm((prev: object) => ({ ...prev, [name]: val }));
   };
 
   const handleSubmit = async () => {
-    if (
-      form.slug === "" ||
-      form.title === "" ||
-      form.videoUrl === ""
-      //categories.some((c) => c.slug === form.slug)
-    ) {
-      return;
-    }
-    const result = await createLecture(form as LectureEntity);
-    if (!!result) {
-      setValue((prev) => [...prev, result]);
-      onClose();
-      //window.location.reload();
+    const {
+      slug,
+      name,
+      introVideo,
+      introThumbnail,
+      mainVideo,
+      mainThumbnail,
+      price,
+      duration,
+      description,
+    } = form;
+
+    try {
+      const list = [];
+      if (!slug) list.push("slug");
+      if (!name) list.push("name");
+      if (!mainVideo) list.push("mainVideo");
+      if (!mainThumbnail) list.push("mainThumbnail");
+      if (!price || Number(price) <= 0) list.push("price");
+      if (!duration || Number(duration) <= 0) list.push("duration");
+
+      if (list.length > 0 || slugError) {
+        setErrors(list);
+        return;
+      }
+
+      setLoading(true);
+
+      const temp = {
+        slug: formatUrl(slug),
+        name: formatText(name),
+        introVideo: formatUrl(introVideo),
+        introThumbnail: formatUrl(introThumbnail),
+        mainVideo: formatUrl(mainVideo),
+        mainThumbnail: formatUrl(mainThumbnail),
+        price: Number(price),
+        duration: Number(duration),
+        description: formatText(description),
+      };
+      console.log(temp);
+      const result = await createLecture({ ...temp });
+
+      setLoading(false);
+      if (!!result) {
+        setValue((prev) => [...prev, result]);
+        onClose();
+      }
+    } catch (e) {
+      setLoading(false);
     }
   };
 
@@ -63,28 +102,23 @@ export const AddLectureForm: React.FC<FormProps> = ({
   const [slugError, setSlugError] = useState(false);
   const [edit, setEdit] = useState(false);
 
-  /* const checkSlugUnique = useCallback(
-    async (value: string) => {
-      if (value === form.slug) {
-        return;
-      } else {
-        setSlugLoading(true);
-        const result = await checkQuestionSlugUnique(value, form.category_id);
-        setSlugError(!result);
-      }
-      setSlugLoading(false);
-    },
-    [form.slug]
-  ); */
+  const checkSlugUnique = useCallback(async (value: string) => {
+    setSlugLoading(true);
+    const formatted = formatUrl(value);
+    const result = await getLectureSlugPrefix(formatted);
+    setSlugError(result?.some((r: any) => r.slug === formatted));
+    setSlugLoading(false);
+  }, []);
 
-  //useDebounceWithTimeout(checkSlugUnique, form.slug, 500);
+  useDebounceWithTimeout(checkSlugUnique, form.slug, 500);
 
   const handleSlug = async () => {
     setSlugLoading(true);
-    const slug = generateUrlSlug(form.title ?? "");
-    /* let result = await getQuestionsWithSlugPrefix(slug, form.category_id);
-    result = result.filter((q: any) => q.id !== soru.id);
-    if (result.length !== 0 && result.some((q: any) => q.slug === slug)) {
+    const slug = generateUrlSlug(form.name ?? "");
+
+    const result = await getLectureSlugPrefix(slug);
+
+    if (result.some((r: any) => r.slug === slug)) {
       let i = 2;
       let resultSlug = slug + "-" + i;
       while (result.some((q: any) => q.slug === resultSlug)) {
@@ -92,11 +126,19 @@ export const AddLectureForm: React.FC<FormProps> = ({
         resultSlug = slug + "-" + i;
       }
       setForm((prev: any) => ({ ...prev, slug: resultSlug }));
-    } else { */
-    setForm((prev: Record<string, unknown>) => ({ ...prev, slug }));
-    // }
+    } else {
+      setForm((prev: Record<string, unknown>) => ({ ...prev, slug }));
+    }
     setSlugLoading(false);
   };
+
+  /* const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const { key } = event;
+    if (key === " " || key === "") {
+      event.preventDefault();
+      return;
+    }
+  }; */
 
   return (
     <>
@@ -138,6 +180,7 @@ export const AddLectureForm: React.FC<FormProps> = ({
             onClick={handleSubmit}
             sx={{
               bgcolor: "primary.main",
+              minWidth: 82,
               "&:hover": { color: "primary.main", bgcolor: "#fff" },
             }}
             disabled={loading}
@@ -145,7 +188,250 @@ export const AddLectureForm: React.FC<FormProps> = ({
             {!loading ? (
               <>{"Kaydet"}</>
             ) : (
-              <CircularProgress sx={{ color: "#fff", fontSize: 20 }} />
+              <CircularProgress size={20} sx={{ color: "#fff" }} />
+            )}
+          </Button>
+        </Paper>
+      </>
+
+      <FormControl
+        component={"form"}
+        sx={{
+          position: "relative",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "stretch",
+          justifyContent: "stretch",
+          flex: 1,
+          "& .MuiTextField-root": {
+            my: 0.2,
+          },
+          "& .MuiFormLabel-root": {},
+        }}
+      >
+        <Box
+          sx={{
+            position: { xs: "absolute", md: "relative" },
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            padding: 2,
+            pb: 3,
+            display: "flex",
+            flexDirection: "column",
+            gap: { xs: "6px", sm: "8px", md: "10px" },
+            overflowY: { xs: "auto", md: "none" },
+          }}
+        >
+          <TextField
+            label='Başlık'
+            name='name'
+            defaultValue={""}
+            error={errors.includes("name")}
+            onChange={handleChange}
+          />
+
+          <div
+            style={{
+              position: "relative",
+            }}
+          >
+            <TextField
+              label='Url Dizini'
+              fullWidth
+              name='slug'
+              value={form.slug}
+              onChange={handleChange}
+              error={errors.includes("slug") || slugError}
+              //onKeyDown={onKeyDown}
+            />
+
+            <div
+              style={{
+                position: "absolute",
+                right: 8,
+                top: 9,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              {slugLoading && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  <CircularProgress sx={{ color: "primary.main" }} size={20} />
+                </Box>
+              )}
+              <IconButton disabled={slugLoading} onClick={handleSlug}>
+                <Replay5Rounded style={{ color: "primary.main" }} />
+              </IconButton>
+            </div>
+          </div>
+
+          <TextField
+            label='Önsöz Resim Dizini'
+            name='introThumbnail'
+            defaultValue={""}
+            error={errors.includes("introThumbnail")}
+            onChange={handleChange}
+          />
+
+          <TextField
+            label='Önsöz Video Dizini'
+            name='introVideo'
+            defaultValue={""}
+            error={errors.includes("introVideo")}
+            onChange={handleChange}
+          />
+
+          <TextField
+            label='Video Resim Dizini'
+            name='mainThumbnail'
+            defaultValue={""}
+            error={errors.includes("mainThumbnail")}
+            onChange={handleChange}
+          />
+
+          <TextField
+            label='Eğitim Videosu Dizini'
+            name='mainVideo'
+            defaultValue={""}
+            error={errors.includes("mainVideo")}
+            onChange={handleChange}
+          />
+
+          <TextField
+            label='Ücret'
+            name='price'
+            type='number'
+            defaultValue={0}
+            error={errors.includes("price")}
+            onChange={handleChange}
+          />
+
+          <TextField
+            label='Süre'
+            name='duration'
+            type='number'
+            defaultValue={0}
+            error={errors.includes("duration")}
+            onChange={handleChange}
+          />
+
+          <TextField
+            label='Açıklama'
+            name='description'
+            defaultValue={""}
+            multiline
+            minRows={2}
+            maxRows={16}
+            error={errors.includes("introThumbnail")}
+            onChange={handleChange}
+          />
+        </Box>
+      </FormControl>
+    </>
+  );
+};
+
+interface AddProductFormProps {
+  onClose: () => void;
+}
+
+export const AddProductForm: React.FC<AddProductFormProps> = ({ onClose }) => {
+  const [form, setForm] = useState<any>({
+    slug: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const { setValue } = useGridContext();
+  const [slugLoading, setSlugLoading] = useState(false);
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setForm((prev: any) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSlug = async () => {
+    setSlugLoading(true);
+    const slug = generateUrlSlug(form.name ?? "");
+    setForm((prev: Record<string, unknown>) => ({ ...prev, slug }));
+    setSlugLoading(false);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      if (!form.slug || !form.name || !form.price) {
+        return;
+      }
+      const result = await createProduct(form);
+
+      if (!!result) {
+        setValue((prev) => [...prev, result]);
+        onClose();
+        //window.location.reload();
+      }
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <>
+        <Paper
+          style={{
+            padding: "8px 16px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "stretch",
+            gap: 10,
+            position: "sticky",
+            top: 0,
+            zIndex: 1000,
+            borderRadius: "0px",
+          }}
+          elevation={4}
+        >
+          <Button
+            variant='contained'
+            onClick={onClose}
+            sx={{ bgcolor: "error.main", color: "#fff", textTransform: "none" }}
+          >
+            {"Vazgeç"}
+          </Button>
+          <Button
+            variant='contained'
+            onClick={handleSubmit}
+            sx={{
+              bgcolor: "success.main",
+              color: "#fff",
+              textTransform: "none",
+              minWidth: 82,
+            }}
+            disabled={loading}
+          >
+            {!loading ? (
+              <>{"Kaydet"}</>
+            ) : (
+              <CircularProgress size={20} sx={{ color: "#fff" }} />
             )}
           </Button>
         </Paper>
@@ -168,6 +454,14 @@ export const AddLectureForm: React.FC<FormProps> = ({
           "& .MuiFormLabel-root": {},
         }}
       >
+        <TextField
+          label='Başlık'
+          name='name'
+          defaultValue={""}
+          onChange={handleChange}
+          disabled={loading}
+        />
+
         <div
           style={{
             position: "relative",
@@ -179,34 +473,9 @@ export const AddLectureForm: React.FC<FormProps> = ({
             name='slug'
             value={form.slug}
             onChange={handleChange}
-            /* disabled={!edit}
-          error={slugError}
-          helperText={slugError && "Url dizini biricik olmalı."} */
-            FormHelperTextProps={{
-              sx: {
-                pt: 0.5,
-                pb: 0.8,
-              },
-            }}
+            disabled={loading}
           />
-          {/* <TextField
-                label="Url Dizini"
-                fullWidth
-                name="slug"
-                value={form?.slug ?? ""}
-                onChange={handleChange}
-                disabled={!edit}
-                error={slugError}
-                helperText={slugError && "Url dizini biricik olmalı."}
-                FormHelperTextProps={{
-                  sx: {
-                    pt: 0.5,
-                    pb: 0.8,
-                  },
-                }}
-                sx={{ opacity: slugLoading ? 0.5 : 1 }}
-              />
- */}
+
           {slugLoading && (
             <Box
               sx={{
@@ -241,37 +510,19 @@ export const AddLectureForm: React.FC<FormProps> = ({
         </div>
 
         <TextField
-          label='Başlık'
-          name='title'
+          label='Resim Dizini'
+          name='imgUrl'
           defaultValue={""}
           onChange={handleChange}
+          disabled={loading}
         />
 
         <TextField
-          label='Giriş Resim Dizini'
-          name='introThumbnail'
+          label='Ücret'
+          name='price'
           defaultValue={""}
           onChange={handleChange}
-        />
-
-        <TextField
-          label='Giriş Video Dizini'
-          name='introUrl'
-          defaultValue={""}
-          onChange={handleChange}
-        />
-
-        <TextField
-          label='Video Resim Dizini'
-          name='videoThumbnail'
-          defaultValue={""}
-          onChange={handleChange}
-        />
-        <TextField
-          label='Eğitim Videosu Dizini'
-          name='videoUrl'
-          defaultValue={""}
-          onChange={handleChange}
+          disabled={loading}
         />
 
         <TextField
@@ -279,129 +530,7 @@ export const AddLectureForm: React.FC<FormProps> = ({
           name='description'
           defaultValue={""}
           onChange={handleChange}
-        />
-      </FormControl>
-    </>
-  );
-};
-
-interface RedirectionFormProps {
-  redirections?: any[];
-  onClose: () => void;
-}
-
-export const RedirectionForm: React.FC<RedirectionFormProps> = ({
-  redirections = [],
-  onClose,
-}) => {
-  const [form, setForm] = useState<any>({
-    sourceUrl: "",
-    targetUrl: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const { setValue } = useGridContext();
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setForm((prev: any) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async () => {
-    if (
-      form.sourceUrl === "" ||
-      form.targetUrl === "" ||
-      redirections.some((r) => r.sourceUrl === form.sourceUrl)
-    ) {
-      return;
-    }
-    const result = null; //await addRedirection(form.sourceUrl, form.targetUrl);
-    if (!!result) {
-      setValue((prev) => [...prev, result]);
-      onClose();
-      //window.location.reload();
-    }
-  };
-
-  return (
-    <>
-      <>
-        <Paper
-          style={{
-            padding: "8px 16px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "stretch",
-            gap: 10,
-            position: "sticky",
-            top: 0,
-            zIndex: 1000,
-            borderRadius: "0px",
-          }}
-          elevation={4}
-        >
-          <Button
-            variant='contained'
-            onClick={onClose}
-            sx={{ bgcolor: "error.main", color: "#fff" }}
-          >
-            {"Vazgeç"}
-          </Button>
-          <Button
-            variant='contained'
-            onClick={handleSubmit}
-            sx={{ bgcolor: "success.main", color: "#fff" }}
-            disabled={loading}
-          >
-            {!loading ? (
-              <>{"Kaydet"}</>
-            ) : (
-              <CircularProgress sx={{ color: "#fff", fontSize: 20 }} />
-            )}
-          </Button>
-        </Paper>
-      </>
-
-      <FormControl
-        component={"form"}
-        sx={{
-          position: "relative",
-          padding: 2,
-          pb: 3,
-          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-          alignItems: "stretch",
-          "& .MuiTextField-root": {
-            my: 0.2,
-          },
-          "& .MuiFormLabel-root": {},
-        }}
-      >
-        <TextField
-          label='Kaynak Url'
-          fullWidth
-          name='sourceUrl'
-          value={form.sourceUrl}
-          onChange={handleChange}
-          /* disabled={!edit}
-          error={slugError}
-          helperText={slugError && "Url dizini biricik olmalı."} */
-          FormHelperTextProps={{
-            sx: {
-              pt: 0.5,
-              pb: 0.8,
-            },
-          }}
-        />
-
-        <TextField
-          label='Hedef Url'
-          name='targetUrl'
-          value={form.targetUrl}
-          onChange={handleChange}
+          disabled={loading}
         />
       </FormControl>
     </>

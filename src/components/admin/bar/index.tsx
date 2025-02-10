@@ -1,5 +1,5 @@
 import { Paper } from "@mui/material";
-import { AccountMenu } from "./menu";
+import { AdminAccountMenu } from "./menu";
 import { NavigationLink } from "@/components/app-bar/link";
 import Image from "next/image";
 import { cookies } from "next/headers";
@@ -50,7 +50,7 @@ export const AdminBar: React.FC<BarProps> = async ({}) => {
           </>
         </NavigationLink>
 
-        {!!token && <AccountMenu account={{}} />}
+        {!!token && <AdminAccountMenu account={{}} />}
       </Paper>
     </>
   );

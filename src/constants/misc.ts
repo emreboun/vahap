@@ -103,4 +103,119 @@ Sitemiz bazı dönemlerde müşterilerine ve üyelerine kampanya bilgileri, yeni
   ],
 };
 
-export const KVKK = `KVKK`;
+export const KVKK = {
+  title: "Kişisel Verilerin Korunması ve İşlenmesi Hakkında Aydınlatma Metni",
+  sections: [
+    {
+      title: "",
+      content:
+        "[Şirket Adı] olarak, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) kapsamında, kişisel verilerinizin gizliliğine ve güvenliğine önem veriyoruz. İşbu Aydınlatma Metni, sitemizi ziyaret eden ve hizmetlerimizden faydalanan müşterilerimizin kişisel verilerinin hangi amaçlarla işlendiği, kimlerle paylaşılabileceği, hangi yöntemlerle toplandığı ve KVKK kapsamında sahip olduğunuz hakları açıklamak amacıyla hazırlanmıştır.",
+    },
+    {
+      title: "1. İşlenen Kişisel Veriler",
+      content: `E-ticaret sitemizi kullanırken aşağıdaki kişisel verileriniz işlenebilir:
+Ad, soyad
+E-posta adresi, telefon numarası
+Adres bilgileri
+Ödeme ve fatura bilgileri
+IP adresi, cihaz bilgileri ve çerezler`,
+    },
+    {
+      title: "2. Kişisel Verilerin İşlenme Amaçları",
+      content: `Kişisel verileriniz, KVKK’nın 5. ve 6. maddeleri kapsamında aşağıdaki amaçlarla işlenmektedir:
+
+Siparişlerin alınması, işlenmesi ve teslim edilmesi
+Ürün ve hizmetlerden faydalanmanızın sağlanması
+Müşteri destek hizmetlerinin sunulması
+Ödeme işlemlerinin gerçekleştirilmesi
+Kampanya, duyuru ve bilgilendirme yapılması
+Yasal yükümlülüklerin yerine getirilmesi`,
+    },
+    {
+      title: "3. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi",
+      content:
+        "Kişisel verileriniz, internet sitemiz, mobil uygulamalarımız, müşteri hizmetleri ve e-posta yoluyla otomatik veya otomatik olmayan yöntemlerle toplanmaktadır. Bu veriler, KVKK’nın 5. ve 6. maddelerinde belirtilen hukuki sebepler doğrultusunda işlenmektedir.",
+    },
+    {
+      title: "4. Kişisel Verilerin Aktarılması",
+      content: `Kişisel verileriniz, yukarıda belirtilen amaçlar doğrultusunda;
+
+Bankalar ve ödeme hizmet sağlayıcıları,
+Kargo ve lojistik firmaları,
+Hukuki ve mali danışmanlık hizmeti veren üçüncü kişiler,
+Yetkili kamu kurum ve kuruluşları ile paylaşılabilir.`,
+    },
+    {
+      title: "5. KVKK Kapsamındaki Haklarınız",
+      content: `KVKK’nın 11. maddesi uyarınca, aşağıdaki haklara sahipsiniz:
+
+Kişisel verilerinizin işlenip işlenmediğini öğrenme
+İşlenmişse bilgi talep etme
+İşlenme amacını öğrenme ve amaca uygun kullanılıp kullanılmadığını sorgulama
+Eksik veya yanlış işlenmişse düzeltilmesini isteme
+Kanuni sebeplerle verilerinizin silinmesini veya yok edilmesini talep etme
+İşlenen verilerin münhasıran otomatik sistemler ile analiz edilmesi nedeniyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme`,
+    },
+    {
+      title: "6. İletişim Bilgileri",
+      content: `KVKK kapsamında haklarınızı kullanmak veya sorularınız için bizimle iletişime geçebilirsiniz:
+
+📩 E-posta: [destek@siteadı.com]
+📞 Telefon: [+90 XXX XXX XX XX]
+📍 Adres: [Şirket Adresi]
+
+Bu aydınlatma metni, ihtiyaçlara göre güncellenebilir. Güncellemeleri web sitemiz üzerinden takip edebilirsiniz.`,
+    },
+  ],
+};
+
+export const KVKK1 = `Kişisel Verilerin Korunması ve İşlenmesi Hakkında Aydınlatma Metni
+
+[Şirket Adı] olarak, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) kapsamında, kişisel verilerinizin gizliliğine ve güvenliğine önem veriyoruz. İşbu Aydınlatma Metni, sitemizi ziyaret eden ve hizmetlerimizden faydalanan müşterilerimizin kişisel verilerinin hangi amaçlarla işlendiği, kimlerle paylaşılabileceği, hangi yöntemlerle toplandığı ve KVKK kapsamında sahip olduğunuz hakları açıklamak amacıyla hazırlanmıştır.
+
+1. İşlenen Kişisel Veriler
+E-ticaret sitemizi kullanırken aşağıdaki kişisel verileriniz işlenebilir:
+
+Ad, soyad
+E-posta adresi, telefon numarası
+Adres bilgileri
+Ödeme ve fatura bilgileri
+IP adresi, cihaz bilgileri ve çerezler
+2. Kişisel Verilerin İşlenme Amaçları
+Kişisel verileriniz, KVKK’nın 5. ve 6. maddeleri kapsamında aşağıdaki amaçlarla işlenmektedir:
+
+Siparişlerin alınması, işlenmesi ve teslim edilmesi
+Ürün ve hizmetlerden faydalanmanızın sağlanması
+Müşteri destek hizmetlerinin sunulması
+Ödeme işlemlerinin gerçekleştirilmesi
+Kampanya, duyuru ve bilgilendirme yapılması
+Yasal yükümlülüklerin yerine getirilmesi
+3. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi
+Kişisel verileriniz, internet sitemiz, mobil uygulamalarımız, müşteri hizmetleri ve e-posta yoluyla otomatik veya otomatik olmayan yöntemlerle toplanmaktadır. Bu veriler, KVKK’nın 5. ve 6. maddelerinde belirtilen hukuki sebepler doğrultusunda işlenmektedir.
+
+4. Kişisel Verilerin Aktarılması
+Kişisel verileriniz, yukarıda belirtilen amaçlar doğrultusunda;
+
+Bankalar ve ödeme hizmet sağlayıcıları,
+Kargo ve lojistik firmaları,
+Hukuki ve mali danışmanlık hizmeti veren üçüncü kişiler,
+Yetkili kamu kurum ve kuruluşları ile paylaşılabilir.
+5. KVKK Kapsamındaki Haklarınız
+KVKK’nın 11. maddesi uyarınca, aşağıdaki haklara sahipsiniz:
+
+Kişisel verilerinizin işlenip işlenmediğini öğrenme
+İşlenmişse bilgi talep etme
+İşlenme amacını öğrenme ve amaca uygun kullanılıp kullanılmadığını sorgulama
+Eksik veya yanlış işlenmişse düzeltilmesini isteme
+Kanuni sebeplerle verilerinizin silinmesini veya yok edilmesini talep etme
+İşlenen verilerin münhasıran otomatik sistemler ile analiz edilmesi nedeniyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme
+6. İletişim Bilgileri
+KVKK kapsamında haklarınızı kullanmak veya sorularınız için bizimle iletişime geçebilirsiniz:
+
+📩 E-posta: [destek@siteadı.com]
+📞 Telefon: [+90 XXX XXX XX XX]
+📍 Adres: [Şirket Adresi]
+
+Bu aydınlatma metni, ihtiyaçlara göre güncellenebilir. Güncellemeleri web sitemiz üzerinden takip edebilirsiniz.
+
+`;

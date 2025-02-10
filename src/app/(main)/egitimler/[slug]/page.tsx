@@ -1,43 +1,42 @@
-import { getLecture } from "@/api/firebase/lecture";
+import { getLectureBySlug } from "@/api/lectures";
 import { LectureMain } from "@/components/lecture";
-import { Box, Paper } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+export const dynamic = "force-dynamic"; // Force dynamic rendering
 
-export default async function LecturePage({
-  params, //: { slug },
-}: {
-  params: { slug: string };
-}) {
+export default async function LecturePage({ params }: { params: any }) {
   const { slug } = await params;
-  const lectureSlug = decodeURIComponent(slug);
-  const lecture = await getLecture(lectureSlug);
+  //const lectureSlug = decodeURIComponent(slug);
+  const lecture = await getLectureBySlug(slug);
   if (!lecture) {
-    return <h1>Eğitim bulunamadı</h1>;
+    return (
+      <Typography
+        component={"h1"}
+        variant={"h4"}
+        sx={{
+          px: "16px",
+          py: { xs: "64px", sm: "80px", md: "96px", lg: "160px", xl: "200px" },
+          fontWeight: 600,
+          fontSize: 32,
+          fontFamily: "Lexend, Roboto, sans-serif",
+          opacity: 0.95,
+        }}
+      >
+        Eğitim bulunamadı
+      </Typography>
+    );
   }
 
   return (
     <>
-      {/*  {!!lecture.product && (
-        <section
-          id='product'
-          className='responsive'
-          style={{ paddingBottom: 32 }}
-        >
-          <MiniProduct product={lecture.product} />
-        </section>
-      )} */}
-
       <Box
         component='section'
         className='responsive'
         sx={{
-          //py: { xs: 2, sm: 8, md: 12 },
           whiteSpace: "break-spaces",
           fontFamily: "Lexend, sans-serif",
         }}
       >
-        <Paper sx={{ px: 4, py: 3, boxShadow: 2 }} elevation={0}>
-          <LectureMain data={lecture} />
-        </Paper>
+        <LectureMain data={lecture} />
       </Box>
     </>
   );

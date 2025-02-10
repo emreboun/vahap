@@ -1,49 +1,12 @@
-//"use client";
-
-import { Box, Typography } from "@mui/material";
 import styles from "../footer.module.css";
 
-/* import { useState } from "react";
-import { Button, FormControl, InputBase } from "@mui/material"; */
+import { Box, Typography } from "@mui/material";
 import { SocialIcon } from "react-social-icons";
 import { MailOutlineRounded } from "@mui/icons-material";
 
 export const Form: React.FC = () => {
-  /* const [email, setEmail] = useState<string>("");
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    setEmail("");
-  }; */
-
   return (
     <>
-      {/* <FormControl
-        component='form'
-        className={styles.formControl}
-        sx={{
-          width: { xs: "auto", sm: "330px" },
-          minWidth: { xs: "300px", sm: "330px" },
-        }}
-      >
-        <InputBase
-          value={email}
-          //onFocus={() => setSearchFocus(true)}
-          //onBlur={() => setSearchFocus(false)}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder={"E-Posta Adresiniz"}
-          className={styles.inputBase}
-        />
-        <Button
-          variant='contained'
-          className={styles.button}
-          onClick={handleSubmit}
-          type='submit'
-        >
-          {"Gönder"}
-        </Button>
-      </FormControl> */}
-
       <Box
         component={"a"}
         href={"mailto:vahapsanal@hotmail.com"}
@@ -60,7 +23,6 @@ export const Form: React.FC = () => {
           "&:hover": {
             boxShadow: 4,
           },
-          //opacity: 0.9,
         }}
       >
         <MailOutlineRounded />
@@ -81,13 +43,6 @@ export const Form: React.FC = () => {
           url={"https://www.youtube.com/@vahapsanal"}
           className={styles.socialIcon}
         />
-
-        {/* <SocialIcon
-          target='_blank'
-          rel='noopener noreferrer'
-          //url={"https://www.facebook.com/"}
-          className={styles.socialIcon}
-        /> */}
 
         <SocialIcon
           target='_blank'

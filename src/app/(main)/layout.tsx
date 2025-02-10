@@ -20,7 +20,7 @@ export default function RootLayout({
             position: "relative",
             zIndex: 1,
             mt: { xs: "64px", md: "100px" },
-            py: 8,
+            py: { xs: 4, sm: 8 },
           }}
           className={styles.layout}
           component={"main"}

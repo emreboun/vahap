@@ -1,9 +1,7 @@
-import { GridSettings } from "@/components/admin/grid/settings";
 import { ModalFactory } from "../types";
 
 export const modalFactories: ModalFactory = {
-  settings: <GridSettings />,
-  //messages: <div />,
+  settings: <></>,
 };
 
 interface ModalPickerProps {

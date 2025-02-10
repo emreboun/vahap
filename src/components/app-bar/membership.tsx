@@ -1,36 +1,30 @@
 "use client";
 
-import { Box, Button, darken, IconButton, Tooltip } from "@mui/material";
-import { AccountCircle, ShoppingBagRounded } from "@mui/icons-material";
+import { Badge, Box, Button, darken, IconButton, Tooltip } from "@mui/material";
+import { CircleRounded, ShoppingBagRounded } from "@mui/icons-material";
 //import { useState, useEffect } from "react";
 import Link from "next/link";
-import { logoutApi } from "@/app/admin/giris/actions";
-import { useRouter } from "next/navigation";
+import { AccountMenu } from "./menu";
+import { NavigationLink } from "./link";
+import { useSidebar } from "./sidebars/SidebarProvider";
+import { useCart } from "../cart/CartProvider";
 
 interface MembershipProps {
   auth: boolean;
-  //onAccount?: () => void;
+  enabled?: boolean;
 }
 
-export const Membership: React.FC<MembershipProps> = ({ auth }) => {
-  const router = useRouter();
-  /* const authenticated = false; // useAppSelector((state) => state.account.authenticated);
-  const [auth, setAuth] = useState(false); */
+export const Membership: React.FC<MembershipProps> = ({
+  auth,
+  //enabled = true,
+}) => {
+  const { onSidebar, handleDropdown, dropdown } = useSidebar();
+  const { state } = useCart();
+  const { items } = state;
 
-  /* useEffect(() => {
-    const loadAuth = () => {
-      setAuth(authenticated);
-      //localStorage.getItem("account") ? setAuth(true) : setAuth(false);
-    };
-    loadAuth();
-  }, [authenticated]); */
-
-  const onLogout = async () => {
-    await logoutApi();
-    location.reload();
+  const handleCart = () => {
+    onSidebar("cart");
   };
-
-  const onCart = () => {};
 
   return (
     <>
@@ -39,6 +33,7 @@ export const Membership: React.FC<MembershipProps> = ({ auth }) => {
           <Link href={"/giris"} passHref>
             <Button
               variant='outlined'
+              onClick={() => handleDropdown(false)}
               sx={{
                 textTransform: "none",
                 paddingX: 2,
@@ -59,9 +54,10 @@ export const Membership: React.FC<MembershipProps> = ({ auth }) => {
             </Button>
           </Link>
 
-          <Link href={"/kayit"} passHref>
+          <NavigationLink href={"/kayit"}>
             <Button
               variant={"contained"}
+              onClick={() => handleDropdown(false)}
               sx={{
                 textTransform: "none",
                 paddingX: 2,
@@ -79,100 +75,66 @@ export const Membership: React.FC<MembershipProps> = ({ auth }) => {
             >
               {"Kayıt Ol"}
             </Button>
-          </Link>
+          </NavigationLink>
         </>
       ) : (
         <>
           <Box
             sx={{
+              height: 58,
               display: "flex",
-              height: { xs: auth ? "46%" : "auto", md: "100%" },
-              position: { xs: auth ? "absolute" : "", md: "relative" },
-              top: { xs: auth ? -30 : "auto", md: "auto" },
-              right: { xs: auth ? 72 : "auto", md: "auto" },
-              opacity: { xs: auth ? 1 : 0, md: 1 },
-              //transition: "opacity 0.2s ease-in-out 0.5s",
+              justifyContent: "flex-end",
+              //opacity: dropdown ? 1 : { xs: 0, md: 1 },
+              transition: "all 0.24s ease-in-out",
+              "& .MuiBadge-badge": {
+                color: "#fff",
+                translate: "-12px 12px",
+              },
             }}
           >
             <Tooltip title={"Sepetim"}>
-              <IconButton
-                onClick={onCart}
-                size='large'
-                sx={{
-                  my: 0,
-                  ml: 0.4,
-                  height: "100%",
-                  "&:hover": {
-                    "& .MuiBox-root": { bgcolor: "secondary.main" },
-                    "& .MuiSvgIcon-root": { color: "primary.main" },
-                  },
-                  opacity: { xs: 1, md: 1 },
-                }}
+              <Badge
+                badgeContent={items.length}
+                color='secondary'
+                sx={{ cursor: "pointer" }}
               >
-                <Box
+                <IconButton
+                  onClick={handleCart}
+                  size='large'
                   sx={{
-                    height: "90%",
+                    my: 0,
+                    height: "100%",
+                    "&:hover": {
+                      "& .first-icon": { color: "primary.main" }, // ShoppingBagRounded
+                      "& .second-icon": { color: "secondary.main" }, // CircleRounded
+                    },
                     aspectRatio: 1,
-                    bgcolor: "primary.main",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
                   <ShoppingBagRounded
+                    className='first-icon'
                     sx={{
                       fontSize: 20,
                       color: "#fff",
+                      position: "relative",
+                      zIndex: 2,
                     }}
                   />
-                </Box>
-              </IconButton>
+
+                  <CircleRounded
+                    className='second-icon'
+                    sx={{
+                      position: "absolute",
+                      fontSize: 38,
+                      zIndex: 1,
+                      color: "primary.main",
+                    }}
+                  />
+                </IconButton>
+              </Badge>
             </Tooltip>
 
-            <Tooltip title={"Hesabım"}>
-              <IconButton
-                onClick={onLogout}
-                size='large'
-                sx={{
-                  my: 0,
-                  ml: 0.4,
-                  "&:hover": {
-                    "& .MuiSvgIcon-root": {
-                      color: "secondary.main",
-                    },
-                    "& .MuiBox-root": {
-                      bgcolor: "primary.main",
-                      borderRadius: "50%",
-                    },
-                  },
-                  position: "relative",
-                  opacity: auth ? 1 : 0,
-                }}
-              >
-                <Box
-                  sx={{
-                    height: "40%",
-                    aspectRatio: 1,
-                    bgcolor: "#fff", //"primary.main",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "absolute",
-                    zIndex: 0,
-                  }}
-                />
-                <AccountCircle
-                  sx={{
-                    fontSize: 34,
-                    color: "primary.main",
-                    position: "relative",
-                    zIndex: 1,
-                  }}
-                />
-              </IconButton>
-            </Tooltip>
+            <AccountMenu />
           </Box>
         </>
       )}

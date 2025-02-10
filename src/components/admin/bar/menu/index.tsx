@@ -29,7 +29,7 @@ interface AccountMenuProps {
   children?: React.ReactNode;
 }
 
-export const AccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
+export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
   const { theme, onTheme } = useThemeContext();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -87,7 +87,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                 }}
               />
             ) : (
-              <AccountIcon />
+              <AccountIcon color='secondary' />
             )}
           </IconButton>
         </Tooltip>
@@ -151,6 +151,10 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
             <Link href={`/admin/lectures`} passHref>
               <MenuItem title={"Eğitimler"} />
             </Link>
+
+            <Link href={`/admin/products`} passHref>
+              <MenuItem title={"Ürünler"} />
+            </Link>
             {/* <Link href={`/Y/sorular`} passHref>
               <MenuItem title={"Sorular"} />
             </Link>
@@ -166,7 +170,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
 
             <Divider style={{ margin: 0 }} />
 
-            <Box>
+            {/* <Box>
               <ToggleButtonGroup
                 value={theme}
                 exclusive
@@ -187,14 +191,14 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                 }}
               >
                 <ToggleButton value='light' aria-label='light theme'>
-                  <LightThemeIcon /* sx={{ color: "primary.main" }} */ />
+                  <LightThemeIcon />
                 </ToggleButton>
                 <ToggleButton value='dark' aria-label='dark theme'>
                   <DarkThemeIcon />
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
-            <Divider />
+            <Divider /> */}
 
             <MenuItem title={"Çıkış"} onClick={handleLogout} />
           </Menu>

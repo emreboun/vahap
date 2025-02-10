@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String      @id @default(uuid()) @db.Uuid
+  email       String      @unique
+  password    String      
+  purchases   Purchase[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("users")
+}
+
+model Lecture {
+  id          String    @id @default(uuid())  @db.Uuid
+  slug        String    @unique
+  name        String
+  description String    @default("")
+  status      Boolean   @default(true)
+  
+  introVideo  String?    @map("intro_video")
+  mainVideo   String    @map("main_video")
+  introThumbnail String? @map("intro_thumbnail")
+  mainThumbnail String  @map("main_thumbnail")
+  duration    Int?       // Duration in seconds
+
+  createdAt   DateTime  @default(now())  @map("created_at")
+  updatedAt   DateTime  @updatedAt  @map("updated_at")
+
+
+  // relations
+  productId   String    @unique  @db.Uuid  @map("product_id") 
+  mainProduct Product   @relation("main_product", fields: [productId], references: [id], onDelete: Cascade)
+  products    ProductLecture[]
+
+  @@map("lectures")
+}
+
+model Product {
+  id          String     @id @db.Uuid @default(uuid())
+  slug        String     @unique 
+  imgUrl      String?    @map("image_url")
+  name        String     
+  description String     @default("")
+  status      Boolean    @default(true)
+
+  price       Int
+  discount    Int?
+
+  createdAt   DateTime   @default(now())  @map("created_at")
+  updatedAt   DateTime   @updatedAt       @map("updated_at")
+
+  lectures    ProductLecture[]
+  purchases   Purchase[]
+  //lectureId   String?    @unique @db.Uuid @map("lecture_id")
+  lecture     Lecture?   @relation("main_product")
+
+  @@map("products")
+}
+
+model ProductLecture {
+  productId String  @db.Uuid  @map("product_id")
+  lectureId String  @db.Uuid  @map("lecture_id")
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  lecture   Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+
+  @@id([productId, lectureId])
+  @@map("products_lectures")
+}
+
+model Purchase {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid @map("user_id")
+  productId  String    @db.Uuid @map("product_id")
+  purchasedAt DateTime @default(now()) @map("purchased_at")
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("purchases")
+}
+

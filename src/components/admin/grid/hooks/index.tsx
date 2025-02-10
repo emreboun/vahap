@@ -9,7 +9,6 @@ import React, {
 } from "react";
 
 interface GridContextProps {
-  //onGrid: (grid: string) => void;
   value: any[];
   setValue: Dispatch<SetStateAction<any[]>>;
 }
@@ -34,15 +33,6 @@ export const GridProvider: React.FC<GridProviderProps> = ({
   children,
 }) => {
   const [value, setValue] = useState<any[]>(data);
-  //const grid = value === "dark" ? darkGrid : lightGrid;
-
-  /* useEffect(() => {
-    if (!!localStorage.getItem(gridCookie)) {
-      setGrid((prev) => localStorage.getItem(gridCookie) ?? prev);
-    } else {
-      localStorage.setItem(gridCookie, "dark");
-    }
-  }, []); */
 
   return (
     <GridContext.Provider value={{ value, setValue }}>

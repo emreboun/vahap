@@ -10,7 +10,8 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useGridContext } from "../../hooks";
 import { GridRowId } from "@mui/x-data-grid";
-import { deleteLecture } from "@/api/firebase/lecture";
+import { deleteLecture } from "@/api/lectures";
+import { deleteProduct } from "@/api/products";
 
 interface FormProps {
   itemId: GridRowId;
@@ -35,23 +36,11 @@ export const DeleteForm: React.FC<FormProps> = ({ itemId, onClose }) => {
     e.preventDefault();
     let result;
     switch (table) {
-      /* case "kategoriler":
-        result = await deleteKatById(itemId);
-        break;
-      case "sorular":
-        result = await deleteSoruById(itemId);
-        break;
-      case "cevaplar":
-        result = await deleteCevapById(itemId);
-        break;
-      case "urunler":
-        result = await deleteProductById(itemId);
-        break;
-      case "yonlendirmeler":
-        result = await deleteRedirection(itemId);
-        break; */
       case "lectures":
         result = await deleteLecture(id);
+        break;
+      case "products":
+        result = await deleteProduct(id);
         break;
     }
     if (!!result) {
@@ -71,10 +60,14 @@ export const DeleteForm: React.FC<FormProps> = ({ itemId, onClose }) => {
           gap: "16px",
         }}
       >
-        <Typography sx={{ py: 0, pl: 1 }}>
-          {"Silmek için Satırın Id'sini Girin"}
-        </Typography>
-
+        <Box>
+          <Typography sx={{ py: 0, pl: 1 }}>
+            {"Silmek için Satırın Id'sini Girin"}
+          </Typography>
+          <Typography sx={{ pt: 1, pl: 1, fontStyle: "italic" }}>
+            {itemId}
+          </Typography>
+        </Box>
         <TextField label='ID' name='id' value={id} onChange={handleChange} />
 
         <Box
@@ -86,7 +79,11 @@ export const DeleteForm: React.FC<FormProps> = ({ itemId, onClose }) => {
           <Button
             variant='contained'
             onClick={onClose}
-            sx={{ bgcolor: "warning.main", color: "#fff" }}
+            sx={{
+              bgcolor: "warning.main",
+              color: "#fff",
+              textTransform: "none",
+            }}
           >
             {"Vazgeç"}
           </Button>
@@ -95,7 +92,7 @@ export const DeleteForm: React.FC<FormProps> = ({ itemId, onClose }) => {
             variant='contained'
             type='submit'
             onClick={handleSubmit}
-            sx={{ bgcolor: "error.main", color: "#fff" }}
+            sx={{ bgcolor: "error.main", color: "#fff", textTransform: "none" }}
             disabled={loading || id !== itemId}
           >
             {!loading ? (

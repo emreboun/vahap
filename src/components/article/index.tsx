@@ -57,7 +57,12 @@ export const ArticleSection: React.FC<ArticleSectionProps> = ({
 
       <Typography
         component='p'
-        sx={{ fontFamily: "Lexend, sans-serif", fontSize: 14, pb: 1 }}
+        sx={{
+          fontFamily: "Lexend, sans-serif",
+          fontSize: { xs: 14, md: 15 },
+          textAlign: "justify",
+          pb: 1,
+        }}
       >
         {content}
       </Typography>
