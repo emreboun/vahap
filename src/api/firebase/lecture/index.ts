@@ -19,7 +19,11 @@ export const createLecture = async (lecture: LectureEntity) => {
   const uuid = v4();
   const lectureRef = ref(db, `lectures/${lecture.slug ?? lecture.id ?? uuid}`);
   try {
-    await set(lectureRef, { ...lecture, status: true, id: lecture.id ?? uuid });
+    await set(lectureRef, {
+      ...lecture,
+      status: true,
+      id: lecture.id ?? uuid,
+    });
     return { ...lecture, id: lecture.id ?? uuid, status: true };
   } catch (e: unknown) {
     console.error(e);
