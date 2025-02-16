@@ -25,7 +25,7 @@ export const AppBarWrapper: React.FC<AppBarProps> = ({ children }) => {
           width: "100%",
           transition: "all 0.2s ease-in-out",
           position: "fixed",
-          bgcolor: "#030420", //"background.paper",
+          bgcolor: "background.paper",
           color: "text.primary",
           height: { xs: 64, md: 100 },
           top: {
