@@ -106,6 +106,8 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                   overflow: "visible",
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                   bgcolor: "background.paper", //#121212 !important",
+                  borderRadius: 0.5,
+                  //boxShadow: 2,
                   my: 0.7,
                   "& .MuiAvatar-root": {
                     width: 26,
@@ -118,7 +120,7 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                     display: "block",
                     position: "absolute",
                     top: 0,
-                    right: 19,
+                    right: 17,
                     width: 10,
                     height: 10,
                     bgcolor: "background.paper",
@@ -127,7 +129,8 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                     textDecoration: "none",
                   },
                   "& .MuiList-root": {
-                    padding: "4px 0px",
+                    padding: "1px",
+                    borderRadius: 0.5,
                   },
                   "& .MuiMenuItem-root": {
                     borderRadius: 0,
@@ -135,6 +138,11 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                     color: "text.primary",
                     opacity: 0.8,
                     textDecoration: "none",
+                    "&:hover": {
+                      //bgcolor: "background.paper",
+                      opacity: 1,
+                      color: "secondary.main",
+                    },
                   },
                 },
               },
@@ -143,7 +151,13 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <Link href={`/`} passHref>
-              <MenuItem title={"gmvahap.com"} />
+              <MenuItem title={"Siteye git"} />
+            </Link>
+
+            <Divider style={{ margin: 0 }} />
+
+            <Link href={`/admin/users`} passHref>
+              <MenuItem title={"Kullanıcılar"} />
             </Link>
 
             <Divider style={{ margin: 0 }} />
@@ -155,16 +169,8 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
             <Link href={`/admin/products`} passHref>
               <MenuItem title={"Ürünler"} />
             </Link>
-            {/* <Link href={`/Y/sorular`} passHref>
-              <MenuItem title={"Sorular"} />
-            </Link>
-            <Link href={`/Y/cevaplar`} passHref>
-              <MenuItem title={"Cevaplar"} />
-            </Link>
-            <Link href={`/Y/urunler`} passHref>
-              <MenuItem title={"Ürünler"} />
-            </Link>
-            <Link href={`/Y/yonlendirmeler`} passHref>
+
+            {/* <Link href={`/Y/yonlendirmeler`} passHref>
               <MenuItem title={"Yönlendirmeler"} />
             </Link> */}
 

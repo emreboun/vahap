@@ -1,3 +1,4 @@
+import { turkcetarih_formati } from "@/utils";
 import { formatDuration } from "@/utils/data";
 import {
   PendingRounded,
@@ -6,6 +7,7 @@ import {
 } from "@mui/icons-material";
 import { Box, Button, Tooltip } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
+import { use } from "react";
 
 export const statusColumnDef: GridColDef = {
   field: "status",
@@ -92,6 +94,40 @@ export const idColumnDef: GridColDef = {
   renderCell: () => <span />,
 };
 
+export const userColumns: GridColDef[] = [
+  {
+    field: "email",
+    headerName: "E-posta",
+    width: 280,
+    editable: true,
+  },
+  {
+    field: "firstName",
+    headerName: "Ad",
+    width: 200,
+    editable: true,
+  },
+  {
+    field: "lastName",
+    headerName: "Soyad",
+    width: 200,
+    editable: true,
+  },
+  {
+    field: "phone",
+    headerName: "Telefon",
+    width: 200,
+    editable: true,
+  },
+  {
+    field: "createdAt",
+    headerName: "Kayıt Tarihi",
+    width: 260,
+    type: "dateTime",
+    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
+  },
+];
+
 export const lectureColumns: GridColDef[] = [
   {
     field: "slug",
@@ -125,19 +161,36 @@ export const lectureColumns: GridColDef[] = [
     },
   },
   statusColumnDef,
-  idColumnDef,
+  //idColumnDef,
   {
     field: "name",
     headerName: "Başlık",
     width: 240,
-    //valueGetter: (e: LectureEntity) => e.title,
     editable: true,
   },
-  //{ field: "name", headerName: "Ad", width: 200, editable: true },
-  { field: "description", headerName: "Açıklama", width: 240, editable: true },
+  {
+    field: "description",
+    headerName: "Açıklama",
+    preProcessEditCellProps(params) {
+      return {
+        ...params.props,
+        multiline: true,
+        maxRows: 2,
+        onKeyDown: (e: any) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.stopPropagation(); // Prevent row submission
+            // e.preventDefault(); // Prevent line break
+          }
+        },
+      };
+    },
+    width: 240,
+    editable: true,
+  },
   {
     field: "introThumbnail",
     headerName: "Giriş Resmi",
+
     width: 200,
     editable: true,
   },
@@ -163,22 +216,32 @@ export const lectureColumns: GridColDef[] = [
     field: "duration",
     headerName: "Eğitim Süresi",
     width: 320,
-    editable: true,
     valueFormatter: (value) => formatDuration(value),
   },
+  {
+    field: "order",
+    headerName: "Sıra",
+    width: 100,
+    type: "number",
+    editable: true,
+  },
+  /* {
+    field: "mainPassword",
+    headerName: "Video Şifresi",
+    width: 240,
+    editable: true,
+  }, */
   //{ field: "price", headerName: "Fiyat", width: 160, editable: true },
   //{ field: "category_id", headerName: "Kat ID", width: 100 },
 
-  /* { field: "question_id", headerName: "Soru ID", width: 100 },
+  /* { field: "question_id", headerName: "Soru ID", width: 100 }, */
   {
-    field: "date_time",
+    field: "createdAt",
     headerName: "Oluşturulma Tarihi",
     width: 260,
     type: "dateTime",
-    //valueGetter: (value: any) => turkcetarih_formati("j F Y l", value),
     valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
-    //editable: false,
-  }, */
+  },
 ];
 
 const productColumns: GridColDef[] = [
@@ -214,7 +277,7 @@ const productColumns: GridColDef[] = [
     },
   },
   statusColumnDef,
-  idColumnDef,
+  //idColumnDef,
   {
     field: "name",
     headerName: "Başlık",
@@ -222,7 +285,13 @@ const productColumns: GridColDef[] = [
     //valueGetter: (e: LectureEntity) => e.title,
     editable: true,
   },
-  { field: "price", headerName: "Fiyat", width: 160, editable: true },
+  {
+    field: "price",
+    headerName: "Fiyat",
+    type: "number",
+    width: 160,
+    editable: true,
+  },
   {
     field: "imgUrl",
     headerName: "Resim Dizini",
@@ -234,4 +303,5 @@ const productColumns: GridColDef[] = [
 export const columnsDefinitions: { [key: string]: GridColDef[] } = {
   lectures: lectureColumns,
   products: productColumns,
+  users: userColumns,
 };

@@ -7,14 +7,16 @@ export async function middleware(req: NextRequest) {
   const token = getToken(req);
   const valid = token ? await isValidToken(token) : false;
   // Check if the request is for the admin path
-  if (pathname.startsWith("/admin") && !pathname.endsWith("/admin/giris")) {
+
+  if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/giris")) {
     // If there is no token or token is invalid, redirect to login
-    if (!token || !isValidToken(token)) {
+
+    if (!token || !valid || valid.role === "user") {
       const loginUrl = new URL("/admin/giris", req.url);
       return NextResponse.redirect(loginUrl);
     }
-  } else if (pathname.endsWith("/admin/giris")) {
-    if (valid) {
+  } else if (pathname.startsWith("/admin/login")) {
+    if (valid && valid.role !== "user") {
       const adminUrl = new URL("/admin", req.url);
       return NextResponse.redirect(adminUrl);
     }
@@ -37,7 +39,7 @@ const getToken = (req: NextRequest): string | undefined => {
 };
 
 // Validate the JWT token
-const isValidToken = async (token: string): Promise<boolean> => {
+const isValidToken = async (token: string): Promise<any> => {
   try {
     if (token.startsWith("Bearer ")) {
       token = token.slice("Bearer ".length);
@@ -48,7 +50,9 @@ const isValidToken = async (token: string): Promise<boolean> => {
       new TextEncoder().encode(jwtConfig.secret)
     );
 
-    return !!result.payload.userId;
+    //console.log(result);
+
+    return result.payload;
   } catch (err) {
     console.error("JWT verification error:", err);
     return false;

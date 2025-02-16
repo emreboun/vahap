@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { Button, Box, Typography, darken, Divider } from "@mui/material";
 import {
   CleaningServicesRounded,
@@ -9,6 +8,7 @@ import {
 import { Price } from "./price";
 import { useCart } from "./CartProvider";
 import { CartList } from "./list";
+import { purchaseItems } from "@/api/user/purchase";
 
 export const CartSidebar = () => {
   const { state, dispatch } = useCart();
@@ -18,13 +18,23 @@ export const CartSidebar = () => {
     dispatch({ type: "CLEAR_CART" });
   };
 
+  const handleApproveCart = async () => {
+    // Approve cart
+    const result = await purchaseItems(
+      state.items.map((item) => item.product.id)
+    );
+    if (result && result.count > 0) {
+      dispatch({ type: "CLEAR_CART" });
+    }
+  };
+
   return (
     <>
       <Box
         sx={{
           height: "100%",
           display: "flex",
-          flexDirection: /* sum === 0   ? "column-reverse" :*/ "column",
+          flexDirection: "column",
           bgcolor: "background.paper",
           minWidth: { xs: "380px", sm: "420px", md: "440px", lg: "460px" },
           borderTop: "1px solid",
@@ -147,6 +157,7 @@ export const CartSidebar = () => {
                   },
                 }}
                 disabled={state.sum === 0}
+                onClick={handleApproveCart}
               >
                 <ThumbUpAltOutlined />
                 <Typography

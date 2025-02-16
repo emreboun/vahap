@@ -1,5 +1,6 @@
 import { getAllLecturesAdmin } from "@/api/lectures";
 import { getAllProducts } from "@/api/products";
+import { getAllUsers } from "@/api/user/account";
 import { Grid } from "@/components/admin/grid";
 
 const TABLES = ["lectures", "products"];
@@ -20,6 +21,10 @@ export default async function TablePage({ params }: { params: any }) {
       break;
     case "products":
       data = await getAllProducts();
+      break;
+
+    case "users":
+      data = await getAllUsers();
       break;
     /*  case "cevaplar":
       data = await getAllCevaplar();

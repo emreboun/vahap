@@ -19,6 +19,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { logout } from "@/api/firebase";
 import { logoutApi } from "@/app/admin/giris/actions";
+//import { processPayment } from "@/api/izyco";
+import { tempFunction } from "@/api/izyco/temp";
+import { init } from "@/api/izyco/init";
 
 interface AccountMenuProps {
   children?: React.ReactNode;
@@ -36,6 +39,8 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
   };
 
   const handleLogout = async () => {
+    //const res = tempFunction();
+    //console.log(res);
     try {
       localStorage.clear();
       await logout();
@@ -45,6 +50,11 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
     } catch (e: unknown) {
       console.error(e);
     }
+  };
+
+  const temp = async () => {
+    init();
+    //await processPayment();
   };
 
   return (
@@ -59,7 +69,6 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
           },
           display: "flex",
           alignItems: "stretch",
-          //py: 0.4,
         }}
       >
         <Tooltip title={"Hesabım"}>
@@ -146,10 +155,9 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
                   borderRadius: 0,
                   margin: 0,
                   color: "text.secondary",
-                  //opacity: 0.8,
                   textDecoration: "none",
                   "&:hover": {
-                    color: "#fff", // "warning.main",
+                    color: "#fff",
                     bgcolor: "secondary.main",
                     fontWeight: 600,
                   },
@@ -161,12 +169,13 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           disableScrollLock
         >
-          <Link href={`/`} passHref>
-            <MenuItem
-              icon={<SettingsRounded sx={{ fontSize: 20 }} />}
-              title={"Ayarlar"}
-            />
-          </Link>
+          {/* <Link href={`/`} passHref> */}
+          <MenuItem
+            icon={<SettingsRounded sx={{ fontSize: 20 }} />}
+            title={"Ayarlar"}
+            onClick={temp}
+          />
+          {/* </Link> */}
 
           <Divider />
 

@@ -1,12 +1,38 @@
 import { getLectureBySlug } from "@/api/lectures";
+import { getUserPurchases } from "@/api/user/purchase";
 import { LectureMain } from "@/components/lecture";
 import { Box, Typography } from "@mui/material";
+import { cookies } from "next/headers";
 export const dynamic = "force-dynamic"; // Force dynamic rendering
 
-export default async function LecturePage({ params }: { params: any }) {
+type Params = Promise<{ slug: string }>;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default async function LecturePage({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
   const { slug } = await params;
+  const cookieStore = await cookies();
+  const userId = cookieStore.get("userid")?.value;
+  let purchases: string[] = [];
+  if (userId) {
+    purchases = (await getUserPurchases(userId)) ?? [];
+  }
+  //const { query } = await searchParams;
+  //console.log(query);
   //const lectureSlug = decodeURIComponent(slug);
   const lecture = await getLectureBySlug(slug);
+  const hasAccess = lecture && purchases?.some((p) => p === lecture.id);
+
+  const opts = {
+    auth: !!userId,
+    hasAccess,
+  };
+
   if (!lecture) {
     return (
       <Typography
@@ -21,23 +47,16 @@ export default async function LecturePage({ params }: { params: any }) {
           opacity: 0.95,
         }}
       >
-        Eğitim bulunamadı
+        {"Eğitim bulunamadı"}
       </Typography>
     );
   }
 
   return (
     <>
-      <Box
-        component='section'
-        className='responsive'
-        sx={{
-          whiteSpace: "break-spaces",
-          fontFamily: "Lexend, sans-serif",
-        }}
-      >
-        <LectureMain data={lecture} />
-      </Box>
+      <>
+        <LectureMain slug={slug} data={lecture} opts={opts} />
+      </>
     </>
   );
 }

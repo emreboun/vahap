@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
   Button,
   Typography,
@@ -11,10 +11,12 @@ import {
   Collapse,
 } from "@mui/material";
 import { validateEmail, validatePassword } from "@/utils/auth";
-import { signup } from "@/api/firebase";
-import { createUser } from "@/api/firebase/user";
+//import { signup } from "@/api/firebase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+//import { createUser } from "@/api/user";
+import { signup } from "@/api/user/auth";
+import { loginApi } from "@/app/admin/giris/actions";
 
 interface FormField {
   name: string;
@@ -133,34 +135,49 @@ const SignupFormClient = () => {
       if (error) hasError = true;
       newFormState[field.name].error = error;
     });
-
+    console.log(hasError);
     if (!hasError) {
       // Submit the form
       let signUpResult;
       try {
-        signUpResult = await signup(
-          formState.email.value,
-          formState.password.value
-        );
+        signUpResult = await signup({
+          email: formState.email.value,
+          password: formState.password.value,
+          phone: formState.phone.value,
+          firstName: formState.firstName.value,
+          lastName: formState.lastName.value,
+        });
       } catch (e: any) {
-        setError(e.message.includes("already-in-use"));
+        console.log(e);
+        setError(true);
+        //setError(e.message.includes("already-in-use"));
         return;
       }
+      if (!signUpResult) {
+        setError(true);
+        return;
+      } else {
+        await loginApi(signUpResult);
+        localStorage.setItem("user", JSON.stringify(signUpResult));
+        router.push("/");
 
-      let userSaved;
+        //router.push("/");
+      }
+
+      /* let userSaved;
       if (signUpResult) {
         userSaved = await createUser({
-          id: signUpResult.user.uid,
           firstName: formState.firstName.value,
           lastName: formState.lastName.value,
           email: formState.email.value,
           phone: formState.phone.value,
+          password: formState.password.value,
         });
       } //else {}
       if (userSaved) {
         router.push("/");
       } // else {}
-
+ */
       console.log(
         "Form Submitted",
         Object.fromEntries(
@@ -174,7 +191,7 @@ const SignupFormClient = () => {
 
   return (
     <>
-      <Typography component='h2' variant='h4'>
+      <Typography component='h2' variant='h4' sx={{ opacity: 0.94 }}>
         {"Üye Kayıt"}
       </Typography>
 

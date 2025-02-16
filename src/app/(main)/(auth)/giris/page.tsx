@@ -14,9 +14,10 @@ import {
   Alert,
 } from "@mui/material";
 import { validateEmail, validatePassword } from "@/utils/auth";
-import { login } from "@/api/firebase";
-import { getUser } from "@/api/firebase/user";
+//import { login, sendPasswordResetEmail_ } from "@/api/firebase";
+//import { getUser } from "@/api/firebase/user";
 import { loginApi } from "@/app/admin/giris/actions";
+import { login } from "@/api/user/auth";
 
 type ErrorType = "email" | "password" | "main" | "" | undefined;
 
@@ -66,7 +67,9 @@ const LoginPageClient = () => {
     );
   };
 
-  const handleForgotPassword = () => {};
+  const handleForgotPassword = async () => {
+    //await sendPasswordResetEmail_(form.email);
+  };
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -87,14 +90,19 @@ const LoginPageClient = () => {
     let loginResult;
     try {
       loginResult = await login(form.email, form.password);
-      await loginApi(loginResult.user.uid);
+      if (loginResult) {
+        await loginApi(loginResult.user);
+        localStorage.setItem("user", JSON.stringify(loginResult.user));
+
+        router.push("/");
+      }
     } catch (error: unknown) {
       console.error(error);
       setDisabled(true);
       return;
     }
 
-    let userResult;
+    /*  let userResult;
     if (loginResult) {
       try {
         userResult = await getUser(loginResult.user.uid);
@@ -109,7 +117,7 @@ const LoginPageClient = () => {
     if (userResult) {
       localStorage.setItem("user", JSON.stringify(userResult));
       router.push("/");
-    }
+    } */
   };
 
   /* const handleGoogleLogin = () => {
@@ -122,11 +130,7 @@ const LoginPageClient = () => {
 
   return (
     <>
-      <Typography
-        component={"h2"}
-        variant={"h4"}
-        //sx={{ color: "text.primary" }}
-      >
+      <Typography component={"h2"} variant={"h4"} sx={{ opacity: 0.94 }}>
         {"Üye Girişi"}
       </Typography>
 

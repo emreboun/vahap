@@ -3,6 +3,7 @@
 import {
   DataGrid,
   GridActionsCellItem,
+  GridCellEditStopReasons,
   GridColDef,
   GridEventListener,
   GridRowEditStopReasons,
@@ -21,7 +22,6 @@ import { GridProvider, useGridContext } from "./hooks";
 import {
   CancelRounded,
   DeleteOutline,
-  Description,
   EditRounded,
   SaveRounded,
 } from "@mui/icons-material";
@@ -29,6 +29,8 @@ import { DeleteForm } from "./form/delete";
 import { useParams } from "next/navigation";
 import { updateProduct } from "@/api/products";
 import { updateLecture } from "@/api/lectures";
+import { isKeyboardEvent } from "@mui/x-data-grid/utils/keyboardUtils";
+import { useEventListener } from "@/hooks/useEventListener";
 
 interface GridProps {
   type: string;
@@ -54,21 +56,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   const [deleteSelected, setDeleteSelected] = useState<GridRowId | null>(null);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
-  //const [modal, setModal] = useState(false);
-
   const { value, setValue } = useGridContext();
-  //console.log(value);
-  /* useEffect(() => {
-    setValue(data);
-  }, [data, setValue]); */
-
-  /* const handleModal = () => {
-    setModal((prev) => !prev);
-  }; */
-
-  /* const isEditable = (params: any) => {
-    return false;
-  }; */
 
   const handleEditClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
@@ -110,7 +98,9 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
 
   const processRowUpdate = async (newRow: GridRowModel) => {
     try {
+      console.log(newRow);
       const result = await handleSubmit(newRow);
+      console.log(result);
       if (!!result) {
         const updatedRow = { ...newRow, isNew: false };
 
@@ -125,42 +115,57 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   };
 
   const handleSubmit = async (value: any) => {
-    const {
-      id,
-      name,
-      description,
-      mainVideo,
-      mainThumbnail,
-      introVideo,
-      introThumbnail,
-      price,
-      status,
-    } = value;
-    const req: any = {
-      name,
-      description,
-      mainVideo,
-      mainThumbnail,
-      introVideo,
-      introThumbnail,
-      price,
-      status,
-    };
-    const existingItem = data.find((item) => item.id === id);
-    Object.keys(req).forEach((key) => {
-      if (req[key] === existingItem[key]) {
-        req[key] = undefined;
-      }
-    });
-
     try {
+      const {
+        id,
+        name,
+        description,
+        mainVideo,
+        mainThumbnail,
+        introVideo,
+        introThumbnail,
+        price,
+        status,
+        order,
+        //mainPassword,
+        imgUrl,
+      } = value;
       let result;
+      let req: any;
+      let existingItem: any;
       switch (table) {
         case "lectures":
+          req = {
+            name,
+            description,
+            mainVideo,
+            mainThumbnail,
+            introVideo,
+            introThumbnail,
+            price,
+            status,
+            order: Number(order),
+          };
+          existingItem = data.find((item) => item.id === id);
+          Object.keys(req).forEach((key) => {
+            if (req[key] === existingItem[key]) {
+              req[key] = undefined;
+            }
+          });
           result = await updateLecture(id, req);
-          console.log(result);
           break;
         case "products":
+          req = {
+            name,
+            price,
+            imgUrl,
+          };
+          existingItem = data.find((item) => item.id === id);
+          Object.keys(req).forEach((key) => {
+            if (req[key] === existingItem[key]) {
+              req[key] = undefined;
+            }
+          });
           result = await updateProduct(id, req);
           break;
       }
@@ -233,6 +238,23 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
 
   const resultColDef = [editFieldColDef, ...columnsDefinitions[type]];
 
+  useEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const isInEditMode = Object.values(rowModesModel).some(
+        (rowMode) => rowMode.mode === GridRowModes.Edit
+      );
+
+      if (isInEditMode) {
+        setRowModesModel({});
+      }
+    }
+    /* if (e.key === "Enter") {
+      console.log("Enter");
+      e.preventDefault();
+      return null;
+    } */
+  });
+
   return (
     <>
       <Paper
@@ -242,6 +264,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
           flexDirection: "column",
           position: "relative",
           boxShadow: 4,
+          //bgcolor: "primary.main",
         }}
       >
         <DataGrid
@@ -257,13 +280,6 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
             toolbar: () => <CustomToolbar data={data} />,
           }}
           slotProps={{
-            /* root: {
-              style: {
-                backgroundColor: "red",
-                height: "100%",
-                minHeight: "100%",
-              },
-            }, */
             toolbar: {
               style: {
                 display: "flex",
@@ -280,8 +296,16 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
           onProcessRowUpdateError={(e) => console.log(e)}
-          onRowDoubleClick={() => {}}
-          onCellDoubleClick={() => {}}
+          //onRowDoubleClick={() => {}}
+          //onCellDoubleClick={() => {}}
+          /* onCellEditStop={(params, event) => {
+            if (params.reason !== GridCellEditStopReasons.enterKeyDown) {
+              return;
+            }
+            if (isKeyboardEvent(event) && !event.ctrlKey && !event.metaKey) {
+              event.defaultPrevented = true;
+            }
+          }} */
           localeText={{
             toolbarColumns: "Sütunlar",
             columnsManagementSearchTitle: "Ara",
@@ -335,7 +359,6 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
               left: "50%",
               transform: "translate(-50%,-50%)",
               width: { xs: "100%", sm: "100%", md: "500px" },
-              //height: { xs: "100%", md: "auto" },
             }}
           >
             {!!deleteSelected && (

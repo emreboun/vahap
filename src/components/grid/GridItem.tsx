@@ -22,10 +22,10 @@ const GridItem: React.FC<GridItemProps> = ({
           sx={{
             display: "flex",
             flexDirection: "column",
-            borderTopLeftRadius: 6,
-            borderTopRightRadius: 6,
-            borderBottomLeftRadius: 4,
-            borderBottomRightRadius: 4,
+            borderTopLeftRadius: 4,
+            borderTopRightRadius: 4,
+            borderBottomLeftRadius: 2,
+            borderBottomRightRadius: 2,
             overflow: "hidden",
             transition: "all 0.2s ease-in-out",
             boxShadow: 3,
@@ -41,25 +41,28 @@ const GridItem: React.FC<GridItemProps> = ({
             },
             height: "100%",
           }}
+          elevation={0}
         >
           <Box
             sx={{
               flex: 0,
               display: "flex",
               alignItems: "flex-end",
-              bgcolor: "rgb(128,128,128,0.4)", //"secondary.main",
+              //bgcolor: "rgb(128,128,128,0.4)", //"secondary.main",
             }}
           >
-            <Image
-              src={imgUrl}
-              alt={`${title} Resim - Thumbnail`}
-              height={180}
-              width={320}
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
-            />
+            {imgUrl && (
+              <Image
+                src={imgUrl}
+                alt={`${title} Resim - Thumbnail`}
+                height={180}
+                width={320}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
+              />
+            )}
           </Box>
 
           <Box

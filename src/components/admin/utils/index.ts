@@ -45,11 +45,11 @@ export const generateUrlSlug = (text: string) => {
 };
 
 export const formatText = (text: string) => {
-  let formatted = text.trim();
+  const formatted = text.trim();
 
-  formatted = formatted.replace(/\s+/g, " ");
-  formatted = formatted.replace(/\n+/g, "\n");
-
+  //formatted = formatted.replace(/\s+/g, " ");
+  //formatted = formatted.replace(/\n+/g, "\n");
+  console.log(formatted);
   return formatted;
 };
 

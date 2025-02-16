@@ -2,7 +2,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 //import { prisma } from "./init";
 
 export default class CrudRepository<
-  T extends { id: string },
+  T, //extends { id: string },
   //U, //extends keyof Prisma.PrismaDelegate
 > {
   private prisma: any; // PrismaClient;
@@ -166,10 +166,17 @@ export default class CrudRepository<
     });
   }
 
-  async findAll(where?: any): Promise<T[]> {
+  async findAll(where?: any, include?: any): Promise<T[]> {
     //const skip = (page - 1) * pageSize;
 
-    return this.prisma[this.model].findMany({ where });
+    return this.prisma[this.model].findMany({
+      where,
+      include: !!include
+        ? include === true
+          ? this.getIncludes()
+          : include
+        : undefined,
+    });
   }
 
   async update(

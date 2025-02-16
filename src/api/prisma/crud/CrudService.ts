@@ -1,7 +1,7 @@
 import CrudRepository from "./CrudRepository";
 
 export default class CrudService<
-  T extends { id: string },
+  T, // extends { id: string },
   //U, // extends keyof Prisma.PrismaDelegate
 > {
   private repository: CrudRepository<T>;
@@ -17,7 +17,8 @@ export default class CrudService<
   async create(
     data: any //Omit<Omit<Omit<T, "id">, "createdAt">, "updatedAt">
   ) {
-    return this.repository.create(data);
+    //console.log(data);
+    return this.getRepo().create(data);
   }
 
   async createMany(
@@ -50,8 +51,8 @@ export default class CrudService<
     return this.repository.findMany(filters, include, sort, page, pageSize);
   }
 
-  async findAll(select?: any) {
-    return this.repository.findAll(select);
+  async findAll(select?: any, include?: any) {
+    return this.repository.findAll(select, include);
   }
 
   async count(where?: any) {

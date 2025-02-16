@@ -31,9 +31,9 @@ export const AppBar: React.FC<AppBarProps> = async ({}) => {
             zIndex: 4,
           }}
         >
-          <Box sx={{ zIndex: 2 }}>
+          <>
             <AppLogo />
-          </Box>
+          </>
 
           <Box
             sx={{ flex: 1, display: { xs: "none", md: "block" }, zIndex: 2 }}

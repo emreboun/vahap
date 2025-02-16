@@ -16,11 +16,11 @@ export default function RootLayout({
 
         <Box
           sx={{
-            boxShadow: "1px 1px rgb(128,128,128,0.5)",
+            //boxShadow: "1px 1px rgb(128,128,128,0.5)",
             position: "relative",
             zIndex: 1,
             mt: { xs: "64px", md: "100px" },
-            py: { xs: 4, sm: 8 },
+            py: { xs: 2, sm: 4, md: 8 },
           }}
           className={styles.layout}
           component={"main"}

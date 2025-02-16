@@ -14,15 +14,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          String      @id @default(uuid()) @db.Uuid
+model Account {
+  id          String      @id @db.Uuid @default(uuid()) 
+  
   email       String      @unique
+  phone       String?      
+  firstName   String      @map("first_name")
+  lastName    String      @map("last_name")
   password    String      
-  purchases   Purchase[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  role        String      @default("user")
 
-  @@map("users")
+  purchases   Purchase[]
+
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt      @map("updated_at")
+
+  @@map("user_accounts")
 }
 
 model Lecture {
@@ -32,11 +39,13 @@ model Lecture {
   description String    @default("")
   status      Boolean   @default(true)
   
-  introVideo  String?    @map("intro_video")
-  mainVideo   String    @map("main_video")
-  introThumbnail String? @map("intro_thumbnail")
-  mainThumbnail String  @map("main_thumbnail")
-  duration    Int?       // Duration in seconds
+  introVideo        String?   @map("intro_video")
+  mainVideo         String    @map("main_video")
+  introThumbnail    String?   @map("intro_thumbnail")
+  mainThumbnail     String    @map("main_thumbnail")
+  mainPassword      String?   @map("main_password")
+  duration          Int?       // Duration in seconds
+  order             Int        @default(0)   // Determines the order of lectures
 
   createdAt   DateTime  @default(now())  @map("created_at")
   updatedAt   DateTime  @updatedAt  @map("updated_at")
@@ -84,14 +93,16 @@ model ProductLecture {
 }
 
 model Purchase {
-  id         String    @id @default(uuid()) @db.Uuid
+  //id         String    @id @default(uuid()) @db.Uuid
   userId     String    @db.Uuid @map("user_id")
   productId  String    @db.Uuid @map("product_id")
   purchasedAt DateTime @default(now()) @map("purchased_at")
 
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       Account     @relation(fields: [userId], references: [id], onDelete: Cascade)
   product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
+  @@id([userId, productId])
   @@map("purchases")
+  
 }
 

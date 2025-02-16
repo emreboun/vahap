@@ -4,22 +4,40 @@ import { SignJWT } from "jose";
 import { jwtConfig } from "@/config";
 import { NextResponse } from "next/server";
 
-export const loginApi = async (userId: string) => {
+/* export const loginApi = async (userId: string) => {
   const token = await generateToken({ userId }, jwtConfig.secret, "1y");
   const cookieStore = await cookies();
+  console.log(token);
   cookieStore.set("token", token);
+  return true;
+}; */
+
+export const loginApi = async (user: any) => {
+  const { id, password, role = "user" } = user;
+  const token = await generateToken(
+    { id, password, role },
+    jwtConfig.secret,
+    "1y"
+  );
+
+  const cookieStore = await cookies();
+  cookieStore.set("token", token);
+  cookieStore.set("userid", id);
   return true;
 };
 
 export const logoutApi = async () => {
   const cookieStore = await cookies();
   cookieStore.delete("token");
+  cookieStore.delete("userid");
+
   return true;
 };
 
 interface TokenPayload {
-  userId: string;
-  email?: string;
+  id: string;
+  password: string;
+  role: "gm" | "user";
 }
 
 export const generateToken = async (

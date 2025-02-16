@@ -111,7 +111,7 @@ export const CartList = () => {
                       <IconButton
                         sx={{
                           p: 0,
-                          mr: 2,
+                          mr: { xs: 4, sm: 4, md: 4, lg: 3, xl: 2 },
                           mb: { xs: 0.2, sm: 0.4, md: 0.6 },
                           border: "0.5px solid rgb(51,90,32, 0.3)",
                           height: "38px",

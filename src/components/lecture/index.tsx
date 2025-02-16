@@ -1,65 +1,108 @@
 import { Paper, Box, Divider, Typography } from "@mui/material";
 
-import VimeoVideo from "./VimeoVideo";
 import AddToCartButton from "./AddToCartButton";
-//import { Lecture } from "@prisma/client";
+import { VimeoVideoPlayer } from "./video/VimeoVideoPlayer";
+//import { Suspense } from "react";
+import { LectureMenu } from "./menu";
 
 export interface LectureMainProps {
+  slug: string;
   data: any; //Lecture;
+  opts?: any;
 }
-export const LectureMain: React.FC<LectureMainProps> = ({ data }) => {
-  const {
-    name,
-    mainVideo = "https://vimeo.com/1054640893/75cd40a8e1?share=copy",
-  } = data;
-  const auth = true;
-  const hasAccess = false;
+export const LectureMain: React.FC<LectureMainProps> = ({
+  slug,
+  data,
+  opts,
+}) => {
+  const { name, introVideo, mainVideo } = data;
+  const { hasAccess } = opts;
 
   return (
     <>
-      <Paper sx={{ px: 2, pt: 0, pb: 3, boxShadow: 2 }} elevation={0}>
+      <Paper
+        component='section'
+        className='responsiveSmall'
+        sx={{
+          pt: 0,
+          pb: 3,
+          boxShadow: 1,
+          borderRadius: { xs: 0, sm: 0.6 },
+          borderLeft: { xs: 0, sm: "1px solid #e0e0e0" },
+          borderRight: { xs: 0, sm: "1px solid #e0e0e0" },
+          borderTop: "1px solid #e0e0e0",
+          borderBottom: "1px solid #e0e0e0",
+        }}
+        elevation={0}
+      >
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            pt: 0.5,
-            pr: 1,
-            px: { xs: 1, md: 2 },
+            flexDirection: "column",
+            px: { xs: 2, sm: 3, md: 4, lg: 5 },
           }}
         >
-          <Typography
-            component='h1'
+          <Box
             sx={{
-              fontFamily: "Lexend, sans-serif",
-              fontSize: { xs: 17, sm: 20, md: 22 },
-              fontWeight: 600,
-              letterSpacing: { xs: -0.3, sm: -0.1, md: 0 },
-              pl: { xs: 0, md: 1 },
-              py: 2.5,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              pt: 0.5,
+              pr: 1,
+              px: { xs: 1, md: 2 },
             }}
           >
-            {name}
-          </Typography>
+            <Typography
+              component='h1'
+              sx={{
+                fontFamily: "Lexend, sans-serif",
+                fontSize: { xs: 17, sm: 20, md: 22 },
+                fontWeight: 600,
+                letterSpacing: { xs: -0.3, sm: -0.1, md: 0 },
+                pl: { xs: 0, md: 1 },
+                py: 2.5,
+              }}
+            >
+              {name}
+            </Typography>
 
-          {!hasAccess && <AddToCartButton data={data} />}
-        </Box>
+            {!hasAccess && <AddToCartButton data={data} />}
+          </Box>
 
-        <Divider />
+          <Divider sx={{ display: { xs: "none", sm: "block" } }} />
 
-        <Box sx={{ pt: { xs: 1, md: 1.6, xl: 2 } }}>
-          <VimeoVideo src={mainVideo} />
-        </Box>
+          <Box sx={{ pt: { xs: 0, sm: 1, md: 1.6, xl: 2 } }}>
+            <>
+              <VimeoVideoPlayer
+                src={{
+                  intro: introVideo,
+                  main: mainVideo,
+                }}
+                slug={slug}
+              />
+            </>
+            {/* <VimeoVideo src={{ intro: introVideo, main: mainVideo }} /> */}
+          </Box>
 
-        <Box sx={{ px: { xs: 1.5, md: 2 } }}>
-          <Typography
+          <Box
             sx={{
-              whiteSpace: "break-spaces",
-              fontFamily: "Lexend, sans-serif",
+              px: { xs: 1.5, md: 2 },
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            {data.description}
-          </Typography>
+            <LectureMenu slug={slug} data={data} />
+            <Typography
+              sx={{
+                whiteSpace: "break-spaces",
+                fontFamily: "Lexend, sans-serif",
+                textAlign: { xs: "justify", sm: "justify", md: "left" },
+              }}
+            >
+              {data.description}
+            </Typography>
+          </Box>
         </Box>
       </Paper>
     </>

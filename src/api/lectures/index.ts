@@ -8,7 +8,9 @@ const lectureRepository = new CrudRepository<Lecture>(prisma, "lecture");
 const lectureService = new CrudService<Lecture>(lectureRepository);
 
 export const getAllLectures = async () => {
-  return await lectureService.findAll({ status: true });
+  return await lectureService.findMany({ status: true }, false, {
+    order: "desc",
+  });
 };
 
 export const getAllLecturesAdmin = async () => {

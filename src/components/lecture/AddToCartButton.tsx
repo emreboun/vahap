@@ -8,7 +8,7 @@ import { useCart } from "../cart/CartProvider";
 import { LectureMainProps } from ".";
 import { useSidebar } from "../app-bar/sidebars/SidebarProvider";
 
-const AddToCartButton: React.FC<LectureMainProps> = ({ data }) => {
+const AddToCartButton: React.FC<any> = ({ data }) => {
   const { dispatch, state } = useCart();
   const { onSidebar } = useSidebar();
 
@@ -51,7 +51,7 @@ const AddToCartButton: React.FC<LectureMainProps> = ({ data }) => {
         onClick={onCart}
       >
         {!disabled ? (
-          <AddShoppingCartRounded />
+          <AddShoppingCartRounded sx={{ fontSize: { xs: 24 } }} />
         ) : (
           <ShoppingCartCheckoutRounded />
         )}

@@ -29,14 +29,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         sx={{
           zIndex: "modal",
           transition: "top 0.2s ease-in-out",
-          top: direction === "up" ? { xs: 65, md: 101 } : 0,
+          top: {
+            xs: direction === "up" || scrollY < 64 ? 64 : 0,
+            md: direction === "up" || scrollY < 100 ? 100 : 0,
+          },
           "& .MuiBackdrop-root": {},
         }}
         slotProps={{
           backdrop: {
             sx: {
               transition: "all 0.2s ease-in-out 0.2s",
-              top: direction === "up" ? { xs: 65, md: 101 } : 0,
+              top: direction === "up" ? { xs: 64, md: 100 } : 0,
               background:
                 "radial-gradient(circle at 10% 130%, RGB(0, 0, 0, 0.22), transparent)",
             },
@@ -48,10 +51,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
           container={ref.current}
           direction={"left"}
           in={enabled}
-          timeout={{ enter: 400, exit: 320 }} // ADD: multiplier if prev === null
+          timeout={{ enter: 320, exit: 240 }}
           easing={{ enter: "ease-in-out", exit: "ease-out" }}
-          //mountOnEnter
-          //unmountOnExit
+          mountOnEnter
+          unmountOnExit
         >
           <Box
             sx={{

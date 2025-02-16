@@ -2,16 +2,18 @@
 //import useElementSize from "@/hooks/size/useElementSize";
 import useWindowSize from "@/hooks/size/useWindowSize";
 import { Box } from "@mui/material";
-//import Vimeo from "@u-wave/react-vimeo";
-import { useRef } from "react";
-import dynamic from "next/dynamic";
+import Vimeo from "@u-wave/react-vimeo";
+//import dynamic from "next/dynamic";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { PHASE_ORDER } from "./constants";
+import { useRef, useState } from "react";
 
 const SCREEN_RATIO = 562.5 / 1000;
 
-const Vimeo = dynamic(() => import("@u-wave/react-vimeo"), { ssr: false });
+//const Vimeo = dynamic(() => import("@u-wave/react-vimeo"), { ssr: false });
 
 interface VimeoVideoProps {
-  src: string;
+  src: { intro: string; main: string };
 }
 
 const VimeoVideo: React.FC<VimeoVideoProps> = ({ src }) => {
@@ -38,6 +40,27 @@ const VimeoVideo: React.FC<VimeoVideoProps> = ({ src }) => {
   const selectVideo = (index) => {
     this.setState({ videoIndex: index });
   }; */
+  const router = useRouter();
+  const { slug } = useParams();
+  const searchParams = useSearchParams();
+  const phase = searchParams.get("phase") || "intro"; // Default to intro
+
+  const [videoUrls, setVideoUrls] = useState<{ intro: string; main: string }>(
+    src
+  );
+
+  const onNextPhase = () => {
+    const currentIndex = PHASE_ORDER.indexOf(phase);
+    if (currentIndex < PHASE_ORDER.length - 1) {
+      const nextPhase = PHASE_ORDER[currentIndex + 1];
+      router.push(`/egitimler/${slug}/?phase=${nextPhase}`);
+      /*  setTimeout(
+        () => router.push(`/egitimler/${slug}/?phase=${nextPhase}`),
+        500
+      ); */
+    }
+  };
+
   const ref = useRef<React.ReactElement>(null);
   //const { width, height } = useElementSize(ref);
 
@@ -55,7 +78,7 @@ const VimeoVideo: React.FC<VimeoVideoProps> = ({ src }) => {
   return (
     <>
       <Box
-        ref={ref}
+        //ref={ref}
         sx={{
           display: "flex",
           alignItems: "flex-start",
@@ -66,11 +89,15 @@ const VimeoVideo: React.FC<VimeoVideoProps> = ({ src }) => {
         }}
       >
         <Vimeo
-          video={src}
-          //autoplay
+          video={src[phase as keyof typeof src]}
+          autoplay
           width={getWidth()}
           height={getWidth() * SCREEN_RATIO} //height={getHeight()}
           style={{}}
+          onEnd={onNextPhase} //(e) => console.log(e)
+          onPlay={(e) => console.log(e)}
+          dnt={true}
+          onTimeUpdate={(e) => console.log(e)}
         />
       </Box>
     </>

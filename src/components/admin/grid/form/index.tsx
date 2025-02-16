@@ -97,7 +97,6 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
       setLoading(false);
     }
   };
-
   const [slugLoading, setSlugLoading] = useState(false);
   const [slugError, setSlugError] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -338,7 +337,7 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
             defaultValue={""}
             multiline
             minRows={2}
-            maxRows={16}
+            maxRows={6}
             error={errors.includes("introThumbnail")}
             onChange={handleChange}
           />

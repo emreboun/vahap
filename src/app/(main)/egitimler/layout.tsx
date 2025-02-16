@@ -7,7 +7,7 @@ export default async function LecturesLayout({
 }>) {
   return (
     <Box
-      className='responsive'
+      //className='responsive'
       sx={{
         // py: { xs: 2, sm: 8, md: 12 },
         whiteSpace: "break-spaces",
