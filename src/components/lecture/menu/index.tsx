@@ -49,7 +49,7 @@ export const LectureMenu: React.FC<any> = ({ slug, data }) => {
             sx={{
               alignSelf: "stretch",
               px: 1.6,
-              bgcolor: "secondary.main",
+              bgcolor: "primary.main", // "secondary.main",
               borderRadius: 1,
               boxShadow: 2,
               //display: "flex",
@@ -94,6 +94,7 @@ export const LectureMenu: React.FC<any> = ({ slug, data }) => {
                 gap: 1,
                 boxShadow: 2,
                 px: { xs: 1.5, sm: 2 },
+                bgcolor: "#fff",
               }}
             >
               {phase !== "intro" ? (

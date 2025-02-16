@@ -12,10 +12,10 @@ export const darkTheme = {
     palette: {
       mode: "dark",
       primary: {
-        main: "#375D62",
+        main: "#22333F", //"#375D62",
       },
       secondary: {
-        main: "#D3B26B",
+        main: "#B18F65", //"#D3B26B",
       },
       text: {
         secondary: "rgba(255, 255, 255, 0.85)",
@@ -106,13 +106,13 @@ export const lightTheme = {
   ...createTheme({
     palette: {
       primary: {
-        main: "#375D62",
+        main: "#22323F", //"#375D62",
       },
       secondary: {
-        main: "#D3B26B",
+        main: "#D3B26B", // "#B18F65"
       },
       text: {
-        primary: "rgba(0,0,0,0.9)",
+        primary: "#22323F", //"rgba(0,0,0,0.9)",
         secondary: "rgba(0, 0, 0, 0.7)",
       },
       success: {

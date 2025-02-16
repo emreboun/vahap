@@ -32,6 +32,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
           borderRight: { xs: 0, sm: "1px solid #e0e0e0" },
           borderTop: "1px solid #e0e0e0",
           borderBottom: "1px solid #e0e0e0",
+          bgcolor: "secondary.main", // "background.paper",
         }}
         elevation={0}
       >

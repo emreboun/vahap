@@ -40,14 +40,14 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
           textTransform: "none",
           transition: "all 0.24s ease-in-out",
           border: "1px solid",
-          borderColor: "primary.main",
+          borderColor: "primary.main", // "secondary.main",
           "&:hover": {
             boxShadow: 8,
-            color: "primary.main",
+            color: "primary.main", //"secondary.main",
             bgcolor: "#fff",
           },
-          //transform: "scale(0.97)",
         }}
+        //color={"secondary"}
         onClick={onCart}
       >
         {!disabled ? (

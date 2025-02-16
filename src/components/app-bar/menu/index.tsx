@@ -80,10 +80,10 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
               ml: 0.4,
               "&:hover": {
                 "& .MuiSvgIcon-root": {
-                  color: "secondary.main",
+                  color: "primary.main", //"secondary.main",
                 },
                 "& .MuiBox-root": {
-                  bgcolor: "primary.main",
+                  bgcolor: "secondary.main", //"primary.main",
                   borderRadius: "50%",
                 },
               },
@@ -107,7 +107,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
             <AccountCircle
               sx={{
                 fontSize: { xs: 34 },
-                color: "primary.main",
+                color: "secondary.main", // "primary.main",
                 position: "relative",
                 zIndex: 1,
               }}
