@@ -98,9 +98,9 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
 
   const processRowUpdate = async (newRow: GridRowModel) => {
     try {
-      console.log(newRow);
+      //console.log(newRow);
       const result = await handleSubmit(newRow);
-      console.log(result);
+      //console.log(result);
       if (!!result) {
         const updatedRow = { ...newRow, isNew: false };
 

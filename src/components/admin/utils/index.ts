@@ -45,6 +45,7 @@ export const generateUrlSlug = (text: string) => {
 };
 
 export const formatText = (text: string) => {
+  if (!text) return "";
   const formatted = text.trim();
 
   //formatted = formatted.replace(/\s+/g, " ");

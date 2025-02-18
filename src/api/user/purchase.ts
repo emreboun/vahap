@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 export const purchaseItems = async (productIds: string[]) => {
   try {
+    //console.log(productIds);
     const cookieStore = await cookies();
     const userId = cookieStore.get("userid")?.value;
     if (!userId) {

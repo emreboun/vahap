@@ -8,9 +8,13 @@ const lectureRepository = new CrudRepository<Lecture>(prisma, "lecture");
 const lectureService = new CrudService<Lecture>(lectureRepository);
 
 export const getAllLectures = async () => {
-  return await lectureService.findMany({ status: true }, false, {
-    order: "desc",
-  });
+  return await lectureService.findMany(
+    { status: true },
+    { files: true },
+    {
+      order: "desc",
+    }
+  );
 };
 
 export const getAllLecturesAdmin = async () => {
@@ -27,8 +31,7 @@ export const createLecture = async (
       description,
       mainVideo,
       introVideo,
-      introThumbnail,
-      mainThumbnail,
+      thumbnail,
       duration,
       price,
     } = data;
@@ -39,15 +42,14 @@ export const createLecture = async (
       description,
       mainVideo,
       introVideo,
-      introThumbnail,
-      mainThumbnail,
+      thumbnail,
       duration: Number(duration),
       mainProduct: {
         slug,
         name,
         description,
         price: Number(price),
-        imgUrl: mainThumbnail,
+        imgUrl: thumbnail,
       },
     });
 

@@ -19,6 +19,7 @@ export const CartSidebar = () => {
   };
 
   const handleApproveCart = async () => {
+    //console.log(state.items);
     // Approve cart
     const result = await purchaseItems(
       state.items.map((item) => item.product.id)

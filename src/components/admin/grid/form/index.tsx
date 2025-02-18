@@ -1,15 +1,22 @@
 import {
   Box,
   Button,
+  ButtonBase,
   CircularProgress,
   FormControl,
+  FormHelperText,
   IconButton,
   Paper,
   TextField,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useGridContext } from "../hooks";
-import { Replay5Rounded } from "@mui/icons-material";
+import {
+  Replay5Rounded,
+  AddPhotoAlternateOutlined as ImageIcon,
+} from "@mui/icons-material";
 //import { useDebounceWithTimeout } from "@/hooks/debounce";
 import {
   formatText,
@@ -20,6 +27,8 @@ import {
 import { createLecture, getLectureSlugPrefix } from "@/api/lectures";
 import { createProduct } from "@/api/products";
 import { useDebounceWithTimeout } from "@/hooks/debounce";
+import { useFileUpload } from "@/components/image/hooks";
+import { PhotoList } from "@/components/image/photos";
 
 interface FormProps {
   onClose: () => void;
@@ -50,9 +59,9 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
       slug,
       name,
       introVideo,
-      introThumbnail,
+      //introThumbnail,
       mainVideo,
-      mainThumbnail,
+      //mainThumbnail,
       price,
       duration,
       description,
@@ -63,10 +72,10 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
       if (!slug) list.push("slug");
       if (!name) list.push("name");
       if (!mainVideo) list.push("mainVideo");
-      if (!mainThumbnail) list.push("mainThumbnail");
+      //if (!mainThumbnail) list.push("mainThumbnail");
       if (!price || Number(price) <= 0) list.push("price");
       if (!duration || Number(duration) <= 0) list.push("duration");
-
+      if (selectedFiles.length === 0) list.push("image");
       if (list.length > 0 || slugError) {
         setErrors(list);
         return;
@@ -78,18 +87,26 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
         slug: formatUrl(slug),
         name: formatText(name),
         introVideo: formatUrl(introVideo),
-        introThumbnail: formatUrl(introThumbnail),
+        //introThumbnail: formatUrl(introThumbnail),
         mainVideo: formatUrl(mainVideo),
-        mainThumbnail: formatUrl(mainThumbnail),
+        thumbnail: "",
         price: Number(price),
-        duration: Number(duration),
+        duration: Number(duration) * 60,
         description: formatText(description),
       };
       console.log(temp);
+      //console.log(temp);
       const result = await createLecture({ ...temp });
-
+      //console.log(selectedFiles);
+      let imageResult;
+      if (selectedFiles.length > 0 && !!result) {
+        imageResult = await uploadFiles(result.id);
+      } else {
+        imageResult = true;
+      }
+      //console.log(imageResult);
       setLoading(false);
-      if (!!result) {
+      if (!!result && !!imageResult) {
         setValue((prev) => [...prev, result]);
         onClose();
       }
@@ -99,7 +116,7 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
   };
   const [slugLoading, setSlugLoading] = useState(false);
   const [slugError, setSlugError] = useState(false);
-  const [edit, setEdit] = useState(false);
+  //const [edit, setEdit] = useState(false);
 
   const checkSlugUnique = useCallback(async (value: string) => {
     setSlugLoading(true);
@@ -129,6 +146,15 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
       setForm((prev: Record<string, unknown>) => ({ ...prev, slug }));
     }
     setSlugLoading(false);
+  };
+
+  const { selectedFiles, uploadStatus, handleFileChange, uploadFiles } =
+    useFileUpload();
+
+  const handleImage = (event?: React.ChangeEvent<HTMLInputElement>) => {
+    //setErrors((prev) => ({ ...prev, images: "" }));
+    handleFileChange(event);
+    setErrors((prev) => prev.filter((p) => p !== "image"));
   };
 
   /* const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -281,37 +307,135 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
             </div>
           </div>
 
-          <TextField
+          {/* <TextField
             label='Önsöz Resim Dizini'
             name='introThumbnail'
             defaultValue={""}
             error={errors.includes("introThumbnail")}
             onChange={handleChange}
-          />
+          /> */}
 
           <TextField
-            label='Önsöz Video Dizini'
+            label='Giriş Videosu Url Dizini'
             name='introVideo'
             defaultValue={""}
             error={errors.includes("introVideo")}
             onChange={handleChange}
           />
 
-          <TextField
+          {/* <TextField
             label='Video Resim Dizini'
             name='mainThumbnail'
             defaultValue={""}
             error={errors.includes("mainThumbnail")}
             onChange={handleChange}
-          />
+          /> */}
 
           <TextField
-            label='Eğitim Videosu Dizini'
+            label='Eğitim Videosu Url Dizini'
             name='mainVideo'
             defaultValue={""}
             error={errors.includes("mainVideo")}
             onChange={handleChange}
           />
+
+          <Box
+            sx={{
+              position: "relative",
+              //flex: 1,
+              //minHeight: 60,
+              width: "100%",
+              mb: 0.2,
+            }}
+          >
+            <Box
+              //style={{ height: 100, width: 100 }}
+              sx={{
+                //height: "100%",
+                width: "100%",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid",
+                borderColor: errors.includes("image")
+                  ? "error.main"
+                  : "divider",
+                bgcolor: "background.paper",
+                minHeight: 54,
+                px: 1.6,
+              }}
+            >
+              <Typography sx={{}}>
+                {selectedFiles.length > 0
+                  ? selectedFiles[0].file.name
+                  : "Thumbnail"}
+              </Typography>
+
+              <input
+                className='input-hidden'
+                id='input-base'
+                type={"file"}
+                name={"image"}
+                onChange={handleImage}
+                hidden
+              />
+
+              <Tooltip
+                title={
+                  selectedFiles.length > 0
+                    ? "Fotoğrafı Değiştir"
+                    : "Fotoğraf Ekle"
+                }
+              >
+                <ButtonBase
+                  component='label'
+                  htmlFor='input-base'
+                  sx={{
+                    color: "text.secondary",
+                    "&:hover": {
+                      color: "primary.main",
+                    },
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    pr: 1.5,
+
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <ImageIcon sx={{ fontSize: 32 }} />
+                </ButtonBase>
+              </Tooltip>
+            </Box>
+          </Box>
+
+          {/*  <Box
+            sx={{
+              height:
+                !selectedFiles || selectedFiles.length === 0 ? 0 : "129px",
+              transition: "all 0.15s ease-in-out",
+              overflow:
+                !selectedFiles || selectedFiles.length === 0
+                  ? "hidden"
+                  : "visible",
+              position: "relative",
+              mt: !selectedFiles || selectedFiles.length === 0 ? 0 : 2,
+            }}
+          >
+            <FormHelperText
+              sx={{
+                color: "error.main",
+              }}
+            >
+              {errors.images}
+            </FormHelperText>
+          </Box> */}
 
           <TextField
             label='Ücret'
@@ -323,7 +447,7 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
           />
 
           <TextField
-            label='Süre'
+            label='Süre (dk)'
             name='duration'
             type='number'
             defaultValue={0}

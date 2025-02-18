@@ -60,6 +60,7 @@ export const CartList = () => {
                 >
                   {item.product.imgUrl ? (
                     <Image
+                      //src={item.product.imgUrl}
                       src={item.product.imgUrl}
                       alt=''
                       width={160}

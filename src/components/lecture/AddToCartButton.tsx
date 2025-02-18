@@ -5,7 +5,6 @@ import {
 } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 import { useCart } from "../cart/CartProvider";
-import { LectureMainProps } from ".";
 import { useSidebar } from "../app-bar/sidebars/SidebarProvider";
 
 const AddToCartButton: React.FC<any> = ({ data }) => {
@@ -15,11 +14,17 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
   const disabled = state.items.some(
     (item) => item.product.id === data.mainProduct.id
   );
+
   const onCart = () => {
     if (!disabled) {
       dispatch({
         type: "ADD_ITEM",
-        payload: { ...data.mainProduct, duration: data.duration },
+        payload: {
+          ...data.mainProduct,
+          duration: data.duration,
+          imgUrl:
+            data.files.length > 0 ? data.files[0].path : `/thumbnail_main.jpg`,
+        },
       });
     } else {
       onSidebar("cart");

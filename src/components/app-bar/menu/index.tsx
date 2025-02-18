@@ -21,7 +21,7 @@ import { logout } from "@/api/firebase";
 import { logoutApi } from "@/app/admin/giris/actions";
 //import { processPayment } from "@/api/izyco";
 import { tempFunction } from "@/api/izyco/temp";
-import { init } from "@/api/izyco/init";
+//import { init } from "@/api/izyco/init";
 
 interface AccountMenuProps {
   children?: React.ReactNode;
@@ -53,7 +53,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
   };
 
   const temp = async () => {
-    init();
+    //init();
     //await processPayment();
   };
 

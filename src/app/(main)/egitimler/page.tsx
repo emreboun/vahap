@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 export const dynamic = "force-dynamic"; // Force dynamic rendering
 
 export default async function LecturesPage() {
-  const lectures = await getAllLectures();
+  const lectures: any[] = await getAllLectures();
 
   return (
     <Box className='responsive'>

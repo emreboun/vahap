@@ -64,11 +64,11 @@ export const VimeoVideo: React.FC<any> = ({ slug, videoId, phase }) => {
           onLoaded={(e) => setLoaded(true)}
           onError={onError}
           //onPlay={(e) => console.log(e)}
-          dnt={true}
+          //dnt={true}
           loop={false}
-          color={"#375D62"}
+          //color={"#375D62"}
           showPortrait={false}
-          controls={true}
+          //controls={true}
           //showByline={false}
           //volume={0}
         />

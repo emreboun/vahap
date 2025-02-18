@@ -10,7 +10,7 @@ export default function Home() {
         sx={{
           //py: { xs: 2, sm: 8, md: 12 },
           whiteSpace: "break-spaces",
-          fontFamily: "Lexend, sans-serif",
+          fontFamily: "Montserrat, Lexend, sans-serif",
         }}
       >
         <Paper sx={{ px: 4, py: 3, boxShadow: 2 }} elevation={0}>

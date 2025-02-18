@@ -12,7 +12,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useCallback } from "react";
 import { formatDuration } from "@/utils/data";
 
-export const LectureMenu: React.FC<any> = ({ slug, data }) => {
+export const LectureMenu: React.FC<any> = ({ slug, data, hasAccess }) => {
   const searchParams = useSearchParams();
   const phase = searchParams.get("phase") || "intro";
 
@@ -41,8 +41,9 @@ export const LectureMenu: React.FC<any> = ({ slug, data }) => {
         <Box
           sx={{
             display: "flex",
+            //flexDirection: phase === "intro" ? "row" : "row-reverse",
             alignItems: "center",
-            //justifyContent: "space-between",
+            justifyContent: "space-between",
           }}
         >
           <Box
@@ -57,15 +58,14 @@ export const LectureMenu: React.FC<any> = ({ slug, data }) => {
               gap: 1,
               opacity: phase === "intro" ? 1 : 0,
               display: phase === "intro" ? "flex" : "none",
-              transition:
-                "opacity 0.2s ease-in-out, display 0.2s ease-in-out 0.2s",
+              transition: "opacity 0.2s ease-in-out",
             }}
           >
             <Typography
               sx={{}}
               variant={"body2"}
               color='white'
-              fontFamily={"Lexend, sans-serif"}
+              fontFamily={"Montserrat, Lexend, sans-serif"}
               fontSize={15}
               fontWeight={600}
               letterSpacing={0}
@@ -75,12 +75,12 @@ export const LectureMenu: React.FC<any> = ({ slug, data }) => {
             </Typography>
           </Box>
 
-          <Box
+          {/* <Box
             sx={{
               flex: phase === "intro" ? 1 : 0,
               transition: "all 0.2s ease-in-out",
             }}
-          />
+          /> */}
 
           <Link
             href={`/egitimler/${slug}?phase=${phase === "intro" ? "main" : "intro"}`}
@@ -90,29 +90,36 @@ export const LectureMenu: React.FC<any> = ({ slug, data }) => {
               sx={{
                 textTransform: "none",
                 display: "flex",
+                flexDirection: phase !== "intro" ? "row" : "row-reverse",
                 alignItems: "center",
                 gap: 1,
                 boxShadow: 2,
                 px: { xs: 1.5, sm: 2 },
               }}
             >
-              {phase !== "intro" ? (
+              <ReplyRounded
+                sx={{
+                  fontSize: 21,
+                  transform: phase === "intro" ? "scale(-1,1)" : "",
+                }}
+              />
+              {/* {phase !== "intro" ? (
                 <ReplyRounded sx={{ fontSize: 21 }} />
               ) : (
                 <PlayCircleRounded sx={{ fontSize: 21 }} />
-              )}
+              )} */}
               <Typography variant={"body2"} className='limitedLine'>
                 {phase === "intro" ? "Eğitime Git" : "Girişe Dön"}
               </Typography>
             </Button>
           </Link>
 
-          <Box
+          {/* <Box
             sx={{
               flex: phase === "main" ? 1 : 0,
               transition: "all 0.2s ease-in-out",
             }}
-          />
+          /> */}
 
           <Box
             sx={{
@@ -141,7 +148,7 @@ export const LectureMenu: React.FC<any> = ({ slug, data }) => {
               sx={{}}
               variant={"body2"}
               color='white'
-              fontFamily={"Lexend, sans-serif"}
+              fontFamily={"Montserrat, Lexend, sans-serif"}
               fontSize={15}
               fontWeight={600}
               letterSpacing={0}

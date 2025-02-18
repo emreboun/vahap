@@ -55,6 +55,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                   display: "flex",
                   alignItems: "center",
                   fontSize: 14,
+                  fontFamily: "Helvetica, Roboto, sans-serif",
                   letterSpacing: -0.2,
                   fontWeight: 600,
                   lineHeight: 1.9,
@@ -88,6 +89,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                   filter: "contrast(0.8)",
                   justifyContent: { xs: "flex-start", md: "center" },
                   pl: { xs: 3, md: 0 },
+                  fontFamily: "Montserrat, Helvetica, sans-serif",
                 }}
               >
                 <>{page.title}</>

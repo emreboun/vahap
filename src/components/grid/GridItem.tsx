@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export interface GridItemProps {
+  //id?: string;
   imgUrl: string;
   href: string;
   title: string;
@@ -10,11 +11,14 @@ export interface GridItemProps {
 }
 
 const GridItem: React.FC<GridItemProps> = ({
+  //id,
   imgUrl,
   href,
   title,
   description,
 }) => {
+  //console.log(imgUrl);
+  //const imageUrl = imgUrl ? imgUrl : `/resources/egitimler/${id}/image-1.png`;
   return (
     <>
       <Link href={href}>
@@ -22,8 +26,8 @@ const GridItem: React.FC<GridItemProps> = ({
           sx={{
             display: "flex",
             flexDirection: "column",
-            borderTopLeftRadius: 4,
-            borderTopRightRadius: 4,
+            borderTopLeftRadius: 3,
+            borderTopRightRadius: 3,
             borderBottomLeftRadius: 2,
             borderBottomRightRadius: 2,
             overflow: "hidden",
@@ -77,7 +81,7 @@ const GridItem: React.FC<GridItemProps> = ({
             <Typography
               component={"h2"}
               sx={{
-                fontFamily: "Roboto, sans-serif",
+                fontFamily: "Helvetica, Roboto, sans-serif",
                 //fontFamily: "__Inter_e66fe9",
                 fontWeight: 600,
                 fontSize: 15,
@@ -93,7 +97,7 @@ const GridItem: React.FC<GridItemProps> = ({
 
             <Typography
               sx={{
-                fontFamily: "Lexend, sans-serif",
+                fontFamily: "Montserrat, Lexend, sans-serif",
                 fontSize: 14,
                 letterSpacing: -0.2,
                 color: "text.secondary",

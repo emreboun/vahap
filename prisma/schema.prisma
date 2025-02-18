@@ -39,22 +39,21 @@ model Lecture {
   description String    @default("")
   status      Boolean   @default(true)
   
-  introVideo        String?   @map("intro_video")
-  mainVideo         String    @map("main_video")
-  introThumbnail    String?   @map("intro_thumbnail")
-  mainThumbnail     String    @map("main_thumbnail")
-  mainPassword      String?   @map("main_password")
-  duration          Int?       // Duration in seconds
-  order             Int        @default(0)   // Determines the order of lectures
+  introVideo  String?   @map("intro_video")
+  mainVideo   String    @map("main_video")
+  thumbnail   String    
+  
+  duration    Int?       // Duration in seconds
+  order       Int      @default(autoincrement())   // Determines the order of lectures
 
   createdAt   DateTime  @default(now())  @map("created_at")
   updatedAt   DateTime  @updatedAt  @map("updated_at")
-
 
   // relations
   productId   String    @unique  @db.Uuid  @map("product_id") 
   mainProduct Product   @relation("main_product", fields: [productId], references: [id], onDelete: Cascade)
   products    ProductLecture[]
+  files       File[]     
 
   @@map("lectures")
 }
@@ -106,3 +105,17 @@ model Purchase {
   
 }
 
+
+model File {
+  id          Int        @id @default(autoincrement())
+  filename    String     @db.VarChar(255)
+  path        String     @db.VarChar(255)
+  mimetype    String     @db.VarChar(50)
+  size        Int
+  createdAt   DateTime   @default(now())  @map("created_at")
+  
+  lectureId   String     @db.Uuid @map("lecture_id")
+  lecture     Lecture    @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+
+  @@map("files")
+}

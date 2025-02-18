@@ -11,7 +11,7 @@ export default function MiscLayout({
       sx={{
         //py: { xs: 2, sm: 8, md: 12 },
         whiteSpace: "break-spaces",
-        fontFamily: "Lexend, sans-serif",
+        fontFamily: "Montserrat, Lexend, sans-serif",
       }}
     >
       {children}

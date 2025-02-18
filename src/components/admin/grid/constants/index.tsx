@@ -5,7 +5,7 @@ import {
   VerifiedRounded,
   LinkRounded,
 } from "@mui/icons-material";
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box, Button, InputBase, TextField, Tooltip } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { use } from "react";
 
@@ -168,30 +168,11 @@ export const lectureColumns: GridColDef[] = [
     width: 240,
     editable: true,
   },
-  {
-    field: "description",
-    headerName: "Açıklama",
-    preProcessEditCellProps(params) {
-      return {
-        ...params.props,
-        multiline: true,
-        maxRows: 2,
-        onKeyDown: (e: any) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.stopPropagation(); // Prevent row submission
-            // e.preventDefault(); // Prevent line break
-          }
-        },
-      };
-    },
-    width: 240,
-    editable: true,
-  },
-  {
-    field: "introThumbnail",
-    headerName: "Giriş Resmi",
 
-    width: 200,
+  {
+    field: "mainVideo",
+    headerName: "Eğitim Videosu",
+    width: 320,
     editable: true,
   },
   {
@@ -201,22 +182,58 @@ export const lectureColumns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "mainThumbnail",
-    headerName: "Video Resmi",
-    width: 200,
-    editable: true,
-  },
-  {
-    field: "mainVideo",
-    headerName: "Eğitim Videosu",
-    width: 320,
-    editable: true,
-  },
-  {
     field: "duration",
     headerName: "Eğitim Süresi",
     width: 320,
     valueFormatter: (value) => formatDuration(value),
+  },
+  {
+    field: "description",
+    headerName: "Açıklama",
+    renderEditCell: (params) => (
+      <InputBase
+        multiline
+        fullWidth
+        rows={4}
+        value={params.value}
+        onChange={(e) =>
+          params.api.setEditCellValue({
+            id: params.id,
+            field: params.field,
+            value: e.target.value,
+          })
+        }
+        sx={{
+          fontSize: 13,
+          "& .MuiInputBase-root": {
+            //padding: "0px 2px",
+          },
+          "& .MuiInputBase-input": {
+            marginTop: 1,
+            paddingTop: "2px",
+            paddingBottom: "6px",
+            paddingLeft: "2px",
+            paddingRight: "2px",
+            whiteSpace: "pre-wrap",
+          },
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            if (e.shiftKey) {
+              e.stopPropagation(); // Prevent row submission
+            } else {
+              e.preventDefault(); // Prevent line break
+              params.api.stopCellEditMode({
+                id: params.id,
+                field: params.field,
+              });
+            }
+          }
+        }}
+      />
+    ),
+    width: 480,
+    editable: true,
   },
   {
     field: "order",
@@ -225,16 +242,6 @@ export const lectureColumns: GridColDef[] = [
     type: "number",
     editable: true,
   },
-  /* {
-    field: "mainPassword",
-    headerName: "Video Şifresi",
-    width: 240,
-    editable: true,
-  }, */
-  //{ field: "price", headerName: "Fiyat", width: 160, editable: true },
-  //{ field: "category_id", headerName: "Kat ID", width: 100 },
-
-  /* { field: "question_id", headerName: "Soru ID", width: 100 }, */
   {
     field: "createdAt",
     headerName: "Oluşturulma Tarihi",

@@ -1,10 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports, no-var
-"use server";
-import Iyzipay, { PaymentRequestData } from "iyzipay";
+/* "use server";
+//import Iyzipay, { PaymentRequestData } from "iyzipay";
 
-//const Iyzipay = require("iyzipay");
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const Iyzipay = require("iyzipay");
 
-/* const iyzipay = new Iyzipay({
+const iyzipay = new Iyzipay({
   apiKey: process.env.IYZICO_API_KEY ?? "",
   secretKey: process.env.IYZICO_SECRET_KEY ?? "",
   uri: process.env.IYZICO_URI ?? "",
@@ -83,14 +83,16 @@ const requestExample: any = {
       price: "0.2",
     },
   ],
-}; */
+};
 
 export const init = async () => {
   try {
-    /* iyzipay.payment.create(requestExample, function (err: any, result: any) {
+    console.log(Object.values(iyzipay));
+    iyzipay.payment.create(requestExample, function (err: any, result: any) {
       console.log(err, result);
-    }); */
+    });
   } catch (error) {
     console.error(error);
   }
 };
+ */

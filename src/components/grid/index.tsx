@@ -1,10 +1,16 @@
 import React from "react";
 import { Box } from "@mui/material";
 import GridItem from "./GridItem";
-import { LectureEntity } from "@/types";
-import { Lecture } from "@prisma/client";
 
-const ResponsiveGrid: React.FC<{ items: Lecture[] }> = ({ items }) => {
+interface LectureEntity {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  files: { path: string }[];
+}
+
+const ResponsiveGrid: React.FC<{ items: LectureEntity[] }> = ({ items }) => {
   return (
     <Box
       sx={{
@@ -21,7 +27,9 @@ const ResponsiveGrid: React.FC<{ items: Lecture[] }> = ({ items }) => {
       {items.map((item, index) => (
         <Box key={index}>
           <GridItem
-            imgUrl={item.mainThumbnail}
+            imgUrl={
+              item.files.length > 0 ? item.files[0].path : `/thumbnail_main.jpg`
+            }
             title={item.name}
             href={`/egitimler/${item.slug}`}
             description={item.description}

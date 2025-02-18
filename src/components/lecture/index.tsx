@@ -2,7 +2,6 @@ import { Paper, Box, Divider, Typography } from "@mui/material";
 
 import AddToCartButton from "./AddToCartButton";
 import { VimeoVideoPlayer } from "./video/VimeoVideoPlayer";
-//import { Suspense } from "react";
 import { LectureMenu } from "./menu";
 
 export interface LectureMainProps {
@@ -39,7 +38,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
           sx={{
             display: "flex",
             flexDirection: "column",
-            px: { xs: 2, sm: 3, md: 4, lg: 5 },
+            //px: { xs: 2, sm: 3, md: 4, lg: 5 },
           }}
         >
           <Box
@@ -48,14 +47,15 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               alignItems: "center",
               justifyContent: "space-between",
               pt: 0.5,
-              pr: 1,
-              px: { xs: 1, md: 2 },
+              pr: { xs: 3, sm: 4, md: 5, lg: 6 },
+              pl: { xs: 3, md: 5 },
             }}
           >
             <Typography
               component='h1'
               sx={{
-                fontFamily: "Lexend, sans-serif",
+                fontFamily:
+                  "Montserrat, Playfair Display, Montserrat, Lexend, sans-serif",
                 fontSize: { xs: 17, sm: 20, md: 22 },
                 fontWeight: 600,
                 letterSpacing: { xs: -0.3, sm: -0.1, md: 0 },
@@ -69,34 +69,39 @@ export const LectureMain: React.FC<LectureMainProps> = ({
             {!hasAccess && <AddToCartButton data={data} />}
           </Box>
 
-          <Divider sx={{ display: { xs: "none", sm: "block" } }} />
+          <Divider sx={{ display: { xs: "none", sm: "block" }, mx: 4 }} />
 
           <Box sx={{ pt: { xs: 0, sm: 1, md: 1.6, xl: 2 } }}>
-            <>
-              <VimeoVideoPlayer
-                src={{
-                  intro: introVideo,
-                  main: mainVideo,
-                }}
-                slug={slug}
-              />
-            </>
-            {/* <VimeoVideo src={{ intro: introVideo, main: mainVideo }} /> */}
+            <VimeoVideoPlayer
+              src={{
+                intro: introVideo,
+                main: mainVideo,
+              }}
+              //intro={introVideo}
+              //main={hasAccess ? mainVideo : null}
+              slug={slug}
+              //hasAccess={hasAccess}
+            />
           </Box>
 
           <Box
             sx={{
-              px: { xs: 1.5, md: 2 },
+              px: { xs: 3.5, sm: 4.5, md: 6, lg: 7 },
+              pb: 2,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              gap: 1,
             }}
           >
-            <LectureMenu slug={slug} data={data} />
+            <LectureMenu slug={slug} data={data} hasAccess={hasAccess} />
+
             <Typography
               sx={{
                 whiteSpace: "break-spaces",
-                fontFamily: "Lexend, sans-serif",
+                fontFamily: "Montserrat, Lexend, sans-serif",
+                //fontFamily: "serif, sans-serif",
+                //fontSize: { xs: 16, sm: 17, md: 18 },
                 textAlign: { xs: "justify", sm: "justify", md: "left" },
               }}
             >
