@@ -176,16 +176,16 @@ export const lectureColumns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "introVideo",
-    headerName: "Giriş Videosu",
-    width: 200,
-    editable: true,
-  },
-  {
     field: "duration",
     headerName: "Eğitim Süresi",
-    width: 320,
+    width: 240,
     valueFormatter: (value) => formatDuration(value),
+  },
+  {
+    field: "introVideo",
+    headerName: "Giriş Videosu",
+    width: 320,
+    editable: true,
   },
   {
     field: "description",
@@ -295,6 +295,13 @@ const productColumns: GridColDef[] = [
   {
     field: "price",
     headerName: "Fiyat",
+    type: "number",
+    width: 160,
+    editable: true,
+  },
+  {
+    field: "discount",
+    headerName: "İndirim",
     type: "number",
     width: 160,
     editable: true,

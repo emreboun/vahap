@@ -42,9 +42,11 @@ model Lecture {
   introVideo  String?   @map("intro_video")
   mainVideo   String    @map("main_video")
   thumbnail   String    
+
+  misc        Json?     @db.Json 
   
-  duration    Int?       // Duration in seconds
-  order       Int      @default(autoincrement())   // Determines the order of lectures
+  duration    Int?      // Duration in seconds
+  order       Int       @default(autoincrement())   // Determines the order of lectures
 
   createdAt   DateTime  @default(now())  @map("created_at")
   updatedAt   DateTime  @updatedAt  @map("updated_at")
@@ -67,7 +69,7 @@ model Product {
   status      Boolean    @default(true)
 
   price       Int
-  discount    Int?
+  discount    Int        @default(0)
 
   createdAt   DateTime   @default(now())  @map("created_at")
   updatedAt   DateTime   @updatedAt       @map("updated_at")

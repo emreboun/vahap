@@ -149,7 +149,8 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
                   textDecoration: "none",
                 },
                 "& .MuiList-root": {
-                  padding: "4px 0px",
+                  padding: "0px 0px",
+                  gap: 0,
                 },
                 "& .MuiMenuItem-root": {
                   borderRadius: 0,
@@ -177,7 +178,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
           />
           {/* </Link> */}
 
-          <Divider />
+          <Divider style={{ margin: 0 }} />
 
           <MenuItem
             icon={<LogoutRounded sx={{ fontSize: 22 }} />}

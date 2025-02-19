@@ -46,7 +46,13 @@ export const Price: React.FC<PriceProps> = ({
           </div>
         )}
         <div style={{ display: "flex" }}>
-          <div style={{ fontSize: fontSize, fontFamily: "__Inter_e66fe9" }}>
+          <div
+            style={{
+              fontSize: fontSize,
+              fontFamily: "__Inter_e66fe9",
+              //textDecorationLine: "line-through",
+            }}
+          >
             {Math.floor(Number(value))}
           </div>
 

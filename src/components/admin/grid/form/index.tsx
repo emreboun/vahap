@@ -86,7 +86,7 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
       const temp = {
         slug: formatUrl(slug),
         name: formatText(name),
-        introVideo: formatUrl(introVideo),
+        introVideo: introVideo ? formatUrl(introVideo) : undefined,
         //introThumbnail: formatUrl(introThumbnail),
         mainVideo: formatUrl(mainVideo),
         thumbnail: "",
@@ -94,7 +94,7 @@ export const AddLectureForm: React.FC<FormProps> = ({ onClose }) => {
         duration: Number(duration) * 60,
         description: formatText(description),
       };
-      console.log(temp);
+
       //console.log(temp);
       const result = await createLecture({ ...temp });
       //console.log(selectedFiles);

@@ -29,7 +29,7 @@ export const SECTIONS = [
         title: "Hakkımda",
       },
       {
-        href: "/sepet",
+        //href: "/sepet",
         title: "Sepetim",
       },
     ],

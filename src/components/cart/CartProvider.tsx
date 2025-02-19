@@ -47,7 +47,8 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
           ...state,
         };
       }
-      const sum = state.sum + action.payload.price;
+      const sum =
+        state.sum + action.payload.price - (action.payload.discount ?? 0);
       const result = {
         ...state,
         sum,
@@ -68,7 +69,8 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       const result = {
         ...state,
         items: state.items.filter((item) => item.product.id !== action.payload),
-        sum: state.sum - (item ? item.product.price : 0),
+        sum:
+          state.sum - (item ? item.product.price - item.product.discount : 0),
       };
       localStorage.setItem("cart", JSON.stringify(result));
 

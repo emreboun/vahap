@@ -1,8 +1,9 @@
 import { Paper, Box, Divider, Typography } from "@mui/material";
 
 import AddToCartButton from "./AddToCartButton";
-import { VimeoVideoPlayer } from "./video/VimeoVideoPlayer";
-import { LectureMenu } from "./menu";
+import { VimeoVideoPlayer } from "./__video/VimeoVideoPlayer";
+import VideoPlayer from "./video/VideoPlayer";
+import LectureContent from "./LectureContent";
 
 export interface LectureMainProps {
   slug: string;
@@ -14,7 +15,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
   data,
   opts,
 }) => {
-  const { name, introVideo, mainVideo } = data;
+  const { name, introVideo, mainVideo, duration, misc } = data;
   const { hasAccess } = opts;
 
   return (
@@ -38,7 +39,6 @@ export const LectureMain: React.FC<LectureMainProps> = ({
           sx={{
             display: "flex",
             flexDirection: "column",
-            //px: { xs: 2, sm: 3, md: 4, lg: 5 },
           }}
         >
           <Box
@@ -71,42 +71,45 @@ export const LectureMain: React.FC<LectureMainProps> = ({
 
           <Divider sx={{ display: { xs: "none", sm: "block" }, mx: 4 }} />
 
-          <Box sx={{ pt: { xs: 0, sm: 1, md: 1.6, xl: 2 } }}>
-            <VimeoVideoPlayer
-              src={{
-                intro: introVideo,
-                main: mainVideo,
-              }}
-              //intro={introVideo}
-              //main={hasAccess ? mainVideo : null}
-              slug={slug}
-              //hasAccess={hasAccess}
+          <Box
+            sx={{
+              pt: { xs: 0, sm: 1, md: 1.6, xl: 2 },
+            }}
+          >
+            <VideoPlayer
+              intro={introVideo}
+              main={hasAccess ? mainVideo : null}
+              duration={duration}
+              misc={misc}
             />
           </Box>
 
           <Box
             sx={{
               px: { xs: 3.5, sm: 4.5, md: 6, lg: 7 },
-              pb: 2,
+              pt: 2,
+              pb: 3,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: 1,
             }}
           >
-            <LectureMenu slug={slug} data={data} hasAccess={hasAccess} />
-
-            <Typography
+            {/* <Typography
               sx={{
                 whiteSpace: "break-spaces",
-                fontFamily: "Montserrat, Lexend, sans-serif",
+                //fontFamily: "Montserrat, Lexend, sans-serif",
                 //fontFamily: "serif, sans-serif",
                 //fontSize: { xs: 16, sm: 17, md: 18 },
                 textAlign: { xs: "justify", sm: "justify", md: "left" },
               }}
+              fontSize={16}
+              fontFamily={"Helvetica"}
             >
               {data.description}
-            </Typography>
+            </Typography> */}
+
+            <LectureContent markdown={data.description} />
           </Box>
         </Box>
       </Paper>

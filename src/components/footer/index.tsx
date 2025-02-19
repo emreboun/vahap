@@ -5,6 +5,7 @@ import { Box, ButtonBase, Divider, Typography } from "@mui/material";
 import { NavigationLink, NavLink } from "../app-bar/link";
 import { Form } from "./form";
 import { SECTIONS } from "./constants";
+import { CartButton } from "./CartButton";
 
 export const Footer: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ export const Footer: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        borderTop: "1px solid #B3925B",
       }}
     >
       <Box
@@ -102,26 +104,30 @@ export const Footer: React.FC = () => {
                 textAlign: "left",
               }}
             >
-              {section.links.map((link) => (
-                <NavLink key={link.href} href={link.href}>
-                  <ButtonBase
-                    sx={{
-                      p: "9.6px",
-                      textAlign: "left",
-                      justifyContent: "flex-start",
-                      borderRadius: 1,
-                      "&:hover": {
-                        color: "#fff",
-                        bgcolor: "primary.main",
-                        fontWeight: 600,
-                        boxShadow: 2,
-                      },
-                    }}
-                  >
-                    {link.title}
-                  </ButtonBase>
-                </NavLink>
-              ))}
+              {section.links.map((link) =>
+                link.href ? (
+                  <NavLink key={link.href} href={link.href}>
+                    <ButtonBase
+                      sx={{
+                        p: "9.6px",
+                        textAlign: "left",
+                        justifyContent: "flex-start",
+                        borderRadius: 1,
+                        "&:hover": {
+                          color: "#fff",
+                          bgcolor: "primary.main",
+                          fontWeight: 600,
+                          boxShadow: 2,
+                        },
+                      }}
+                    >
+                      {link.title}
+                    </ButtonBase>
+                  </NavLink>
+                ) : (
+                  <CartButton key={link.title} />
+                )
+              )}
             </Box>
           </Box>
         ))}

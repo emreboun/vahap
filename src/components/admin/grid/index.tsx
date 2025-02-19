@@ -31,6 +31,7 @@ import { updateProduct } from "@/api/products";
 import { updateLecture } from "@/api/lectures";
 import { isKeyboardEvent } from "@mui/x-data-grid/utils/keyboardUtils";
 import { useEventListener } from "@/hooks/useEventListener";
+import EditLecture from "./form/EditLecture";
 
 interface GridProps {
   type: string;
@@ -54,12 +55,15 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   const { table } = useParams();
 
   const [deleteSelected, setDeleteSelected] = useState<GridRowId | null>(null);
+  const [editSelected, setEditSelected] = useState<GridRowId | null>(null);
+
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const { value, setValue } = useGridContext();
 
   const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    setEditSelected(data.find((item) => item.id === id));
+    //setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
   const handleDeleteClick = (id: GridRowId | null) => () => {
@@ -121,14 +125,13 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
         name,
         description,
         mainVideo,
-        mainThumbnail,
+        thumbnail,
         introVideo,
-        introThumbnail,
         price,
         status,
         order,
-        //mainPassword,
         imgUrl,
+        discount,
       } = value;
       let result;
       let req: any;
@@ -139,9 +142,8 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
             name,
             description,
             mainVideo,
-            mainThumbnail,
+            thumbnail,
             introVideo,
-            introThumbnail,
             price,
             status,
             order: Number(order),
@@ -159,6 +161,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
             name,
             price,
             imgUrl,
+            discount,
           };
           existingItem = data.find((item) => item.id === id);
           Object.keys(req).forEach((key) => {
@@ -254,6 +257,12 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
       return null;
     } */
   });
+
+  const [modal, setModal] = useState(false);
+
+  const handleModal = () => {
+    setModal((prev) => !prev);
+  };
 
   return (
     <>
@@ -367,6 +376,32 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
                 onClose={() => setDeleteSelected(null)}
               />
             )}
+          </Paper>
+        </Modal>
+
+        <Modal open={!!editSelected} onClose={() => setEditSelected(null)}>
+          <Paper
+            sx={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
+              width: { xs: "100%", sm: "100%", md: "500px" },
+              height: { xs: "100%", md: "auto" },
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {table === "lectures" && (
+              <EditLecture
+                lecture={editSelected}
+                onClose={() => setEditSelected(null)}
+                onSubmit={handleSubmit}
+              />
+            )}
+            {/* {table === "products" && (
+              <AddProductForm onClose={handleModal} />
+            )} */}
           </Paper>
         </Modal>
       </Paper>

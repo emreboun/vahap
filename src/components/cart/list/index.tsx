@@ -184,7 +184,7 @@ export const CartList = () => {
                           pt: 0.2,
                         }}
                       >
-                        {Number(item.product.price)}
+                        {Number(item.product.price) - item.product.discount}
                       </Typography>
 
                       <Typography
