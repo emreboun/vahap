@@ -41,6 +41,7 @@ export const DeleteForm: React.FC<FormProps> = ({ itemId, onClose }) => {
         break;
       case "products":
         result = await deleteProduct(id);
+        console.log(result);
         break;
     }
     if (!!result) {

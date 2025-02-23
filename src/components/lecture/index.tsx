@@ -1,13 +1,12 @@
 import { Paper, Box, Divider, Typography } from "@mui/material";
 
 import AddToCartButton from "./AddToCartButton";
-import { VimeoVideoPlayer } from "./__video/VimeoVideoPlayer";
 import VideoPlayer from "./video/VideoPlayer";
 import LectureContent from "./LectureContent";
 
 export interface LectureMainProps {
   slug: string;
-  data: any; //Lecture;
+  data: any;
   opts?: any;
 }
 export const LectureMain: React.FC<LectureMainProps> = ({
@@ -15,7 +14,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
   data,
   opts,
 }) => {
-  const { name, introVideo, mainVideo, duration, misc } = data;
+  const { name, introVideo, mainVideo, duration, resources } = data;
   const { hasAccess } = opts;
 
   return (
@@ -43,12 +42,14 @@ export const LectureMain: React.FC<LectureMainProps> = ({
         >
           <Box
             sx={{
+              position: "relative",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              pt: 0.5,
+              pt: { xs: 0.2, sm: 0.5 },
               pr: { xs: 3, sm: 4, md: 5, lg: 6 },
               pl: { xs: 3, md: 5 },
+              pb: { xs: 0.2, sm: 0 },
             }}
           >
             <Typography
@@ -58,9 +59,10 @@ export const LectureMain: React.FC<LectureMainProps> = ({
                   "Montserrat, Playfair Display, Montserrat, Lexend, sans-serif",
                 fontSize: { xs: 17, sm: 20, md: 22 },
                 fontWeight: 600,
-                letterSpacing: { xs: -0.3, sm: -0.1, md: 0 },
+                letterSpacing: { xs: -0.5, sm: -0.4, md: -0.3 },
                 pl: { xs: 0, md: 1 },
-                py: 2.5,
+                pt: { xs: 2, sm: 2.5 },
+                pb: { xs: 2, sm: 2.5 },
               }}
             >
               {name}
@@ -80,7 +82,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               intro={introVideo}
               main={hasAccess ? mainVideo : null}
               duration={duration}
-              misc={misc}
+              resources={resources}
             />
           </Box>
 
@@ -95,20 +97,6 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               gap: 1,
             }}
           >
-            {/* <Typography
-              sx={{
-                whiteSpace: "break-spaces",
-                //fontFamily: "Montserrat, Lexend, sans-serif",
-                //fontFamily: "serif, sans-serif",
-                //fontSize: { xs: 16, sm: 17, md: 18 },
-                textAlign: { xs: "justify", sm: "justify", md: "left" },
-              }}
-              fontSize={16}
-              fontFamily={"Helvetica"}
-            >
-              {data.description}
-            </Typography> */}
-
             <LectureContent markdown={data.description} />
           </Box>
         </Box>

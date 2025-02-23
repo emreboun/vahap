@@ -1,8 +1,7 @@
 "use server";
+import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { userService } from ".";
-import { jwtConfig } from "@/config";
 
 export const signup = async (data: {
   email: string;
@@ -28,8 +27,8 @@ export const signup = async (data: {
 export const login = async (email: string, password: string) => {
   const user: any = await userService.findByUniqueProperty(
     "email",
-    email
-    //true
+    email,
+    true
   );
   if (!user) return null;
 
@@ -48,4 +47,19 @@ export const login = async (email: string, password: string) => {
   return { user: { id, email, firstName, lastName, phone, role, purchases } };
 };
 
-export const logout = async (email: string, password: string) => {};
+//export const logout = async (email: string, password: string) => {};
+
+export const getCurrentUserId = async () => {
+  try {
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("userid")?.value;
+    if (!userId) {
+      return null;
+    }
+
+    return userId;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};

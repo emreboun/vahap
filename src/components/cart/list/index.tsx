@@ -23,7 +23,6 @@ export const CartList = () => {
       <Box
         style={{
           position: "relative",
-          //width: "100%",
           overflowY: "auto",
           overflowX: "hidden",
           flex: 1,
@@ -60,7 +59,6 @@ export const CartList = () => {
                 >
                   {item.product.imgUrl ? (
                     <Image
-                      //src={item.product.imgUrl}
                       src={item.product.imgUrl}
                       alt=''
                       width={160}
@@ -145,10 +143,11 @@ export const CartList = () => {
                       >
                         <Box
                           sx={{
-                            fontSize: 20,
+                            fontSize: 18,
                             color: "#fff",
                             position: "absolute",
                             zIndex: 1,
+                            mt: 0.4,
                           }}
                         >
                           {"₺"}

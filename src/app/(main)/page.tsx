@@ -1,34 +1,197 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { getLatestThreeLectures, getThreeLectures } from "@/api/lectures";
 import styles from "./page.module.css";
+import { Box, Divider, Paper, Typography } from "@mui/material";
+import ResponsiveGrid from "@/components/grid";
+import { getDiscountedProducts } from "@/api/products";
+import ProductGrid from "@/components/grid/ProductGrid";
 
-export default function Home() {
+export default async function Home() {
+  const three = await getThreeLectures();
+  const latest = await getLatestThreeLectures();
+  const discounts = await getDiscountedProducts();
   return (
-    <div className={styles.page}>
+    <>
       <Box
-        //component={"main"}
-        className={`${styles.main} responsive`}
         sx={{
-          //py: { xs: 2, sm: 8, md: 12 },
           whiteSpace: "break-spaces",
           fontFamily: "Montserrat, Lexend, sans-serif",
+          display: "flex",
+          flexDirection: "column",
+          gap: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        <Paper sx={{ px: 4, py: 3, boxShadow: 2 }} elevation={0}>
-          <Typography
+        <Paper
+          component='section'
+          className='responsiveSmall'
+          sx={{
+            pt: 0,
+            pb: 3,
+            boxShadow: 1,
+            borderRadius: { xs: 0, sm: 0.6 },
+            borderLeft: { xs: 0, sm: "1px solid #e0e0e0" },
+            borderRight: { xs: 0, sm: "1px solid #e0e0e0" },
+            borderTop: "1px solid #e0e0e0",
+            borderBottom: "1px solid #e0e0e0",
+          }}
+          elevation={0}
+        >
+          <Box
             sx={{
-              whiteSpace: "break-spaces",
-              fontFamily: "Roboto, sans-serif, Lexend",
-              fontSize: 16,
-              textAlign: "justify",
-              letterSpacing: 0.2,
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            {
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-            }
-          </Typography>
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                pt: { xs: 0.2, sm: 0.5 },
+                pr: { xs: 3, sm: 4, md: 5, lg: 6 },
+                pl: { xs: 3, md: 5 },
+                pb: { xs: 0.2, sm: 0 },
+              }}
+            >
+              <Typography
+                component='h1'
+                sx={{
+                  fontFamily:
+                    "Montserrat, Playfair Display, Montserrat, Lexend, sans-serif",
+                  fontSize: { xs: 17, sm: 20, md: 22 },
+                  fontWeight: 600,
+                  letterSpacing: { xs: -0.5, sm: -0.4, md: -0.3 },
+                  pl: { xs: 0, md: 1 },
+                  pt: { xs: 2, sm: 2.5 },
+                  pb: { xs: 2, sm: 2.5 },
+                }}
+              >
+                {"Öne Çıkanlar"}
+              </Typography>
+            </Box>
+
+            {/* <Divider sx={{ display: { xs: "none", sm: "block" }, mx: 4 }} /> */}
+
+            <Box sx={{ px: 4 }}>
+              <ResponsiveGrid items={three} slug={"egitimler"} />
+            </Box>
+          </Box>
+        </Paper>
+
+        {discounts?.length > 0 && (
+          <Paper
+            component='section'
+            className='responsiveSmall'
+            sx={{
+              pt: 0,
+              pb: 3,
+              boxShadow: 1,
+              borderRadius: { xs: 0, sm: 0.6 },
+              borderLeft: { xs: 0, sm: "1px solid #e0e0e0" },
+              borderRight: { xs: 0, sm: "1px solid #e0e0e0" },
+              borderTop: "1px solid #e0e0e0",
+              borderBottom: "1px solid #e0e0e0",
+            }}
+            elevation={0}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box
+                sx={{
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  pt: { xs: 0.2, sm: 0.5 },
+                  pr: { xs: 3, sm: 4, md: 5, lg: 6 },
+                  pl: { xs: 3, md: 5 },
+                  pb: { xs: 0.2, sm: 0 },
+                }}
+              >
+                <Typography
+                  component='h1'
+                  sx={{
+                    fontFamily:
+                      "Montserrat, Playfair Display, Montserrat, Lexend, sans-serif",
+                    fontSize: { xs: 17, sm: 20, md: 22 },
+                    fontWeight: 600,
+                    letterSpacing: { xs: -0.5, sm: -0.4, md: -0.3 },
+                    pl: { xs: 0, md: 1 },
+                    pt: { xs: 2, sm: 2.5 },
+                    pb: { xs: 2, sm: 2.5 },
+                  }}
+                >
+                  {"İndirimdekiler"}
+                </Typography>
+              </Box>
+
+              <Box sx={{ px: { xs: 3, sm: 8, md: 3, lg: 5 } }}>
+                <ProductGrid items={discounts} />
+              </Box>
+            </Box>
+          </Paper>
+        )}
+
+        <Paper
+          component='section'
+          className='responsiveSmall'
+          sx={{
+            pt: 0,
+            pb: 3,
+            boxShadow: 1,
+            borderRadius: { xs: 0, sm: 0.6 },
+            borderLeft: { xs: 0, sm: "1px solid #e0e0e0" },
+            borderRight: { xs: 0, sm: "1px solid #e0e0e0" },
+            borderTop: "1px solid #e0e0e0",
+            borderBottom: "1px solid #e0e0e0",
+          }}
+          elevation={0}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                pt: { xs: 0.2, sm: 0.5 },
+                pr: { xs: 3, sm: 4, md: 5, lg: 6 },
+                pl: { xs: 3, md: 5 },
+                pb: { xs: 0.2, sm: 0 },
+              }}
+            >
+              <Typography
+                component='h1'
+                sx={{
+                  fontFamily:
+                    "Montserrat, Playfair Display, Montserrat, Lexend, sans-serif",
+                  fontSize: { xs: 17, sm: 20, md: 22 },
+                  fontWeight: 600,
+                  letterSpacing: { xs: -0.5, sm: -0.4, md: -0.3 },
+                  pl: { xs: 0, md: 1 },
+                  pt: { xs: 2, sm: 2.5 },
+                  pb: { xs: 2, sm: 2.5 },
+                }}
+              >
+                {"Son Eklenen Eğitimler"}
+              </Typography>
+            </Box>
+
+            <Box sx={{ px: 4 }}>
+              <ResponsiveGrid items={latest} slug={"egitimler"} />
+            </Box>
+          </Box>
         </Paper>
       </Box>
-    </div>
+    </>
   );
 }

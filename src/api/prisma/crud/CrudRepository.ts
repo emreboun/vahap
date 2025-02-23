@@ -66,11 +66,13 @@ export default class CrudRepository<
 
   async findById(
     id: string,
-    include: any = false,
-    deletedAt: any = null
+    include: any = false
+    //deletedAt: any = null
   ): Promise<T | null> {
     return this.prisma[this.model].findUnique({
-      where: { id, deletedAt: deletedAt === null ? deletedAt : undefined },
+      where: {
+        id /* , deletedAt: deletedAt === null ? deletedAt : undefined */,
+      },
       include: !!include
         ? include === true
           ? this.getIncludes()
@@ -166,7 +168,7 @@ export default class CrudRepository<
     });
   }
 
-  async findAll(where?: any, include?: any): Promise<T[]> {
+  async findAll(where?: any, include?: any, orderBy?: any): Promise<T[]> {
     //const skip = (page - 1) * pageSize;
 
     return this.prisma[this.model].findMany({
@@ -176,15 +178,19 @@ export default class CrudRepository<
           ? this.getIncludes()
           : include
         : undefined,
+      orderBy,
     });
   }
 
   async update(
     idOrWhere: string | object,
-    data: Partial<Omit<T, "id">>
+    data: Partial<Omit<T, "id">>,
+    process: boolean = true
     //prop?: keyof T
   ): Promise<T> {
-    this.getUpdates(data); // Apply transformations for nested relations
+    if (process) {
+      this.getUpdates(data); // Apply transformations for nested relations
+    }
     return this.prisma[this.model].update({
       where: typeof idOrWhere === "string" ? { id: idOrWhere } : idOrWhere,
       //where: prop ? { [prop]: id } : { id },
@@ -223,9 +229,10 @@ export default class CrudRepository<
     });
   }
 
-  async delete(id: string): Promise<T> {
+  async delete(idOrWhere: string | object): Promise<T> {
     return this.prisma[this.model].delete({
-      where: { id },
+      where:
+        typeof idOrWhere === "string" ? { id: idOrWhere } : { ...idOrWhere },
     });
   }
 

@@ -6,10 +6,17 @@ const LectureContent: React.FC<any> = ({ markdown }) => {
   return (
     <Typography
       component={"section"}
-      sx={{ letterSpacing: -0.4, py: 1 }}
-      className={"markdown-container"}
+      sx={{
+        py: 1,
+        alignSelf: "flex-start",
+      }}
+      letterSpacing={-0.4}
+      fontSize={{ xs: 16, md: 17, xl: 18 }}
+      lineHeight={{ xs: 1.4, sm: 1.45, md: 1.5 }}
     >
-      <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+      <Markdown remarkPlugins={[remarkGfm]} className={"markdown"}>
+        {markdown}
+      </Markdown>
     </Typography>
   );
 };

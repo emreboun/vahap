@@ -19,7 +19,7 @@ export const AppBar: React.FC<AppBarProps> = async ({}) => {
 
   return (
     <>
-      <AppBarWrapper>
+      <AppBarWrapper auth={!!auth}>
         <Toolbar
           variant='dense'
           className={`responsive`}

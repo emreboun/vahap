@@ -1,6 +1,13 @@
+import { Metadata } from "next";
 import { Article } from "@/components/article";
 
-export default function AboutPage() {
+export const metadata: Metadata = {
+  title: "Hakkımda - Online Satranç Okulu",
+  description:
+    "Vahap Şanal hakkında biyografik bilgiler - Online Satranç Okulu - Vahap Şanal",
+};
+
+export default async function AboutPage() {
   return (
     <>
       <Article

@@ -45,7 +45,7 @@ export const generateUrlSlug = (text: string) => {
 };
 
 export const formatText = (text: string) => {
-  if (!text) return "";
+  if (!text || typeof text !== "string") return "";
   const formatted = text.trim();
 
   //formatted = formatted.replace(/\s+/g, " ");
@@ -80,6 +80,18 @@ export const turkish_chars = [
   "ğ",
   "Ğ",
 ];
+
+export const parseUrlSlug = (slug: string) => {
+  if (!slug || typeof slug !== "string") return "";
+
+  // Replace dashes with spaces
+  let formatted = slug.replace(/-/g, " ");
+
+  // Capitalize each word
+  formatted = formatted.replace(/\b\w/g, (char) => char.toUpperCase());
+
+  return formatted;
+};
 
 export function isAlphanumeric(str: string): boolean {
   return /^[a-zA-Z0-9]+$/.test(str);

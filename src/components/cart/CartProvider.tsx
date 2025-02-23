@@ -26,7 +26,8 @@ type CartAction =
     }
   | { type: "APPLY_DISCOUNT"; payload: Discount }
   | { type: "CLEAR_CART" }
-  | { type: "INIT_CART" /* ; payload: CartState  */ };
+  | { type: "INIT_CART" /* ; payload: CartState  */ }
+  | { type: "LOGIN"; payload: string[] };
 
 // Initial cart state
 const initialState: CartState = {
@@ -77,6 +78,37 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       return result;
     }
 
+    case "LOGIN": {
+      const items: CartItem[] = [];
+      let resultSum = state.sum;
+      state.items.forEach((item) => {
+        if (!action.payload.includes(item.product.id)) {
+          items.push(item);
+        } else {
+          resultSum += item.product.discount - item.product.price;
+        }
+      });
+
+      const result = {
+        ...state,
+        items,
+        sum: resultSum,
+      };
+      /* const item = state.items.find(
+        (item) => item.product.id === action.payload
+      );
+
+      const result = {
+        ...state,
+        items: state.items.filter((item) => item.product.id !== action.payload),
+        sum:
+          state.sum - (item ? item.product.price - item.product.discount : 0),
+      }; */
+      localStorage.setItem("cart", JSON.stringify(result));
+
+      return result;
+    }
+
     case "APPLY_DISCOUNT": {
       return { ...state, discount: action.payload };
     }
@@ -107,7 +139,7 @@ const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
   useEffect(() => {
-    const temp = localStorage.getItem("cart");
+    //const temp = localStorage.getItem("cart");
     dispatch({ type: "INIT_CART" });
   }, []);
 

@@ -1,5 +1,6 @@
 import { getAllLecturesAdmin } from "@/api/lectures";
-import { getAllProducts } from "@/api/products";
+import { getAllProducts, getAllProductsAdmin } from "@/api/products";
+import { getAllTicketsAdmin } from "@/api/products/tickets";
 import { getAllUsers } from "@/api/user/account";
 import { Grid } from "@/components/admin/grid";
 
@@ -20,11 +21,15 @@ export default async function TablePage({ params }: { params: any }) {
       data = await getAllLecturesAdmin();
       break;
     case "products":
-      data = await getAllProducts();
+      data = await getAllProductsAdmin();
       break;
-
     case "users":
       data = await getAllUsers();
+      break;
+
+    case "tickets":
+      data = await getAllTicketsAdmin();
+
       break;
     /*  case "cevaplar":
       data = await getAllCevaplar();

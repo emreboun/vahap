@@ -3,7 +3,6 @@
 import {
   DataGrid,
   GridActionsCellItem,
-  GridCellEditStopReasons,
   GridColDef,
   GridEventListener,
   GridRowEditStopReasons,
@@ -26,12 +25,11 @@ import {
   SaveRounded,
 } from "@mui/icons-material";
 import { DeleteForm } from "./form/delete";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { updateProduct } from "@/api/products";
 import { updateLecture } from "@/api/lectures";
-import { isKeyboardEvent } from "@mui/x-data-grid/utils/keyboardUtils";
 import { useEventListener } from "@/hooks/useEventListener";
-import EditLecture from "./form/EditLecture";
+import { updateTicket } from "@/api/products/tickets";
 
 interface GridProps {
   type: string;
@@ -53,17 +51,25 @@ export const Grid: React.FC<GridProps> = ({ type, data }) => {
 
 export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   const { table } = useParams();
-
+  const router = useRouter();
   const [deleteSelected, setDeleteSelected] = useState<GridRowId | null>(null);
-  const [editSelected, setEditSelected] = useState<GridRowId | null>(null);
-
+  //const [editSelected, setEditSelected] = useState<GridRowId | null>(null);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const { value, setValue } = useGridContext();
 
   const handleEditClick = (id: GridRowId) => () => {
-    setEditSelected(data.find((item) => item.id === id));
-    //setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    if (table === "products") {
+      router.push(`/admin/products/edit/${id}`);
+
+      //setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    } else if (table === "users") {
+      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    } else if (table === "lectures") {
+      router.push(`/admin/lectures/edit/${id}`);
+      //setEditSelected(id);
+    } else if (table === "tickets") {
+    }
   };
 
   const handleDeleteClick = (id: GridRowId | null) => () => {
@@ -132,6 +138,12 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
         order,
         imgUrl,
         discount,
+        //
+        date,
+        url,
+        location,
+        capacity,
+        sold,
       } = value;
       let result;
       let req: any;
@@ -170,6 +182,24 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
             }
           });
           result = await updateProduct(id, req);
+          break;
+
+        case "tickets":
+          req = {
+            name,
+            date,
+            url,
+            location,
+            capacity,
+            sold,
+          };
+          existingItem = data.find((item) => item.id === id);
+          Object.keys(req).forEach((key) => {
+            if (req[key] === existingItem[key]) {
+              req[key] = undefined;
+            }
+          });
+          result = await updateTicket(id, req);
           break;
       }
       return result;
@@ -304,7 +334,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
-          onProcessRowUpdateError={(e) => console.log(e)}
+          //onProcessRowUpdateError={(e) => console.log(e)}
           //onRowDoubleClick={() => {}}
           //onCellDoubleClick={() => {}}
           /* onCellEditStop={(params, event) => {
@@ -379,7 +409,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
           </Paper>
         </Modal>
 
-        <Modal open={!!editSelected} onClose={() => setEditSelected(null)}>
+        {/* <Modal open={!!editSelected} onClose={() => setEditSelected(null)}>
           <Paper
             sx={{
               position: "fixed",
@@ -394,16 +424,15 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
           >
             {table === "lectures" && (
               <EditLecture
-                lecture={editSelected}
+                id={editSelected}
+                //lecture={editSelected}
                 onClose={() => setEditSelected(null)}
                 onSubmit={handleSubmit}
               />
             )}
-            {/* {table === "products" && (
-              <AddProductForm onClose={handleModal} />
-            )} */}
+         
           </Paper>
-        </Modal>
+        </Modal> */}
       </Paper>
     </>
   );

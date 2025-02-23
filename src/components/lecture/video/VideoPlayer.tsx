@@ -1,5 +1,6 @@
 "use client";
-import { formatDuration } from "@/utils/data";
+import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   AttachFileRounded,
   ReplyRounded,
@@ -7,8 +8,8 @@ import {
   VideoLibraryRounded,
 } from "@mui/icons-material";
 import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
-import dynamic from "next/dynamic";
-import React, { useRef, useState } from "react";
+
+import { formatDuration } from "@/utils/data";
 import { downloadPgn } from "../actions";
 
 const VimeoPlayer = dynamic(() => import("react-player/vimeo"), { ssr: false });
@@ -17,16 +18,15 @@ interface VideoPlayerProps {
   intro?: string;
   main?: string;
   duration: number;
-  misc?: Record<string, any>;
+  resources: { name: string; content: string }[];
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
   intro,
   main,
   duration,
-  misc,
+  resources,
 }) => {
-  const ref = useRef(null);
   const [phase, setPhase] = useState(intro ? "intro" : "main");
   const videoUrl = phase === "intro" ? intro : main;
 
@@ -317,7 +317,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
             </Tooltip>
 
             <Button
-              variant={"outlined"}
+              variant={phase === "intro" ? "contained" : "outlined"}
               sx={{
                 textTransform: "none",
                 display: phase === "main" && !intro ? "none" : "flex",
@@ -343,7 +343,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
             </Button>
           </Box>
 
-          {phase === "main" && !!main && misc?.pgns?.length > 0 && (
+          {phase === "main" && !!main && resources?.length > 0 && (
             <Box sx={{ display: "flex", gap: 1 }}>
               <Box
                 sx={{
@@ -375,7 +375,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                   />
 
                   <Typography
-                    sx={{}}
                     variant={"body2"}
                     color='white'
                     fontFamily={"Montserrat, Lexend, sans-serif"}
@@ -388,7 +387,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                   </Typography>
                 </Box>
 
-                {misc?.pgns?.map((item: any, i: number) => (
+                {resources.map((item: any, i: number) => (
                   <Tooltip key={i} title={"Pgn Dosyasını İndir"}>
                     <Button
                       sx={{

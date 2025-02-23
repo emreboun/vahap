@@ -8,9 +8,13 @@ import { Sidebars } from "../sidebars";
 
 interface AppBarProps {
   children?: React.ReactNode;
+  auth?: boolean;
 }
 
-export const AppBarWrapper: React.FC<AppBarProps> = ({ children }) => {
+export const AppBarWrapper: React.FC<AppBarProps> = ({
+  children,
+  auth = false,
+}) => {
   const { direction } = useScrollHandler();
   return (
     <>
@@ -66,7 +70,7 @@ export const AppBarWrapper: React.FC<AppBarProps> = ({ children }) => {
           },
           {
             value: "cart",
-            child: <CartSidebar />,
+            child: <CartSidebar auth={auth} />,
           },
         ]}
       />

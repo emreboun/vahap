@@ -1,14 +1,9 @@
-import { Account, Purchase } from "@prisma/client";
+import { Account } from "@prisma/client";
 import { CrudRepository, CrudService } from "../prisma/crud";
 import prisma from "../prisma/init";
 
 export const userRepository = new CrudRepository<Account>(prisma, "account");
 export const userService = new CrudService<Account>(userRepository);
-export const purchaseRepository = new CrudRepository<Purchase>(
-  prisma,
-  "purchase"
-);
-export const purchaseService = new CrudService<Purchase>(purchaseRepository);
 
 /* 
 import { User, Purchase } from "@prisma/client";

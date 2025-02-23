@@ -8,9 +8,13 @@ interface LectureEntity {
   slug: string;
   description: string;
   files: { path: string }[];
+  thumbnail?: string;
 }
 
-const ResponsiveGrid: React.FC<{ items: LectureEntity[] }> = ({ items }) => {
+const ResponsiveGrid: React.FC<{ items: LectureEntity[]; slug: string }> = ({
+  items,
+  slug,
+}) => {
   return (
     <Box
       sx={{
@@ -28,10 +32,11 @@ const ResponsiveGrid: React.FC<{ items: LectureEntity[] }> = ({ items }) => {
         <Box key={index}>
           <GridItem
             imgUrl={
-              item.files.length > 0 ? item.files[0].path : `/thumbnail_main.jpg`
+              //item.files.length > 0 ? item.files[0].path : `/thumbnail_main.jpg`
+              item.thumbnail ?? `/thumbnail_main.jpg`
             }
             title={item.name}
-            href={`/egitimler/${item.slug}`}
+            href={`/${slug}/${item.slug}`}
             description={item.description}
           />
         </Box>

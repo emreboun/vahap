@@ -9,37 +9,43 @@ import { createFile } from "@/api/files";
 const pump = promisify(pipeline);
 const FILE_ROOT_PATH = "./public/resources";
 
-export const uploadImage = async (formData: any, lectureId: string) => {
+export const uploadImage = async (
+  formData: any,
+  entityId: string,
+  type: "lecture" | "product"
+) => {
   try {
-    const subFolderPath = `egitimler/${lectureId}`;
+    const subFolderPath =
+      type === "lecture" ? `egitimler/${entityId}` : `urunler/${entityId}`;
+    const targetDirectory = path.join(FILE_ROOT_PATH, subFolderPath);
 
-    const targetDirectory = FILE_ROOT_PATH + "/" + subFolderPath; //path.join(FILE_ROOT_PATH, subFolderPath);
     // Ensure the directory exists
     fs.mkdirSync(targetDirectory, { recursive: true });
 
     const files = formData.getAll("files");
     const result = [];
+
     for (const file of files) {
       const filePath = await generateFilePath(targetDirectory, file);
       await pump(file.stream(), fs.createWriteStream(filePath));
 
-      const item = await createFile({
+      const temp = {
         filename: file.name,
         size: file.size,
         mimetype: file.type,
         path: filePath.replace("public", ""),
-        lectureId,
-      });
+        lectureId: type === "lecture" ? entityId : undefined,
+        productId: type === "product" ? entityId : undefined,
+      };
+
+      console.log(temp);
+
+      const item = await createFile(temp);
 
       result.push(item);
     }
-    if (result.length > 0) {
-      return result;
-    } else {
-      return null;
-    }
 
-    // You might return some response or data here
+    return result.length > 0 ? result : null;
   } catch (error) {
     console.error("Failed to upload images:", error);
     throw new Error("Failed to upload images");

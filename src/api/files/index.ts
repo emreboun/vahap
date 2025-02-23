@@ -13,13 +13,14 @@ export const getAllFiles = async () => {
 
 export const createFile = async (data: Partial<File>) => {
   // try {
-  const { filename, size, mimetype, path, lectureId } = data;
+  const { filename, size, mimetype, path, lectureId, productId } = data;
   const result = await fileService.create({
     filename,
     size,
     mimetype,
     path,
     lectureId,
+    productId,
   });
 
   return result;

@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
 import {
   AccountCircle as AccountIcon,
   LightModeRounded as LightThemeIcon,
@@ -13,15 +17,9 @@ import {
   ListItemIcon,
   Menu,
   MenuItem as MuiMenuItem,
-  ToggleButton,
-  ToggleButtonGroup,
   Tooltip,
 } from "@mui/material";
-import Link from "next/link";
-import { useState } from "react";
-import Image from "next/image";
-import { useThemeContext } from "@/common/theme/provider";
-import { logout } from "@/api/firebase";
+
 import { logoutApi } from "@/app/admin/giris/actions";
 
 interface AccountMenuProps {
@@ -30,7 +28,6 @@ interface AccountMenuProps {
 }
 
 export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
-  const { theme, onTheme } = useThemeContext();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
@@ -44,18 +41,11 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
   const handleLogout = async () => {
     try {
       localStorage.clear();
-      await logout();
       await logoutApi();
-
       location.reload();
     } catch (e: unknown) {
       console.error(e);
     }
-  };
-
-  const handleTheme = (event: React.MouseEvent<HTMLElement>, value: string) => {
-    if (!value) return;
-    onTheme(value);
   };
 
   return (
@@ -105,7 +95,7 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                   minWidth: 200,
                   overflow: "visible",
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  bgcolor: "background.paper", //#121212 !important",
+                  bgcolor: "background.paper",
                   borderRadius: 0.5,
                   //boxShadow: 2,
                   my: 0.7,
@@ -139,7 +129,6 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
                     opacity: 0.8,
                     textDecoration: "none",
                     "&:hover": {
-                      //bgcolor: "background.paper",
                       opacity: 1,
                       color: "secondary.main",
                     },
@@ -149,6 +138,7 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
             }}
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            disableScrollLock
           >
             <Link href={`/`} passHref>
               <MenuItem title={"Siteye git"} />
@@ -160,51 +150,21 @@ export const AdminAccountMenu: React.FC<AccountMenuProps> = ({ account }) => {
               <MenuItem title={"Kullanıcılar"} />
             </Link>
 
+            <Link href={`/admin/products`} passHref>
+              <MenuItem title={"Ürünler"} />
+            </Link>
+
             <Divider style={{ margin: 0 }} />
 
             <Link href={`/admin/lectures`} passHref>
               <MenuItem title={"Eğitimler"} />
             </Link>
 
-            <Link href={`/admin/products`} passHref>
-              <MenuItem title={"Ürünler"} />
+            <Link href={`/admin/tickets`} passHref>
+              <MenuItem title={"Biletler"} />
             </Link>
 
-            {/* <Link href={`/Y/yonlendirmeler`} passHref>
-              <MenuItem title={"Yönlendirmeler"} />
-            </Link> */}
-
             <Divider style={{ margin: 0 }} />
-
-            {/* <Box>
-              <ToggleButtonGroup
-                value={theme}
-                exclusive
-                onChange={handleTheme}
-                aria-label='theme preference'
-                sx={{
-                  display: "flex",
-                  "& .MuiToggleButton-root": {
-                    flex: 1,
-                    border: "none",
-                    borderRadius: 0,
-                  },
-                  "& .Mui-selected": {
-                    "& .MuiSvgIcon-root": {
-                      color: "primary.main",
-                    },
-                  },
-                }}
-              >
-                <ToggleButton value='light' aria-label='light theme'>
-                  <LightThemeIcon />
-                </ToggleButton>
-                <ToggleButton value='dark' aria-label='dark theme'>
-                  <DarkThemeIcon />
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </Box>
-            <Divider /> */}
 
             <MenuItem title={"Çıkış"} onClick={handleLogout} />
           </Menu>

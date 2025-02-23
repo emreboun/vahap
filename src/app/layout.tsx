@@ -54,6 +54,7 @@ export default function RootLayout({
           display: "flex",
           flexDirection: "column",
           minHeight: "100dvh",
+          backgroundColor: "#DFDAD4",
         }}
       >
         {children}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Paper, Box, Modal, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 import {
   GridToolbarColumnsButton,
@@ -9,8 +9,8 @@ import {
   GridToolbarExport,
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
-import { AddLectureForm, AddProductForm } from "../form";
 import { useParams } from "next/navigation";
+import { NavLink } from "@/components/app-bar/link";
 
 interface Props {
   data: any[];
@@ -18,11 +18,7 @@ interface Props {
 
 export const CustomToolbar: React.FC<Props> = ({ data }) => {
   const params = useParams();
-  const [modal, setModal] = useState(false);
-
-  const handleModal = () => {
-    setModal((prev) => !prev);
-  };
+  const { table } = params;
 
   return (
     <>
@@ -92,7 +88,29 @@ export const CustomToolbar: React.FC<Props> = ({ data }) => {
             }}
           />
 
-          {(params.table === "lectures" || params.table === "products") && (
+          {(table === "lectures" ||
+            table === "products" ||
+            table === "tickets") && (
+            <NavLink href={`/admin/${table}/add`}>
+              <Button
+                variant={"contained"}
+                className={"limitedLine"}
+                sx={{
+                  fontSize: 13,
+                  alignSelf: "center",
+                  py: "3px",
+                  minWidth: 107,
+                  flex: { xs: 1, md: 0 },
+                  boxShadow: 2,
+                }}
+                style={{ minWidth: 108, color: "#fff" }}
+              >
+                {"Yeni Oluştur"}
+              </Button>
+            </NavLink>
+          )}
+
+          {/* {params.table === "products" && (
             <Button
               variant={"contained"}
               className={"limitedLine"}
@@ -109,11 +127,11 @@ export const CustomToolbar: React.FC<Props> = ({ data }) => {
             >
               {"Yeni Oluştur"}
             </Button>
-          )}
+          )} */}
         </Box>
       </GridToolbarContainer>
 
-      <Modal open={modal} onClose={() => setModal(false)}>
+      {/* <Modal open={modal} onClose={() => setModal(false)}>
         <Paper
           sx={{
             position: "fixed",
@@ -126,14 +144,10 @@ export const CustomToolbar: React.FC<Props> = ({ data }) => {
             flexDirection: "column",
           }}
         >
-          {params.table === "lectures" && (
-            <AddLectureForm onClose={handleModal} />
-          )}
-          {params.table === "products" && (
-            <AddProductForm onClose={handleModal} />
-          )}
+          {params.table === "lectures" && <AddLecture onClose={handleModal} />}
+          {params.table === "products" && <AddProduct onClose={handleModal} />}
         </Paper>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

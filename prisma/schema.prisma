@@ -25,7 +25,7 @@ model Account {
   role        String      @default("user")
 
   purchases   Purchase[]
-
+  permissions UserLectureAccess[]
   createdAt   DateTime    @default(now()) @map("created_at")
   updatedAt   DateTime    @updatedAt      @map("updated_at")
 
@@ -41,20 +41,25 @@ model Lecture {
   
   introVideo  String?   @map("intro_video")
   mainVideo   String    @map("main_video")
-  thumbnail   String    
+  thumbnail   String    @default("")
 
   misc        Json?     @db.Json 
-  
+
   duration    Int?      // Duration in seconds
-  order       Int       @default(autoincrement())   // Determines the order of lectures
+  order       Int       @default(autoincrement())   
 
   createdAt   DateTime  @default(now())  @map("created_at")
   updatedAt   DateTime  @updatedAt  @map("updated_at")
 
   // relations
-  productId   String    @unique  @db.Uuid  @map("product_id") 
-  mainProduct Product   @relation("main_product", fields: [productId], references: [id], onDelete: Cascade)
+  //productId   String?             @db.Uuid  @map("product_id") 
+  productId   String                @unique  @db.Uuid  @map("product_id") 
+  mainProduct Product               @relation("main_product", fields: [productId], references: [id])
+
+  tags        LectureTag[]          @relation("LectureTags")
   products    ProductLecture[]
+  resources   LectureResource[]
+  userAccess  UserLectureAccess[]
   files       File[]     
 
   @@map("lectures")
@@ -68,6 +73,7 @@ model Product {
   description String     @default("")
   status      Boolean    @default(true)
 
+  order       Int        @default(autoincrement())   
   price       Int
   discount    Int        @default(0)
 
@@ -76,10 +82,52 @@ model Product {
 
   lectures    ProductLecture[]
   purchases   Purchase[]
-  //lectureId   String?    @unique @db.Uuid @map("lecture_id")
+
   lecture     Lecture?   @relation("main_product")
+  eventTicket EventTicket?
+  files       File[]
 
   @@map("products")
+}
+
+model LectureTag {
+  id          String    @id @db.Uuid @default(uuid()) 
+  name        String    @unique   @db.VarChar(256)
+  lectures    Lecture[] @relation("LectureTags")
+  
+  createdAt   DateTime  @default(now())    @map("created_at")
+  updatedAt   DateTime  @updatedAt    @map("updated_at")
+
+  @@map("lecture_tags")
+}
+
+model LectureResource {
+  id        String   @id @default(uuid()) @db.Uuid
+  lectureId String   @db.Uuid  @map("lecture_id")
+  type      String   // "pgn", "pdf", "notes", etc.
+  name      String    
+  url       String?   // File URL
+  content   String?
+
+  lecture   Lecture  @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+
+  @@map("lecture_resources")
+}
+
+
+model EventTicket {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  date        DateTime
+  location    String?
+  url         String?
+  capacity    Int
+  sold        Int      @default(0) @map("sold")
+
+  productId   String   @unique @db.Uuid @map("product_id")
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("event_tickets")
 }
 
 model ProductLecture {
@@ -94,17 +142,27 @@ model ProductLecture {
 }
 
 model Purchase {
-  //id         String    @id @default(uuid()) @db.Uuid
-  userId     String    @db.Uuid @map("user_id")
-  productId  String    @db.Uuid @map("product_id")
-  purchasedAt DateTime @default(now()) @map("purchased_at")
+  userId      String    @db.Uuid @map("user_id")
+  productId   String    @db.Uuid @map("product_id")
+  purchasedAt DateTime  @default(now()) @map("purchased_at")
 
-  user       Account     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user        Account   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([userId, productId])
   @@map("purchases")
-  
+}
+
+model UserLectureAccess {
+  userId    String   @db.Uuid @map("user_id")
+  lectureId String   @db.Uuid @map("lecture_id")
+  grantedAt DateTime @default(now())  @map("granted_at")
+
+  user      Account  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lecture   Lecture  @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+
+  @@id([userId, lectureId])
+  @@map("user_lecture_access")
 }
 
 
@@ -116,8 +174,11 @@ model File {
   size        Int
   createdAt   DateTime   @default(now())  @map("created_at")
   
-  lectureId   String     @db.Uuid @map("lecture_id")
-  lecture     Lecture    @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  lectureId   String?    @db.Uuid @map("lecture_id")
+  productId   String?    @db.Uuid @map("product_id")
+
+  lecture     Lecture?   @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  product     Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@map("files")
 }

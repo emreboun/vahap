@@ -27,9 +27,9 @@ export default class CrudService<
     return this.repository.createMany(data);
   }
 
-  async findById(id: string, include?: any, deletedAt?: any) {
+  async findById(id: string, include?: any /* , deletedAt?: any */) {
     try {
-      return this.repository.findById(id, include, deletedAt);
+      return this.repository.findById(id, include /* , deletedAt */);
     } catch (e) {}
   }
 
@@ -51,8 +51,8 @@ export default class CrudService<
     return this.repository.findMany(filters, include, sort, page, pageSize);
   }
 
-  async findAll(select?: any, include?: any) {
-    return this.repository.findAll(select, include);
+  async findAll(select?: any, include?: any, orderBy?: any) {
+    return this.repository.findAll(select, include, orderBy);
   }
 
   async count(where?: any) {
@@ -61,9 +61,10 @@ export default class CrudService<
 
   async update(
     idOrWhere: string | object,
-    data: any /* Partial<Omit<T, "id"> >*/
+    data: any /* Partial<Omit<T, "id"> >*/,
+    process: boolean = true
   ) {
-    return this.repository.update(idOrWhere, data);
+    return this.repository.update(idOrWhere, data, process);
   }
 
   async updateMany(where: Partial<T>, data: Partial<Omit<T, "id">>) {
@@ -74,8 +75,8 @@ export default class CrudService<
     return this.repository.deleteSafe(id);
   }
 
-  async delete(id: string) {
-    return this.repository.delete(id);
+  async delete(idOrWhere: string | object) {
+    return this.repository.delete(idOrWhere);
   }
 
   async deleteMany(where?: any) {

@@ -252,37 +252,6 @@ export const lectureColumns: GridColDef[] = [
 ];
 
 const productColumns: GridColDef[] = [
-  {
-    field: "slug",
-    headerName: "Sayfa",
-    width: 60,
-    resizable: false,
-    sortable: false,
-    filterable: false,
-    disableColumnMenu: true,
-    hideSortIcons: true,
-    renderCell: (params) => {
-      return (
-        <>
-          <Button
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              width: "100%",
-              ml: "-12px",
-            }}
-            target='_blank'
-            rel='noopener noreferrer'
-            href={`/egitimler/${params.value}`}
-          >
-            <LinkRounded sx={{ color: "cyan", fontSize: 21 }} />
-          </Button>
-        </>
-      );
-    },
-  },
   statusColumnDef,
   //idColumnDef,
   {
@@ -306,11 +275,62 @@ const productColumns: GridColDef[] = [
     width: 160,
     editable: true,
   },
-  {
-    field: "imgUrl",
-    headerName: "Resim Dizini",
-    width: 240,
+  /*  {
+    field: "order",
+    headerName: "Sıra",
+    width: 100,
+    type: "number",
     editable: true,
+  }, */
+  {
+    field: "createdAt",
+    headerName: "Oluşturulma Tarihi",
+    width: 260,
+    type: "dateTime",
+    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
+  },
+];
+
+const eventTicketColumns: GridColDef[] = [
+  //statusColumnDef,
+  {
+    field: "name",
+    headerName: "Etkinlik Adı",
+    width: 320,
+    editable: true,
+  },
+  {
+    field: "date",
+    headerName: "Tarih",
+    width: 260,
+    type: "dateTime",
+    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
+  },
+  {
+    field: "url",
+    headerName: "Url",
+    width: 160,
+    editable: true,
+  },
+  {
+    field: "location",
+    headerName: "Konum",
+    width: 200,
+    editable: true,
+  },
+  {
+    field: "capacity",
+    headerName: "Kapasite",
+    type: "number",
+    width: 160,
+    editable: true,
+  },
+  {
+    field: "sold",
+    headerName: "Satılan",
+    type: "number",
+    width: 160,
+    editable: false,
   },
 ];
 
@@ -318,4 +338,5 @@ export const columnsDefinitions: { [key: string]: GridColDef[] } = {
   lectures: lectureColumns,
   products: productColumns,
   users: userColumns,
+  tickets: eventTicketColumns,
 };

@@ -24,7 +24,10 @@ export function useFileUpload() {
     }
   };
 
-  const uploadFiles = async (lectureId: string) => {
+  const uploadFiles = async (
+    lectureId: string,
+    type: "lecture" | "product"
+  ) => {
     setUploadStatus({ uploading: true });
 
     try {
@@ -34,7 +37,7 @@ export function useFileUpload() {
         formdata.append("files", f.file);
       });
 
-      const result = await uploadImage(formdata, lectureId);
+      const result = await uploadImage(formdata, lectureId, type);
 
       //var requestOptions = { method: "POST", body: formdata };
 

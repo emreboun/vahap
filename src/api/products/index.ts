@@ -3,26 +3,151 @@ import { Product } from "@prisma/client";
 import { CrudRepository, CrudService } from "../prisma/crud";
 
 import prisma from "../prisma/init";
+import { getCurrentUserId } from "../user/auth";
 
 const productRepository = new CrudRepository<Product>(prisma, "product");
 const productService = new CrudService<Product>(productRepository);
 
-export const getAllProducts = async () => {
-  return await productService.findAll();
+export const getDiscountedProducts = async () => {
+  const userId = await getCurrentUserId();
+
+  const purchasedProductIds = userId
+    ? await prisma.purchase
+        .findMany({
+          where: { userId },
+          select: { productId: true },
+        })
+        .then((purchases) => purchases.map((p) => p.productId))
+    : [];
+
+  const result: any[] = await productService.findMany(
+    {
+      status: true,
+      ...(userId ? { id: { notIn: purchasedProductIds } } : {}), // Exclude purchased products if logged in
+    },
+    {
+      files: {
+        take: 1,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          path: true,
+        },
+      },
+      lecture: {
+        select: {
+          duration: true,
+          resources: { select: { type: true } },
+        },
+      },
+      lectures: {
+        select: {
+          lecture: {
+            select: { duration: true, resources: { select: { type: true } } },
+          },
+        },
+      },
+    },
+    {
+      discount: "desc",
+    },
+    1,
+    4
+  );
+  return result
+    .map((item) => {
+      const lectureDuration = item.lecture?.duration || 0;
+      const lecturesDuration = item.lectures?.reduce(
+        (
+          sum: number,
+          lectureContainer: { lecture: { duration: number | null } }
+        ) => sum + (lectureContainer.lecture.duration || 0),
+        0
+      );
+
+      const lecturePgns = item.lecture?.pgnCount || 0;
+      const lecturesPgns = item.lectures?.reduce(
+        (sum: number, lectureContainer: { lecture: { resources: any[] } }) =>
+          sum + (lectureContainer.lecture.resources.length || 0),
+        0
+      );
+
+      return {
+        ...item,
+        files: undefined,
+        thumbnail: item.files[0]?.path,
+        duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
+        pgnCount: lecturePgns || lecturesPgns || 0,
+      };
+    })
+    .filter((item) => item.discount > 0);
+  return result
+    .map((item) => ({
+      ...item,
+      files: undefined,
+      thumbnail: item.files[0]?.path,
+    }))
+    .filter((item) => item.discount > 0);
 };
 
-export const createProduct = async (data: Partial<Product>) => {
+export const getAllProducts = async () => {
+  const result: any[] = await productService.findMany(
+    { status: true },
+    {
+      files: {
+        take: 1,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          path: true,
+        },
+      },
+    },
+    {
+      order: "desc",
+    }
+  );
+
+  return result.map((item) => ({
+    ...item,
+    files: undefined,
+    thumbnail: item.files[0]?.path,
+  }));
+};
+
+export const getAllProductsAdmin = async () => {
+  const result: any[] = await productService.findMany(undefined, false);
+
+  return result;
+};
+
+export const createProduct = async (data: any /* Partial<Product> */) => {
   // try {
-  const { slug, name, description, imgUrl, price } = data;
+  const { slug, name, description, price, discount, lectures } = data;
+
   const result = await productService.create({
     slug,
     name,
     description,
-    imgUrl,
     price: Number(price),
+    discount,
+    /* lectures: {
+      create: lectures.map((lecture: any) => ({
+        lecture: { connect: { id: lecture.id } },
+      })),
+    }, */
   });
 
-  return result;
+  const second = await prisma.productLecture.createMany({
+    data: lectures.map((lec: any) => ({
+      lectureId: lec.id,
+      productId: result.id,
+    })),
+  });
+
+  return { ...result, lectures: second };
   /* } catch (e: unknown) {
     console.log(e);
     return null;
@@ -31,11 +156,24 @@ export const createProduct = async (data: Partial<Product>) => {
 
 export const getProductBySlug = async (slug: string) => {
   try {
+    console.log(slug);
     const result = await productService.findByUniqueProperty(
       "slug",
       slug,
-      true
+      false
     );
+    console.log(result);
+    return result;
+  } catch (e: unknown) {
+    console.log(e);
+    return null;
+  }
+};
+
+export const getProductById = async (id: string) => {
+  try {
+    console.log(id);
+    const result = await productService.findById(id, true);
     console.log(result);
     return result;
   } catch (e: unknown) {
@@ -59,5 +197,15 @@ export const deleteProduct = async (id: string) => {
     return true;
   } catch (e) {
     return false;
+  }
+};
+
+export const getProductSlugPrefix = async (slug: string) => {
+  try {
+    const result = await productRepository.getListBySlugPrefix(slug);
+    console.log(result);
+    return result;
+  } catch (e) {
+    return null;
   }
 };

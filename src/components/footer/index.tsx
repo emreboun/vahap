@@ -1,4 +1,3 @@
-import styles from "./footer.module.css";
 import React from "react";
 import Image from "next/image";
 import { Box, ButtonBase, Divider, Typography } from "@mui/material";
@@ -25,7 +24,7 @@ export const Footer: React.FC = () => {
       }}
     >
       <Box
-        className={styles.gridContainer}
+        //className={styles.gridContainer}
         sx={{
           display: "grid",
           justifyContent: "center",
@@ -43,7 +42,7 @@ export const Footer: React.FC = () => {
         }}
       >
         <Box
-          className={styles.widgetContainer}
+          //className={styles.widgetContainer}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -133,10 +132,30 @@ export const Footer: React.FC = () => {
         ))}
       </Box>
 
-      <div className={styles.bottomContainer}>
-        <Divider className={styles.divider} flexItem />
-        <p className={styles.footerText}>© 2025 Tüm hakları saklıdır.</p>
-      </div>
+      <>
+        <Divider
+          sx={{
+            borderColor: "#fff",
+            mt: { xs: 4, sm: 6, md: 8 },
+            mb: { xs: 0.4, sm: 0.5, md: 0.6 },
+            mx: { xs: 4, sm: 6, md: 8, lg: 10, xl: 12 },
+          }}
+          flexItem
+        />
+
+        <Typography
+          sx={{
+            fontSize: 11,
+            textAlign: "center",
+            mb: "16px",
+            zIndex: 2,
+            //width: { xs: "60%", sm: "auto" },
+            alignSelf: "center",
+          }}
+        >
+          © 2025 Tüm hakları saklıdır.
+        </Typography>
+      </>
     </Box>
   );
 };

@@ -24,8 +24,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         ref={ref}
         open={enabled}
         onClose={() => handleClose("")}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
+        //aria-labelledby='modal-modal-title'
+        //aria-describedby='modal-modal-description'
         sx={{
           zIndex: "modal",
           transition: "top 0.2s ease-in-out",
@@ -54,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           timeout={{ enter: 320, exit: 240 }}
           easing={{ enter: "ease-in-out", exit: "ease-out" }}
           mountOnEnter
-          unmountOnExit
+          //unmountOnExit
         >
           <Box
             sx={{

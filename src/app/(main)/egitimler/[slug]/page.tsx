@@ -1,8 +1,21 @@
 import { getLectureBySlug } from "@/api/lectures";
+import { getUserPermissions } from "@/api/lectures/access";
 import { getUserPurchases } from "@/api/user/purchase";
+import { parseUrlSlug } from "@/components/admin/utils";
 import { LectureMain } from "@/components/lecture";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { cookies } from "next/headers";
+
+// or Dynamic metadata
+export async function generateMetadata({ params }: any) {
+  const { slug } = await params;
+  const title = parseUrlSlug(slug);
+  return {
+    title: `${title} - Online Satranç Okulu`,
+    description: `${title} Eğitimi - Online Satranç Okulu`,
+  };
+}
+
 export const dynamic = "force-dynamic"; // Force dynamic rendering
 
 type Params = Promise<{ slug: string }>;
@@ -10,7 +23,6 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function LecturePage({
   params,
-  searchParams,
 }: {
   params: Params;
   searchParams: SearchParams;
@@ -18,15 +30,19 @@ export default async function LecturePage({
   const { slug } = await params;
   const cookieStore = await cookies();
   const userId = cookieStore.get("userid")?.value;
-  let purchases: string[] = [];
+  let permissions: string[] = [];
+  if (userId) {
+    permissions = (await getUserPermissions(userId)) ?? [];
+  }
+  console.log(permissions);
+  /* let purchases: string[] = [];
   if (userId) {
     purchases = (await getUserPurchases(userId)) ?? [];
-  }
-  //const { query } = await searchParams;
-  //console.log(query);
-  //const lectureSlug = decodeURIComponent(slug);
+  } */
+
   const lecture = await getLectureBySlug(slug);
-  const hasAccess = lecture && purchases?.some((p) => p === lecture.id);
+  const hasAccess =
+    lecture && permissions?.some((p: any) => p.lectureId === lecture.id);
 
   const opts = {
     auth: !!userId,

@@ -105,8 +105,8 @@ export const Membership: React.FC<MembershipProps> = ({
                     my: 0,
                     height: "100%",
                     "&:hover": {
-                      "& .first-icon": { color: "primary.main" }, // ShoppingBagRounded
-                      "& .second-icon": { color: "secondary.main" }, // CircleRounded
+                      "& .first-icon": { color: "primary.main" },
+                      "& .second-icon": { color: "secondary.main" },
                     },
                     aspectRatio: 1,
                   }}
