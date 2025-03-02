@@ -272,6 +272,10 @@ export const CartList = () => {
                           borderRadius: 1,
                           zIndex: 2,
                           pt: 0.2,
+                          position: "relative",
+                          right: !!item.product.eventTicket
+                            ? { xs: 4, sm: 6, md: 0 }
+                            : 0,
                         }}
                       >
                         {item.duration &&

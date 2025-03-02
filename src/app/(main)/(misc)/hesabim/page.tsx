@@ -91,7 +91,7 @@ const AccountPage: React.FC = async () => {
             >
               {permissions.map((lec: any) => (
                 <Link
-                  key={lec.lecture.id}
+                  key={lec.lecture.slug}
                   href={`/egitimler/${lec.lecture.slug}`}
                 >
                   <Paper

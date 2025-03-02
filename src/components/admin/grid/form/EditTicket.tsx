@@ -33,7 +33,6 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
   const { id } = data;
 
   const [form, setForm] = useState<any>({});
-  const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (event: any) => {
@@ -49,13 +48,14 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
       ...form,
     };
     req.date = new Date(form.date);
+    req.capacity = req.capacity ? req.capacity * 1 : undefined;
+
     Object.keys(req).forEach((key) => {
       if (req[key] === data[key]) {
         delete req[key];
         //req[key] = undefined;
       }
     });
-    req.capacity = req.capacity ? req.capacity * 1 : undefined;
     //req.discount = req.discount ? req.discount * 1 : undefined;
 
     const result = await updateTicket(id, req);
@@ -86,7 +86,7 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant={"h6"}>{`Yeni Bilet`}</Typography>
+        <Typography variant={"h6"}>{`Bileti Düzenle`}</Typography>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <NavLink href={`/admin/tickets`}>
@@ -237,7 +237,7 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
             />
           </Box>
 
-          <Box
+          {/* <Box
             sx={{
               display: "flex",
               gap: { xs: 0.8, md: 1.2, lg: 2 },
@@ -259,7 +259,7 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
               sx={{ flex: 1 }}
               onChange={handleChange}
             />
-          </Box>
+          </Box> */}
         </Box>
         <TextField
           label='Açıklama'
