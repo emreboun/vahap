@@ -1,35 +1,20 @@
 import {
   Box,
   Button,
-  ButtonBase,
   CircularProgress,
-  Collapse,
   FormControl,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
   Paper,
   Switch,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 
-import {
-  AddPhotoAlternateOutlined as ImageIcon,
-  Replay5Rounded,
-} from "@mui/icons-material";
-import { formatText, formatUrl, generateUrlSlug } from "../../utils";
+import { formatText } from "../../utils";
 import { NavLink } from "@/components/app-bar/link";
-import { useFileUpload } from "@/components/image/hooks";
 import { useRouter } from "next/navigation";
-import { useDebounceWithTimeout } from "@/hooks/debounce";
 import { BoxCard } from "@/components/box";
-import { SearchBar } from "@/components/search/SearchBar";
-import { searchLectures } from "@/api/lectures";
-import { formatDuration } from "@/utils/data";
+
 import { createTicket } from "@/api/products/tickets";
 
 interface AddTicketFormProps {
@@ -57,7 +42,8 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
   };
 
   const handleSubmit = async () => {
-    const { name, price, discount, date, url, location, capacity, sold } = form;
+    const { name, price, discount, date, url, location, capacity, status } =
+      form;
 
     try {
       const list = [];
@@ -73,17 +59,15 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
 
       const temp = {
         name: formatText(name),
-        date,
+        date: new Date(date),
         url,
         location,
-        capacity,
-        sold,
+        capacity: Number(capacity),
         price: Number(price),
-        discount,
+        discount: Number(discount),
+        status,
       };
-
       const result = await createTicket({ ...temp });
-      console.log(result);
 
       setLoading(false);
       if (!!result) {
@@ -96,31 +80,6 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
     } catch (e) {
       setLoading(false);
     }
-  };
-  const [searchResult, setSearchResult] = useState<any[]>([]);
-  const [lectures, setLectures] = useState<any[]>([]);
-
-  const onSearch = useCallback(
-    async (text: string) => {
-      if (text.length < 3) {
-        setSearchResult([]);
-      } else {
-        const resultList = await searchLectures(text);
-        const res = resultList.filter(
-          (item) => !lectures.some((l) => l.id === item.id)
-        );
-        setSearchResult(res);
-      }
-    },
-    [lectures]
-  );
-
-  const handleAddLecture = (lectureData: any) => {
-    setLectures((prev: any) =>
-      !prev.some((p: any) => p.id === lectureData.id)
-        ? [...prev, lectureData]
-        : prev
-    );
   };
 
   return (
@@ -182,7 +141,7 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)",
           display: "flex",
           flexDirection: "column",
-          gap: "12px",
+          gap: { xs: 0.8, md: 1.2, lg: 2 },
           alignItems: "stretch",
           "& .MuiTextField-root": {
             my: 0.2,
@@ -194,7 +153,7 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
-            gap: { xs: 1.4, md: 1.2, lg: 2 },
+            gap: { xs: 0.8, md: 1.2, lg: 2 },
           }}
         >
           <TextField
@@ -217,6 +176,7 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             gap: { xs: 0.8, md: 1.2, lg: 2 },
             flex: 4,
           }}
@@ -239,49 +199,72 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             gap: { xs: 0.8, md: 1.2, lg: 2 },
-            flex: 4,
           }}
         >
-          <BoxCard
-            title={"Durum:"}
+          <Box
             sx={{
-              bgcolor: "background.paper",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 2,
-              py: 0,
-              //px: { xs: 2, sm: 3, md: 4 },
-              minWidth: { xs: 150, sm: 160, md: 180 },
+              gap: { xs: 0.8, md: 1.2, lg: 2 },
+              flex: 4,
             }}
           >
-            <Typography>{form.status ? "Aktif" : "Pasif"}</Typography>
-            <Switch
-              name={"status"}
-              sx={{}}
-              defaultChecked={true}
+            <BoxCard
+              title={"Durum:"}
+              sx={{
+                bgcolor: "background.paper",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+                py: 0,
+                //px: { xs: 2, sm: 3, md: 4 },
+                minWidth: { xs: 150, sm: 160, md: 180 },
+              }}
+            >
+              <Typography>{form.status ? "Aktif" : "Pasif"}</Typography>
+              <Switch
+                name={"status"}
+                sx={{}}
+                defaultChecked={true}
+                onChange={handleChange}
+              />
+            </BoxCard>
+
+            <TextField
+              name={"capacity"}
+              label={"Kapasite"}
+              type={"number"}
+              sx={{ flex: 1 }}
               onChange={handleChange}
             />
-          </BoxCard>
+          </Box>
 
-          <TextField
-            name={"price"}
-            label={"Ücret"}
-            type={"number"}
-            sx={{ flex: 1 }}
-            onChange={handleChange}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              gap: { xs: 0.8, md: 1.2, lg: 2 },
+              flex: 4,
+            }}
+          >
+            <TextField
+              name={"price"}
+              label={"Ücret"}
+              type={"number"}
+              sx={{ flex: 1 }}
+              onChange={handleChange}
+            />
 
-          <TextField
-            name={"discount"}
-            label={"İndirim"}
-            type={"number"}
-            sx={{ flex: 1 }}
-            onChange={handleChange}
-          />
+            <TextField
+              name={"discount"}
+              label={"İndirim"}
+              type={"number"}
+              sx={{ flex: 1 }}
+              onChange={handleChange}
+            />
+          </Box>
         </Box>
-
         <TextField
           label='Açıklama'
           name='description'

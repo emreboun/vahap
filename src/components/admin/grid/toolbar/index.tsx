@@ -109,45 +109,8 @@ export const CustomToolbar: React.FC<Props> = ({ data }) => {
               </Button>
             </NavLink>
           )}
-
-          {/* {params.table === "products" && (
-            <Button
-              variant={"contained"}
-              className={"limitedLine"}
-              sx={{
-                fontSize: 13,
-                alignSelf: "center",
-                py: "3px",
-                minWidth: 107,
-                flex: { xs: 1, md: 0 },
-                boxShadow: 2,
-              }}
-              style={{ minWidth: 108, color: "#fff" }}
-              onClick={handleModal}
-            >
-              {"Yeni Oluştur"}
-            </Button>
-          )} */}
         </Box>
       </GridToolbarContainer>
-
-      {/* <Modal open={modal} onClose={() => setModal(false)}>
-        <Paper
-          sx={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%,-50%)",
-            width: { xs: "100%", sm: "100%", md: "500px" },
-            height: { xs: "100%", md: "auto" },
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          {params.table === "lectures" && <AddLecture onClose={handleModal} />}
-          {params.table === "products" && <AddProduct onClose={handleModal} />}
-        </Paper>
-      </Modal> */}
     </>
   );
 };

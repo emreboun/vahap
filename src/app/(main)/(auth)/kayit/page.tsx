@@ -254,7 +254,7 @@ const SignupFormClient = () => {
         disabled={!isFormValid && submitted}
         onClick={handleSignup}
       >
-        Kayıt Ol
+        {"Kayıt Ol"}
       </Button>
 
       <Box
@@ -274,7 +274,7 @@ const SignupFormClient = () => {
             fontSize: 13,
             textTransform: "none",
           }}
-          href='/giris'
+          href={"/giris"}
         >
           {"Giriş Yap"}
         </Link>

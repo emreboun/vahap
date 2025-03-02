@@ -15,8 +15,7 @@ const ticketService = new CrudService<EventTicket>(eventTicketRepository);
 
 export const createTicket = async (data: any /*  Partial<EventTicket> */) => {
   // try {
-  const { name, date, url, location, capacity, sold, price, discount, status } =
-    data;
+  const { name, date, url, location, capacity, price, discount, status } = data;
 
   const slug = generateUrlSlug(name);
 
@@ -38,7 +37,6 @@ export const createTicket = async (data: any /*  Partial<EventTicket> */) => {
     url,
     location,
     capacity,
-    sold,
     product: {
       slug,
       name,

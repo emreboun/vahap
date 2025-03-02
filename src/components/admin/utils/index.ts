@@ -66,6 +66,13 @@ export const formatUrl = (text: string) => {
   return formatted;
 };
 
+export const formatDateToDb = (text: string) => {
+  const date = new Date(text);
+  if (isNaN(date.getTime())) throw new Error("Invalid date format");
+
+  return date.toISOString().replace("T", " ").split(".")[0];
+};
+
 export const turkish_chars = [
   "ş",
   "Ş",

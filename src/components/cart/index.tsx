@@ -9,7 +9,6 @@ import {
 import { Price } from "./price";
 import { useCart } from "./CartProvider";
 import { CartList } from "./list";
-import { purchaseItems } from "@/api/user/purchase";
 import { LoginPageClient } from "@/app/(main)/(auth)/giris/LoginPageClient";
 import { useRouter } from "next/navigation";
 import { useSidebar } from "../app-bar/sidebars/SidebarProvider";
@@ -36,17 +35,6 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ auth }) => {
     } else {
       setShowLogin(true);
     }
-
-    //console.log(state.items);
-    // Approve cart
-    /*  const result = await purchaseItems(
-      state.items.map((item) => item.product.id)
-    );
-    if (result && result.count > 0) {
-      dispatch({ type: "CLEAR_CART" });
-    } else {
-      setShowLogin(false);
-    } */
   };
 
   const goToPayment = () => {
@@ -57,7 +45,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ auth }) => {
   const handleLogin = () => {
     setShowLogin(false);
   };
-
+  console.log(state.items);
   return (
     <>
       {!showLogin ? (
@@ -108,6 +96,8 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ auth }) => {
                 fontSize={19}
                 color={"#fff"}
                 sx={{ fontWeight: 550 }}
+                isSign={""}
+                isDecimal={true}
               />
             </Box>
           </Box>

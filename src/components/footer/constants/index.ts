@@ -28,6 +28,7 @@ export const SECTIONS = [
         href: "/hakkimda",
         title: "Hakkımda",
       },
+      { href: "/sss", title: "Sıkça Sorulan Sorular" },
       {
         //href: "/sepet",
         title: "Sepetim",

@@ -5,10 +5,12 @@ import { Product } from "@prisma/client";
 import {
   Circle,
   Close,
+  AccessTimeFilledRounded,
   OndemandVideoRounded,
   TimerOutlined,
 } from "@mui/icons-material";
 import { formatDuration } from "@/utils/data";
+import { turkcetarih_formati } from "@/utils";
 
 export const CartList = () => {
   const { state, dispatch } = useCart();
@@ -31,7 +33,7 @@ export const CartList = () => {
         <ul
           style={{ position: "absolute", width: "100%", listStyleType: "none" }}
         >
-          {items.map((item, i) => (
+          {items.map((item: any, i) => (
             <Box
               key={i}
               component={"li"}
@@ -220,14 +222,26 @@ export const CartList = () => {
                           justifyContent: "center",
                         }}
                       >
-                        <TimerOutlined
-                          sx={{
-                            fontSize: 22,
-                            color: "#fff",
-                            position: "absolute",
-                            zIndex: 1,
-                          }}
-                        />
+                        {item.duration && (
+                          <TimerOutlined
+                            sx={{
+                              fontSize: 22,
+                              color: "#fff",
+                              position: "absolute",
+                              zIndex: 1,
+                            }}
+                          />
+                        )}
+                        {!!item.product.eventTicket && (
+                          <AccessTimeFilledRounded
+                            sx={{
+                              fontSize: 22,
+                              color: "#fff",
+                              position: "absolute",
+                              zIndex: 1,
+                            }}
+                          />
+                        )}
 
                         <Circle
                           sx={{
@@ -260,9 +274,15 @@ export const CartList = () => {
                           pt: 0.2,
                         }}
                       >
-                        {formatDuration(item.duration, {
-                          showSeconds: false,
-                        })}
+                        {item.duration &&
+                          formatDuration(item.duration, {
+                            showSeconds: false,
+                          })}
+
+                        {turkcetarih_formati(
+                          new Date(item.product.eventTicket?.date),
+                          { showYear: false }
+                        )}
                       </Typography>
                     </Box>
                   </Box>

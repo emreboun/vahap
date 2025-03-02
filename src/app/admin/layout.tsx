@@ -14,6 +14,8 @@ export default function AdminLayout({ children }: any) {
               sx={{
                 bgcolor: "secondary.main",
                 flex: 1,
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <AdminBar />

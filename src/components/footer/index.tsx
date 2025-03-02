@@ -11,7 +11,8 @@ export const Footer: React.FC = () => {
     <Box
       component={"footer"}
       sx={{
-        bgcolor: "secondary.main",
+        //bgcolor: "secondary.main",
+        bgcolor: "#445055",
         marginBottom: 0,
         paddingTop: "112px",
         paddingBottom: "32px",
@@ -20,7 +21,8 @@ export const Footer: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        borderTop: "1px solid #B3925B",
+        borderTop: "1px solid #243035",
+        //borderTop: "1px solid #B3925B",
       }}
     >
       <Box
@@ -49,6 +51,9 @@ export const Footer: React.FC = () => {
             gap: { xs: "16px", sm: "24px", md: "24px", lg: "24px" },
             marginRight: { xs: 0, sm: 0, md: 0, lg: 8.7, xl: 14 },
             alignItems: { xs: "flex-start" },
+            /* bgcolor: "secondary.main",
+            p: 4,
+            borderRadius: 1, */
           }}
         >
           <NavigationLink
@@ -81,7 +86,8 @@ export const Footer: React.FC = () => {
             <Typography
               component={"h3"}
               sx={{
-                color: "#1d2746",
+                //color: "#1d2746",
+                color: "secondary.main",
                 fontSize: "14px",
                 fontWeight: 600,
                 lineHeight: 1.2,
@@ -112,9 +118,10 @@ export const Footer: React.FC = () => {
                         textAlign: "left",
                         justifyContent: "flex-start",
                         borderRadius: 1,
+                        color: "secondary.main",
                         "&:hover": {
                           color: "#fff",
-                          bgcolor: "primary.main",
+                          bgcolor: "secondary.main", //"primary.main",
                           fontWeight: 600,
                           boxShadow: 2,
                         },
@@ -136,7 +143,7 @@ export const Footer: React.FC = () => {
         <Divider
           sx={{
             borderColor: "#fff",
-            mt: { xs: 4, sm: 6, md: 8 },
+            mt: { xs: 4, sm: 6, md: 8, lg: 12 },
             mb: { xs: 0.4, sm: 0.5, md: 0.6 },
             mx: { xs: 4, sm: 6, md: 8, lg: 10, xl: 12 },
           }}
@@ -152,8 +159,9 @@ export const Footer: React.FC = () => {
             //width: { xs: "60%", sm: "auto" },
             alignSelf: "center",
           }}
+          color={"secondary"}
         >
-          © 2025 Tüm hakları saklıdır.
+          {"© 2025 Tüm hakları saklıdır."}
         </Typography>
       </>
     </Box>

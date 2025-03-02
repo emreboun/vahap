@@ -1,5 +1,6 @@
 import { getProductBySlug } from "@/api/products";
 import { parseUrlSlug } from "@/components/admin/utils";
+import { ProductMain } from "@/components/product";
 import { Typography } from "@mui/material";
 import { cookies } from "next/headers";
 
@@ -25,8 +26,6 @@ export default async function ProductPage({
   searchParams: SearchParams;
 }) {
   const { slug } = await params;
-  //const { query } = await searchParams;
-  //console.log(query);
   const productSlug = decodeURIComponent(slug);
 
   const product = await getProductBySlug(productSlug);
@@ -50,5 +49,9 @@ export default async function ProductPage({
     );
   }
 
-  return <>asd</>;
+  return (
+    <>
+      <ProductMain data={product} />
+    </>
+  );
 }

@@ -2,13 +2,9 @@ import {
   Box,
   Button,
   ButtonBase,
-  Chip,
   CircularProgress,
   Collapse,
   FormControl,
-  IconButton,
-  InputBase,
-  InputLabel,
   List,
   ListItem,
   ListItemButton,
@@ -44,7 +40,6 @@ interface EditProductProps {
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ data }) => {
-  //const { value, setValue } = useGridContext();
   const router = useRouter();
   const [product, setProduct] = useState<any>(data);
   const [loading, setLoading] = useState(false);
@@ -54,8 +49,8 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
     slug,
     name,
     description,
-    price,
-    discount,
+    /* price,
+    discount, */
     lecture,
     order,
     status,
@@ -67,78 +62,6 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
       ...prev,
       [name]: name !== "status" ? value : checked,
     }));
-  };
-
-  /* const [addLecture, setAddPgn] = useState<boolean>(false);
-  const [addDisabled, setAddDisabled] = useState<boolean>(true);
-  const handleAddDisabled = (name: string) => {
-    setAddDisabled(!name || resources.some((res: any) => res.name === name));
-  }; */
-
-  /*  const handleAddLecture = () => {
-    setAddPgn((prev) => !prev);
-  }; */
-
-  /*  const [newPgn, setNewPgn] = useState<{ name: string; content: string }>({
-    name: "",
-    content: "",
-  }); */
-
-  /* const onNewPgnChange = (event: any) => {
-    const { name, value } = event.target;
-    setNewPgn((prev) => ({ ...prev, [name]: value }));
-    if (name === "name") {
-      handleAddDisabled(value);
-    }
-  }; */
-
-  const onAddSubmit = async () => {
-    /*  const { name, content } = newPgn;
-    const result = await addProductResource(id, {
-      name,
-      content,
-      type: "pgn",
-    });
-
-    if (!!result) {
-      setProduct((prev: any) => ({
-        ...prev,
-        resources: [...prev.resources, result],
-      }));
-      setNewPgn({
-        name: "",
-        content: "",
-      });
-      setAddPgn(false);
-    } */
-  };
-
-  const onDeleteSubmit = async (id: string) => {
-    /*  try {
-      await deleteProductResource(id);
-      setProduct((prev: any) => ({
-        ...prev,
-        resources: prev.resources.filter((res: any) => res.id !== id),
-      }));
-    } catch (e) {
-      console.error(e);
-    } */
-  };
-
-  const onEditSubmit = async (id: string, content: any) => {
-    /* try {
-      const result = await updateProductResourceContent(id, { content });
-      if (!!result) {
-        setProduct((prev: any) => ({
-          ...prev,
-          resources: prev.resources.map((res: any) =>
-            res.id !== id ? res : { ...res, content }
-          ),
-        }));
-      }
-    } catch (e) {
-      console.error(e);
-    } */
   };
 
   const { selectedFiles, uploadStatus, handleFileChange, uploadFiles } =
@@ -154,9 +77,13 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
     };
     Object.keys(req).forEach((key) => {
       if (req[key] === data[key]) {
-        req[key] = undefined;
+        delete req[key];
+        //req[key] = undefined;
       }
     });
+    req.price = req.price ? req.price * 1 : undefined;
+    req.discount = req.discount ? req.discount * 1 : undefined;
+
     const result = await updateProduct(id, req);
     let imageResult;
     if (selectedFiles.length > 0 && !!result) {
@@ -360,7 +287,6 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
                 justifyContent: "center",
                 gap: 2,
                 py: 0,
-                //px: { xs: 2, sm: 3, md: 4 },
                 minWidth: { xs: 150, sm: 160, md: 180 },
               }}
             >
@@ -384,7 +310,7 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
           <TextField
             name={"price"}
             label={"Ücret"}
-            defaultValue={price}
+            defaultValue={data.price}
             onChange={onProductChange}
             sx={{ minWidth: { xs: 150, md: 180 }, flex: 1 }}
           />
@@ -392,7 +318,7 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
             name={"discount"}
             label={"İndirim"}
             type={"number"}
-            defaultValue={discount}
+            defaultValue={data.discount}
             sx={{ flex: 1 }}
             onChange={onProductChange}
           />
@@ -401,10 +327,10 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
         {!!lecture && (
           <BoxCard title={"Eğitim"} sx={{ bgcolor: "background.paper" }}>
             <Box sx={{ transform: "scale(90%)" }}>
-              <GridItemCore
+              {/* <GridItemCore
                 imgUrl={`/resources/egitimler/${lecture.id}/image-1.jpg`}
                 title={lecture.name}
-              />
+              /> */}
             </Box>
           </BoxCard>
         )}

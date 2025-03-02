@@ -21,6 +21,8 @@ export const getLatestThreeLectures = async () => {
           path: true,
         },
       },
+      mainProduct: true,
+      resources: true,
     },
     {
       createdAt: "desc",
@@ -48,6 +50,8 @@ export const getThreeLectures = async () => {
           path: true,
         },
       },
+      mainProduct: true,
+      resources: true,
     },
     {
       order: "desc",
@@ -62,7 +66,7 @@ export const getThreeLectures = async () => {
   }));
 };
 
-export const getAllLectures = async () => {
+export const getAllLectures = async (userId?: string) => {
   const result: any[] = await lectureService.findMany(
     { status: true },
     {
@@ -75,6 +79,8 @@ export const getAllLectures = async () => {
           path: true,
         },
       },
+      mainProduct: true,
+      resources: true,
     },
     {
       order: "desc",
@@ -92,7 +98,7 @@ export const getAllLecturesAdmin = async () => {
 };
 
 export const createLecture = async (
-  data: Partial<Lecture> & { price: number }
+  data: Partial<Lecture> & { price: number; discount: number }
 ) => {
   try {
     const {
@@ -103,7 +109,10 @@ export const createLecture = async (
       introVideo,
       thumbnail,
       duration,
+      minElo,
+      maxElo,
       price,
+      discount,
       status,
     } = data;
 
@@ -132,12 +141,15 @@ export const createLecture = async (
       thumbnail,
       status,
       //order: Number(order),
+      minElo: Number(minElo),
+      maxElo: Number(maxElo),
       duration: Number(duration),
       mainProduct: {
         slug: productSlug,
         name,
         description,
         price: Number(price),
+        discount: Number(discount),
         status,
         //imgUrl: thumbnail,
       },

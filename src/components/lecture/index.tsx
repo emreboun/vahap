@@ -5,17 +5,14 @@ import VideoPlayer from "./video/VideoPlayer";
 import LectureContent from "./LectureContent";
 
 export interface LectureMainProps {
-  slug: string;
   data: any;
-  opts?: any;
+  hasAccess?: boolean;
 }
 export const LectureMain: React.FC<LectureMainProps> = ({
-  slug,
   data,
-  opts,
+  hasAccess = false,
 }) => {
   const { name, introVideo, mainVideo, duration, resources } = data;
-  const { hasAccess } = opts;
 
   return (
     <>

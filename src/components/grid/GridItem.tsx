@@ -1,36 +1,44 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import AddToCartButton from "../lecture/AddToCartButton";
+import {
+  AttachFileRounded,
+  SignalCellularAltRounded,
+  TimerOutlined,
+  Verified,
+} from "@mui/icons-material";
+import { formatDuration } from "@/utils/data";
+import AddToCartButtonSecondary from "../lecture/AddToCartButtonSecondary";
 
 export interface GridItemProps {
-  imgUrl: string;
-  href: string;
-  title: string;
-  description?: string;
+  item: any;
 }
 
-const GridItem: React.FC<GridItemProps> = ({
-  imgUrl,
-  href,
-  title,
-  description,
-}) => {
+const GridItem: React.FC<GridItemProps> = ({ item }) => {
+  const { href } = item;
   return (
-    <>
-      <Link href={href}>
-        <GridItemCore imgUrl={imgUrl} title={title} description={description} />
-      </Link>
-    </>
+    <Link href={href}>
+      <GridItemCore item={item} />
+    </Link>
   );
 };
 
 export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
-  imgUrl,
-  title,
-  description,
+  item,
 }) => {
-  const { length } = title;
+  const {
+    name,
+    thumbnail,
+    duration,
+    resources,
+    mainProduct,
+    minElo,
+    maxElo,
+    hasAccess,
+  } = item;
+  const { length } = name;
   const multiplier = (length < 20 ? 1 : length < 40 ? 2 : 3) * 0.7;
   return (
     <>
@@ -65,20 +73,20 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
             flex: 0,
             display: "flex",
             alignItems: "flex-end",
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          {imgUrl && (
-            <Image
-              src={imgUrl}
-              alt={`${title} Resim - Thumbnail`}
-              height={180}
-              width={320}
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
-            />
-          )}
+          <Image
+            src={thumbnail ?? "/thumbnail_main.jpg"}
+            alt={`${name} Resim - Thumbnail`}
+            height={180}
+            width={320}
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+          />
         </Box>
 
         <Box
@@ -88,6 +96,8 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           <Typography
@@ -107,26 +117,145 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
               opacity: 0.99,
             }}
           >
-            {title}
+            {name}
           </Typography>
 
-          <Typography
+          {minElo && maxElo && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.2,
+                minHeight: 22,
+                pl: { xs: 0.2, sm: 0.4, md: 0.6, lg: 0.8 },
+                opacity: 0.99,
+              }}
+            >
+              <SignalCellularAltRounded
+                sx={{
+                  fontSize: 19,
+                  color: "primary.main",
+                }}
+              />
+
+              <Typography
+                color={"textSecondary"}
+                fontSize={{ xs: 13, md: 14 }}
+                letterSpacing={{
+                  xs: -0.8,
+                  sm: -0.6,
+                  md: -0.5,
+                }}
+                className={"limitedLine"}
+              >
+                {`Önerilen Seviye`}
+              </Typography>
+
+              <Typography
+                color={"textSecondary"}
+                fontSize={{ xs: 13, md: 14 }}
+                fontWeight={600}
+                letterSpacing={{
+                  xs: -0.8,
+                  sm: -0.6,
+                  md: -0.5,
+                }}
+                className={"limitedLine"}
+                sx={{
+                  pl: 0.1,
+                  transform: "scale(0.96)",
+                }}
+              >
+                {`${minElo} - ${maxElo}`}
+              </Typography>
+            </Box>
+          )}
+
+          <Box
             sx={{
-              px: 1,
-              wordBreak: "break-words",
-              hyphens: "auto",
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              pl: { xs: 0.2, sm: 0.4, md: 0.6, lg: 0.8 },
+              pr: 0.6,
             }}
-            fontSize={{ xs: 14 }}
-            lineHeight={{ xs: 1.5, lg: 1.5 }}
-            letterSpacing={{ xs: -0.4, md: -0.4 }}
-            fontFamily={"sans-serif"}
-            color={"textSecondary"}
-            whiteSpace={"break-spaces"}
-            textAlign={"left"}
-            className='limitedLine2'
           >
-            {description}
-          </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                gap: 0.2,
+                pt: 0.2,
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.2 }}>
+                <TimerOutlined
+                  sx={{
+                    fontSize: 19,
+                    color: "primary.main", //"text.secondary"
+                  }}
+                />
+                <Typography
+                  color={"textSecondary"}
+                  fontSize={{ xs: 13, md: 14 }}
+                  letterSpacing={{
+                    xs: -0.8,
+                    //sm: -0.7,
+                    //md: -0.6,
+                  }}
+                  className={"limitedLine"}
+                >
+                  {formatDuration(duration)}
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.2,
+                  minHeight: 22,
+                }}
+              >
+                {resources.length > 0 && (
+                  <>
+                    <AttachFileRounded
+                      sx={{
+                        fontSize: 19,
+                        color: "primary.main", //"text.secondary"
+                      }}
+                    />
+                    <Typography
+                      color={"textSecondary"}
+                      fontSize={{ xs: 13, md: 14 }}
+                      letterSpacing={{
+                        xs: -0.8,
+                        //sm: -0.6,
+                        //md: -0.5,
+                      }}
+                      className={"limitedLine"}
+                    >
+                      {`${resources.length} Döküman`}
+                    </Typography>
+                  </>
+                )}
+              </Box>
+            </Box>
+
+            {hasAccess ? (
+              <Tooltip title={"Satın Alındı"}>
+                <Verified color={"secondary"} sx={{ fontSize: 36, mr: 1.6 }} />
+              </Tooltip>
+            ) : (
+              <>
+                <AddToCartButtonSecondary
+                  data={{ mainProduct, duration, thumbnail }}
+                />
+              </>
+            )}
+          </Box>
         </Box>
       </Paper>
     </>

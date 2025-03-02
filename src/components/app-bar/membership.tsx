@@ -1,13 +1,21 @@
 "use client";
 
-import { Badge, Box, Button, darken, IconButton, Tooltip } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Button,
+  Collapse,
+  darken,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import { CircleRounded, ShoppingBagRounded } from "@mui/icons-material";
-//import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AccountMenu } from "./menu";
 import { NavigationLink } from "./link";
 import { useSidebar } from "./sidebars/SidebarProvider";
 import { useCart } from "../cart/CartProvider";
+import { usePathname } from "next/navigation";
 
 interface MembershipProps {
   auth: boolean;
@@ -18,9 +26,12 @@ export const Membership: React.FC<MembershipProps> = ({
   auth,
   //enabled = true,
 }) => {
+  const path = usePathname();
   const { onSidebar, handleDropdown, dropdown } = useSidebar();
   const { state } = useCart();
   const { items } = state;
+
+  const isEmpty = items.length === 0;
 
   const handleCart = () => {
     onSidebar("cart");
@@ -29,8 +40,57 @@ export const Membership: React.FC<MembershipProps> = ({
   return (
     <>
       {!auth ? (
-        <>
-          <Link href={"/giris"} passHref>
+        <Box sx={{ display: "flex", width: 240 }}>
+          <Collapse
+            in={!isEmpty}
+            orientation='horizontal'
+            sx={{
+              "& .MuiBadge-badge": {
+                color: "#fff",
+                translate: "-10px 0px",
+              },
+            }}
+          >
+            <Badge
+              badgeContent={items.length}
+              color='secondary'
+              sx={{ cursor: "pointer" }}
+            >
+              <Button
+                variant={"contained"}
+                onClick={handleCart}
+                sx={{
+                  textTransform: "none",
+                  paddingX: 2,
+                  marginX: 1,
+                  border: "1px solid",
+                  transition: "all 0.2s linear",
+                  borderColor: "primary.main",
+                  maxHeight: 38.5,
+                  minWidth: 103,
+                  gap: 1,
+                  "&:hover": {
+                    color: "#fff",
+                    bgcolor: darken("#D3B26B", 0.24),
+                    borderColor: darken("#D3B26B", 0.08),
+                    boxShadow: 4,
+                  },
+                }}
+              >
+                <ShoppingBagRounded
+                  sx={{
+                    fontSize: 20,
+                    color: "#fff",
+                    position: "relative",
+                    zIndex: 2,
+                  }}
+                />
+                <span>{"Sepetim"}</span>
+              </Button>
+            </Badge>
+          </Collapse>
+
+          <Link href={`/giris?redirect=${encodeURIComponent(path)}`} passHref>
             <Button
               variant='outlined'
               onClick={() => handleDropdown(false)}
@@ -41,7 +101,6 @@ export const Membership: React.FC<MembershipProps> = ({
                 bgcolor: "#fff",
                 border: "1px solid",
                 borderColor: "primary.main",
-                transition: "all 0.2s linear",
                 "&:hover": {
                   color: "#fff",
                   bgcolor: darken("#D3B26B", 0.24),
@@ -54,29 +113,42 @@ export const Membership: React.FC<MembershipProps> = ({
             </Button>
           </Link>
 
-          <NavigationLink href={"/kayit"}>
-            <Button
-              variant={"contained"}
-              onClick={() => handleDropdown(false)}
-              sx={{
-                textTransform: "none",
-                paddingX: 2,
-                marginX: 1,
-                border: "1px solid",
-                transition: "all 0.2s linear",
-                borderColor: "primary.main",
-                "&:hover": {
-                  color: "#fff",
-                  bgcolor: darken("#D3B26B", 0.24),
-                  borderColor: darken("#D3B26B", 0.08),
-                  boxShadow: 4,
-                },
-              }}
-            >
-              {"Kayıt Ol"}
-            </Button>
-          </NavigationLink>
-        </>
+          <Collapse
+            in={isEmpty}
+            orientation='horizontal'
+            /* sx={{
+              transform: `scaleX(${isEmpty ? 1 : 0})`,
+              width: isEmpty ? 103 : 0,
+              maxHeight: 38.5,
+              transition: "all 0.16s linear",
+            }} */
+          >
+            <NavigationLink href={"/kayit"}>
+              <Button
+                className={"limitedLine"}
+                variant={"contained"}
+                onClick={() => handleDropdown(false)}
+                sx={{
+                  textTransform: "none",
+                  paddingX: 2,
+                  marginX: 1,
+                  border: "1px solid",
+                  borderColor: "primary.main",
+                  maxHeight: 38.5,
+
+                  "&:hover": {
+                    color: "#fff",
+                    bgcolor: darken("#D3B26B", 0.24),
+                    borderColor: darken("#D3B26B", 0.08),
+                    boxShadow: 4,
+                  },
+                }}
+              >
+                {"Kayıt Ol"}
+              </Button>
+            </NavigationLink>
+          </Collapse>
+        </Box>
       ) : (
         <>
           <Box
@@ -85,7 +157,7 @@ export const Membership: React.FC<MembershipProps> = ({
               display: "flex",
               justifyContent: "flex-end",
               //opacity: dropdown ? 1 : { xs: 0, md: 1 },
-              transition: "all 0.24s ease-in-out",
+              transition: "all 0.2s linear",
               "& .MuiBadge-badge": {
                 color: "#fff",
                 translate: "-12px 12px",

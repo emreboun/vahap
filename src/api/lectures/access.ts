@@ -3,8 +3,8 @@ import { UserLectureAccess } from "@prisma/client";
 import { CrudRepository, CrudService } from "../prisma/crud";
 
 import prisma from "../prisma/init";
-import { getProductSlugPrefix } from "../products";
 import { getCurrentUserId } from "../user/auth";
+import { userService } from "../user";
 
 const lectureAccessRepository = new CrudRepository<UserLectureAccess>(
   prisma,
@@ -16,14 +16,67 @@ const lectureAccessService = new CrudService<UserLectureAccess>(
 
 export const getUserPermissions = async (userId: string) => {
   try {
-    /* const userId = await getCurrentUserId();
-    if (!userId) {
-      return [];
-    } */
     const result: any[] = await lectureAccessService.findAll({ userId });
     return result;
   } catch (e) {
     console.log(e);
     return null;
+  }
+};
+
+export const getUserAccess = async () => {
+  try {
+    const userId = await getCurrentUserId();
+
+    if (!userId) {
+      return [];
+    }
+    const permissions = (await getUserPermissions(userId)) ?? [];
+
+    return permissions;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+export const getUserWithLectures = async () => {
+  try {
+    const userId = await getCurrentUserId();
+
+    if (!userId) {
+      return null;
+    }
+
+    const user = await userService.findById(userId);
+
+    const permissions: any[] = await lectureAccessService.findAll(
+      { userId },
+      {
+        //user: { select: { firstName: true, email: true, lastName: true } },
+        lecture: {
+          select: {
+            slug: true,
+            name: true,
+            duration: true,
+            minElo: true,
+            maxElo: true,
+            resources: true,
+          },
+        },
+      },
+      { grantedAt: "desc" }
+    );
+
+    return {
+      user,
+      permissions: permissions.map((per) => ({
+        ...per,
+        lecture: { ...per.lecture, pgnCount: per.lecture.resources.length },
+      })),
+    };
+  } catch (e) {
+    console.error(e);
+    return [];
   }
 };

@@ -1,9 +1,19 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Paper, Typography } from "@mui/material";
-import { AttachFileRounded, TimerOutlined } from "@mui/icons-material";
+import { Box, Chip, Paper, Typography } from "@mui/material";
+import {
+  AccessTimeFilledRounded,
+  AttachFileRounded,
+  EventAvailable,
+  LocationOn,
+  SignalCellularAltRounded,
+  TimerOutlined,
+} from "@mui/icons-material";
 import AddToCartButton from "../lecture/AddToCartButton";
 import { formatDuration } from "@/utils/data";
+import { turkcetarih_formati } from "@/utils";
+import AddToCartButtonSecondary from "../lecture/AddToCartButtonSecondary";
+import Link from "next/link";
 
 interface ProductEntity {
   id: number;
@@ -15,6 +25,7 @@ interface ProductEntity {
 }
 
 const ProductGrid: React.FC<{ items: ProductEntity[] }> = ({ items }) => {
+  //console.log(items);
   return (
     <Box
       sx={{
@@ -24,7 +35,7 @@ const ProductGrid: React.FC<{ items: ProductEntity[] }> = ({ items }) => {
           sm: "repeat(1,1fr)",
           xs: "repeat(1,1fr)",
         },
-        gap: 4,
+        gap: { xs: 3, sm: 3.2, md: 3.6, lg: 6, xl: 5 },
         px: { xs: 0, sm: 4, md: 0 },
       }}
     >
@@ -48,12 +59,24 @@ export interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
-  const { name, thumbnail, duration, pgnCount } = item;
+  const {
+    slug,
+    name,
+    thumbnail,
+    duration,
+    pgnCount,
+    //
+    eventTicket,
+    lecture,
+    minElo,
+    maxElo,
+  } = item;
 
   const { length } = name;
   const multiplier = (length < 20 ? 1 : length < 40 ? 2 : 3) * 0.7;
+
   return (
-    <>
+    <Link href={`/urunler/${slug}`}>
       <Paper
         sx={{
           display: "flex",
@@ -80,6 +103,35 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
         }}
         elevation={0}
       >
+        {eventTicket && (
+          <Chip
+            icon={
+              <EventAvailable
+                color={"info"}
+                sx={{ fontSize: 21, color: "#fff" }}
+              />
+            }
+            label={"Etkinlik Bileti"}
+            sx={{
+              position: "absolute",
+              right: 14,
+              top: 12,
+              zIndex: 1000,
+              bgcolor: "secondary.main",
+              height: 28,
+              p: 0,
+              borderRadius: 1,
+              boxShadow: 2,
+              "& .MuiChip-label": {
+                py: 0,
+                px: 1.2,
+                color: "#fff",
+                fontWeight: 600,
+              },
+            }}
+          />
+        )}
+
         <Box
           sx={{
             flex: 0,
@@ -128,11 +180,61 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
             {name}
           </Typography>
 
+          {((lecture?.minElo && lecture.maxElo) || (minElo && maxElo)) && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.2,
+                minHeight: 22,
+                pl: { xs: 0.2, sm: 0.4, md: 0.6, lg: 0.8 },
+                opacity: 0.99,
+              }}
+            >
+              <SignalCellularAltRounded
+                sx={{ fontSize: 19, color: "text.secondary" }}
+              />
+
+              <Typography
+                color={"textSecondary"}
+                fontSize={{ xs: 13, md: 14 }}
+                letterSpacing={{
+                  xs: -0.8,
+                  sm: -0.6,
+                  md: -0.5,
+                }}
+                className={"limitedLine"}
+              >
+                {`Önerilen Seviye`}
+              </Typography>
+
+              <Typography
+                color={"textSecondary"}
+                fontSize={{ xs: 13, md: 14 }}
+                fontWeight={600}
+                //fontFamily={"Lexend"}
+                letterSpacing={{
+                  xs: -0.8,
+                  sm: -0.6,
+                  md: -0.5,
+                }}
+                className={"limitedLine"}
+                sx={{
+                  pl: 0.1,
+                  transform: "scale(0.96)",
+                }}
+              >
+                {`${lecture?.minElo ?? minElo} - ${lecture?.maxElo ?? maxElo}`}
+              </Typography>
+            </Box>
+          )}
+
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "space-between",
+              pr: 0.6,
             }}
           >
             <Box
@@ -141,34 +243,39 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 gap: 0.2,
-                pl: { xs: 0.2, sm: 0.4, md: 0.8, lg: 1 },
+                pl: { xs: 0.6, sm: 0.7, md: 0.8, lg: 1 },
+                pt: 0.2,
               }}
             >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 0.2 }}>
-                <TimerOutlined sx={{ fontSize: 19, color: "text.secondary" }} />
-                <Typography
-                  color={"textSecondary"}
-                  fontSize={{ xs: 13, md: 14 }}
-                  letterSpacing={{
-                    xs: -0.7,
-                    sm: -0.6,
-                    md: -0.5,
-                  }}
-                  className={"limitedLine"}
-                >
-                  {formatDuration(duration)}
-                </Typography>
-              </Box>
+              {duration > 0 && (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.2 }}>
+                  <TimerOutlined
+                    sx={{ fontSize: 19, color: "text.secondary" }}
+                  />
+                  <Typography
+                    color={"textSecondary"}
+                    fontSize={{ xs: 13, md: 14 }}
+                    letterSpacing={{
+                      xs: -0.7,
+                      sm: -0.6,
+                      md: -0.5,
+                    }}
+                    className={"limitedLine"}
+                  >
+                    {formatDuration(duration)}
+                  </Typography>
+                </Box>
+              )}
 
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 0.2,
-                  minHeight: 22,
-                }}
-              >
-                {pgnCount > 0 && (
+              {pgnCount > 0 && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.2,
+                    minHeight: 22,
+                  }}
+                >
                   <>
                     <AttachFileRounded
                       sx={{ fontSize: 19, color: "text.secondary" }}
@@ -186,12 +293,69 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                       {`${pgnCount} Döküman`}
                     </Typography>
                   </>
-                )}
-              </Box>
-            </Box>
+                </Box>
+              )}
 
-            <Box
+              {eventTicket && (
+                <>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.2,
+                      minHeight: 22,
+                      pl: 0.1,
+                    }}
+                  >
+                    <AccessTimeFilledRounded
+                      sx={{ fontSize: 19, color: "primary.main" }}
+                    />
+                    <Typography
+                      color={"textSecondary"}
+                      fontSize={{ xs: 13, md: 14 }}
+                      letterSpacing={{
+                        xs: -0.7,
+                        sm: -0.6,
+                        md: -0.5,
+                      }}
+                      className={"limitedLine"}
+                      sx={{ pl: 0.1 }}
+                    >
+                      {`${turkcetarih_formati(eventTicket.date)}`}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.2,
+                      minHeight: 22,
+                    }}
+                  >
+                    <LocationOn sx={{ fontSize: 21, color: "primary.main" }} />
+                    <Typography
+                      color={"textSecondary"}
+                      fontSize={{ xs: 13, md: 14 }}
+                      letterSpacing={{
+                        xs: -0.7,
+                        sm: -0.6,
+                        md: -0.5,
+                      }}
+                      className={"limitedLine"}
+                    >
+                      {`${eventTicket.url ?? eventTicket.location}`}
+                    </Typography>
+                  </Box>
+                </>
+              )}
+            </Box>
+            <AddToCartButtonSecondary
+              data={{ mainProduct: item, duration, thumbnail }}
+              long={true}
+            />
+            {/* <Box
               sx={{
+                //transformOrigin: "right",
                 transform: {
                   xs: "scale(0.86)",
                   sm: "scale(0.88)",
@@ -202,10 +366,10 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
               <AddToCartButton
                 data={{ mainProduct: item, duration, thumbnail }}
               />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </Paper>
-    </>
+    </Link>
   );
 };

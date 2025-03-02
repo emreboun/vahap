@@ -4,6 +4,7 @@ import {
   DataGrid,
   GridActionsCellItem,
   GridColDef,
+  GridDensity,
   GridEventListener,
   GridRowEditStopReasons,
   GridRowId,
@@ -14,7 +15,7 @@ import {
 import { Modal, Paper } from "@mui/material";
 
 import { columnsDefinitions } from "./constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomToolbar } from "./toolbar";
 import { EmptyData } from "./empty";
 import { GridProvider, useGridContext } from "./hooks";
@@ -69,6 +70,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
       router.push(`/admin/lectures/edit/${id}`);
       //setEditSelected(id);
     } else if (table === "tickets") {
+      router.push(`/admin/tickets/edit/${id}`);
     }
   };
 
@@ -90,6 +92,8 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   };
 
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
+    if (["products", "lectures", "tickets"].includes(table?.toString() ?? ""))
+      return;
     setRowModesModel(newRowModesModel);
   };
 
@@ -122,6 +126,19 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const [density, setDensity] = useState<GridDensity>("standard");
+  useEffect(() => {
+    const temp = localStorage.getItem("admin_density") as GridDensity;
+    if (temp) {
+      setDensity(temp);
+    }
+  }, []);
+
+  const onDensityChange = (value: GridDensity) => {
+    localStorage.setItem("admin_density", value);
+    setDensity(value);
   };
 
   const handleSubmit = async (value: any) => {
@@ -288,12 +305,6 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
     } */
   });
 
-  const [modal, setModal] = useState(false);
-
-  const handleModal = () => {
-    setModal((prev) => !prev);
-  };
-
   return (
     <>
       <Paper
@@ -334,17 +345,8 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
-          //onProcessRowUpdateError={(e) => console.log(e)}
-          //onRowDoubleClick={() => {}}
-          //onCellDoubleClick={() => {}}
-          /* onCellEditStop={(params, event) => {
-            if (params.reason !== GridCellEditStopReasons.enterKeyDown) {
-              return;
-            }
-            if (isKeyboardEvent(event) && !event.ctrlKey && !event.metaKey) {
-              event.defaultPrevented = true;
-            }
-          }} */
+          onDensityChange={onDensityChange}
+          density={density}
           localeText={{
             toolbarColumns: "Sütunlar",
             columnsManagementSearchTitle: "Ara",

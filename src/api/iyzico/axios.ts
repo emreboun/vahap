@@ -6,7 +6,7 @@ const apiKey = process.env.IYZICO_API_KEY || "your-api-key";
 const secretKey = process.env.IYZICO_SECRET_KEY || "your-secret-key";
 const baseUrl = "https://api.iyzipay.com";
 
-function generateAuthorizationString(
+export function generateAuthorizationString(
   uriPath: string,
   requestData: any = ""
 ): string {

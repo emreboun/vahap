@@ -10,7 +10,7 @@ const purchaseService = new CrudService<Purchase>(purchaseRepository);
 export const getAllPurchasesAdmin = async () => {
   const result = await purchaseService.findAll(
     undefined,
-    { product: true },
+    { product: true, user: true },
     {
       purchasedAt: "desc",
     }

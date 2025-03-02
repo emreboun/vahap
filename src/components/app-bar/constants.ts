@@ -15,4 +15,5 @@ export const NAV_LINKS = [
     href: "/hakkimda",
     external: false,
   },
+  { title: "Sıkça Sorulan Sorular", href: "/sss", external: false },
 ];

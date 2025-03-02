@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface PriceProps {
   value: number | string;
@@ -45,28 +45,32 @@ export const Price: React.FC<PriceProps> = ({
             {"₺"}
           </div>
         )}
-        <div style={{ display: "flex" }}>
-          <div
-            style={{
-              fontSize: fontSize,
-              fontFamily: "__Inter_e66fe9",
-              //textDecorationLine: "line-through",
-            }}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography
+            fontSize={fontSize}
+            fontWeight={600}
+            fontFamily={"__Inter_e66fe9"}
           >
             {Math.floor(Number(value))}
-          </div>
+          </Typography>
 
-          <div
+          <Typography
             style={{
-              fontSize: !isDecimal ? fontSize - 4 : fontSize,
+              //fontSize: !isDecimal ? fontSize - 4 : fontSize,
               marginLeft: !isDecimal ? 1 : 0,
               marginTop: !isDecimal ? 1.5 : 0,
-              fontFamily: "__Inter_e66fe9",
             }}
+            fontSize={fontSize - 4}
+            fontFamily={"__Inter_e66fe9"}
+            fontWeight={600}
           >
             {!isDecimal || <>{"."}</>}
             {Number(value).toFixed(2).split(".")[1]}
-          </div>
+          </Typography>
+
+          <Typography fontSize={fontSize - 4} sx={{ pl: 0.2 }}>
+            {"TL"}
+          </Typography>
 
           {isPc && (
             <>
@@ -82,7 +86,7 @@ export const Price: React.FC<PriceProps> = ({
               </div>
             </>
           )}
-        </div>
+        </Box>
       </Box>
     </>
   );

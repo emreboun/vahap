@@ -1,4 +1,5 @@
 import { getAllLectures } from "@/api/lectures";
+import { getUserAccess } from "@/api/lectures/access";
 import ResponsiveGrid from "@/components/grid";
 import { Box } from "@mui/material";
 import { Metadata } from "next";
@@ -12,10 +13,15 @@ export const dynamic = "force-dynamic"; // Force dynamic rendering
 
 export default async function LecturesPage() {
   const lectures: any[] = await getAllLectures();
+  const permissions = await getUserAccess();
 
+  const items = lectures.map((lecture) => ({
+    ...lecture,
+    hasAccess: permissions?.some((perm) => perm.lectureId === lecture.id),
+  }));
   return (
     <Box className='responsive'>
-      <ResponsiveGrid items={lectures} slug={"egitimler"} />
+      <ResponsiveGrid items={items} slug={"egitimler"} />
     </Box>
   );
 }

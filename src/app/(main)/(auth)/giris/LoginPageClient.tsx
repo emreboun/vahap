@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import {
@@ -35,7 +35,10 @@ export const LoginPageClient = ({
   onSubmit?: () => void;
 }) => {
   const router = useRouter();
-  const { state, dispatch } = useCart();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect");
+
+  const { dispatch } = useCart();
 
   const [form, setForm] = useState<LoginFormProps>({ email: "", password: "" });
   const [errors, setErrors] = useState<ErrorType[]>([]);
@@ -100,8 +103,13 @@ export const LoginPageClient = ({
         });
         localStorage.setItem("user", JSON.stringify(loginResult.user));
 
-        if (!side) router.push("/");
-        if (!!onSubmit) {
+        if (!side) {
+          if (redirectTo && redirectTo.startsWith("/")) {
+            router.push(redirectTo);
+          } else {
+            router.push("/");
+          }
+        } else if (!!onSubmit) {
           onSubmit();
         }
       }

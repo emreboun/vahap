@@ -7,6 +7,7 @@ import {
   CircularProgress,
   FormControl,
   IconButton,
+  InputBase,
   Paper,
   Switch,
   TextField,
@@ -104,6 +105,9 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
       duration,
       description,
       status,
+      minElo,
+      maxElo,
+      discount,
     } = form;
 
     try {
@@ -115,6 +119,8 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
       if (!price || Number(price) <= 0) list.push("price");
       if (!duration || Number(duration) <= 0) list.push("duration");
       if (selectedFiles.length === 0) list.push("image");
+      if (!minElo || !maxElo) list.push("elo");
+
       if (list.length > 0 || slugError) {
         console.log("error");
         setErrors(list);
@@ -130,7 +136,10 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
         mainVideo: formatUrl(mainVideo),
         thumbnail: "",
         price: Number(price),
+        discount: Number(discount),
         duration: Number(duration) * 60,
+        minElo,
+        maxElo,
         description: formatText(description),
         status,
       };
@@ -377,7 +386,7 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
             sx={{
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
-              gap: { xs: 1.4, md: 1.2, lg: 2 },
+              gap: { xs: 0.8, md: 1.2, lg: 2 },
             }}
           >
             <TextField
@@ -408,7 +417,7 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
               sx={{
                 display: "flex",
                 gap: { xs: 0.8, md: 1.2, lg: 2 },
-                flex: 4,
+                flex: 2,
               }}
             >
               <BoxCard
@@ -434,30 +443,70 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
               </BoxCard>
 
               <TextField
-                name={"price"}
-                label={"Ücret"}
-                error={errors.includes("price")}
-                type={"number"}
-                sx={{ flex: 1 }}
+                name={"duration"}
+                label={"Süre (dk)"}
+                error={errors.includes("duration")}
                 onChange={handleChange}
+                sx={{ minWidth: { xs: 150, md: 180 }, flex: 3 }}
               />
             </Box>
 
+            <BoxCard
+              title={"Seviye Aralığı:"}
+              sx={{
+                bgcolor: "background.paper",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+                py: 0,
+                //px: { xs: 2, sm: 3, md: 4 },
+                minWidth: { xs: 150, sm: 160, md: 180 },
+              }}
+            >
+              <TextField
+                variant={"standard"}
+                name={"minElo"}
+                type={"number"}
+                sx={{ flex: 1 }}
+                defaultValue={0}
+                onChange={handleChange}
+              />
+              {"-"}
+              <TextField
+                variant={"standard"}
+                name={"maxElo"}
+                type={"number"}
+                defaultValue={2800}
+                onChange={handleChange}
+              />
+            </BoxCard>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: { xs: 0.8, md: 1.2, lg: 2 },
+            }}
+          >
             <TextField
-              name={"duration"}
-              label={"Süre (dk)"}
-              error={errors.includes("duration")}
+              name={"price"}
+              label={"Ücret"}
+              error={errors.includes("price")}
+              type={"number"}
+              sx={{ flex: 1 }}
               onChange={handleChange}
-              sx={{ minWidth: { xs: 150, md: 180 }, flex: 3 }}
             />
 
-            {/*  <TextField
-              name={"order"}
-              label={"Sıra"}
+            <TextField
+              name={"discount"}
+              label={"İndirim"}
+              //error={errors.includes("price")}
               type={"number"}
-              sx={{ flex: 3 }}
+              sx={{ flex: 1 }}
               onChange={handleChange}
-            /> */}
+            />
           </Box>
 
           <TextField

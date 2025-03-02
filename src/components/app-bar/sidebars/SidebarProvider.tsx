@@ -34,7 +34,7 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
   const [sidebar, setSidebar] = useState<string | null>(null);
   const [dropdown, , setDropdown] = useToggle();
 
-  const handleSidebar = useCallback(
+  const onSidebar = useCallback(
     (val: string) => {
       setSidebar((prev) => (prev === val ? "" : val));
       setDropdown(false);
@@ -61,7 +61,7 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
     <SidebarContext.Provider
       value={{
         sidebar,
-        onSidebar: handleSidebar,
+        onSidebar,
         dropdown,
         handleDropdown,
       }}

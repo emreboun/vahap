@@ -124,7 +124,7 @@ export const userColumns: GridColDef[] = [
     headerName: "Kayıt Tarihi",
     width: 260,
     type: "dateTime",
-    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
+    valueFormatter: (value: any) => turkcetarih_formati(value),
   },
 ];
 
@@ -180,6 +180,16 @@ export const lectureColumns: GridColDef[] = [
     headerName: "Eğitim Süresi",
     width: 240,
     valueFormatter: (value) => formatDuration(value),
+  },
+  {
+    field: "minElo",
+    headerName: "Min. Seviye",
+    width: 120,
+  },
+  {
+    field: "maxElo",
+    headerName: "Max. Seviye",
+    width: 120,
   },
   {
     field: "introVideo",
@@ -247,7 +257,7 @@ export const lectureColumns: GridColDef[] = [
     headerName: "Oluşturulma Tarihi",
     width: 260,
     type: "dateTime",
-    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
+    valueFormatter: (value: any) => turkcetarih_formati(value),
   },
 ];
 
@@ -287,7 +297,7 @@ const productColumns: GridColDef[] = [
     headerName: "Oluşturulma Tarihi",
     width: 260,
     type: "dateTime",
-    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
+    valueFormatter: (value: any) => turkcetarih_formati(value),
   },
 ];
 
@@ -304,7 +314,7 @@ const eventTicketColumns: GridColDef[] = [
     headerName: "Tarih",
     width: 260,
     type: "dateTime",
-    valueFormatter: (value: any) => turkcetarih_formati("j F Y l", value),
+    valueFormatter: (value: any) => turkcetarih_formati(value),
   },
   {
     field: "url",

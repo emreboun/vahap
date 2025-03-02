@@ -18,6 +18,7 @@ import {
 import { useState } from "react";
 import { logout } from "@/api/firebase";
 import { logoutApi } from "@/app/admin/giris/actions";
+import Link from "next/link";
 
 interface AccountMenuProps {
   children?: React.ReactNode;
@@ -166,13 +167,12 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           disableScrollLock
         >
-          {/* <Link href={`/`} passHref> */}
-          <MenuItem
-            icon={<SettingsRounded sx={{ fontSize: 20 }} />}
-            title={"Ayarlar"}
-            onClick={temp}
-          />
-          {/* </Link> */}
+          <Link href={`/hesabim`} passHref>
+            <MenuItem
+              icon={<SettingsRounded sx={{ fontSize: 20 }} />}
+              title={"Hesabım"}
+            />
+          </Link>
 
           <Divider style={{ margin: 0 }} />
 

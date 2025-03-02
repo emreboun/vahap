@@ -13,13 +13,14 @@ export const CartButton: React.FC<CartButtonProps> = () => {
     <>
       <ButtonBase
         sx={{
-          p: "9.6px",
+          p: 1.3,
           textAlign: "left",
           justifyContent: "flex-start",
           borderRadius: 1,
+          color: "secondary.main",
           "&:hover": {
             color: "#fff",
-            bgcolor: "primary.main",
+            bgcolor: "secondary.main",
             fontWeight: 600,
             boxShadow: 2,
           },

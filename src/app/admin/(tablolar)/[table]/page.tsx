@@ -1,5 +1,5 @@
 import { getAllLecturesAdmin } from "@/api/lectures";
-import { getAllProducts, getAllProductsAdmin } from "@/api/products";
+import { getAllProductsAdmin } from "@/api/products";
 import { getAllTicketsAdmin } from "@/api/products/tickets";
 import { getAllUsers } from "@/api/user/account";
 import { Grid } from "@/components/admin/grid";

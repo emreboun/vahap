@@ -37,15 +37,35 @@ export const getDiscountedProducts = async () => {
       },
       lecture: {
         select: {
+          id: true,
           duration: true,
           resources: { select: { type: true } },
+          minElo: true,
+          maxElo: true,
         },
       },
       lectures: {
         select: {
           lecture: {
-            select: { duration: true, resources: { select: { type: true } } },
+            select: {
+              id: true,
+              duration: true,
+              minElo: true,
+              maxElo: true,
+              resources: { select: { type: true } },
+            },
           },
+        },
+      },
+      eventTicket: {
+        select: {
+          id: true,
+          name: true,
+          date: true,
+          location: true,
+          capacity: true,
+          url: true,
+          sold: true,
         },
       },
     },
@@ -53,8 +73,82 @@ export const getDiscountedProducts = async () => {
       discount: "desc",
     },
     1,
-    4
+    6 //4
   );
+
+  return result
+    .map((item) => {
+      const lectures = item.lectures?.map((l: any) => l.lecture) || [];
+
+      const lectureDuration = item.lecture?.duration || 0;
+      const lecturesDuration = item.lectures?.reduce(
+        (
+          sum: number,
+          lectureContainer: { lecture: { duration: number | null } }
+        ) => sum + (lectureContainer.lecture.duration || 0),
+        0
+      );
+
+      const lecturePgns = item.lecture?.pgnCount || 0;
+      const lecturesPgns = item.lectures?.reduce(
+        (sum: number, lectureContainer: { lecture: { resources: any[] } }) =>
+          sum + (lectureContainer.lecture.resources.length || 0),
+        0
+      );
+
+      // Calculate average minElo and maxElo
+      /* const allMinElos = lectures
+        .map((l) => l.minElo)
+        .filter((e) => e !== null);
+      const allMaxElos = lectures
+        .map((l) => l.maxElo)
+        .filter((e) => e !== null);
+
+      const avgMinElo =
+        allMinElos.length > 0
+          ? allMinElos.reduce((sum, elo) => sum + elo, 0) / allMinElos.length
+          : null;
+
+      const avgMaxElo =
+        allMaxElos.length > 0
+          ? allMaxElos.reduce((sum, elo) => sum + elo, 0) / allMaxElos.length
+          : null;
+
+      const elos = {
+        minElo: avgMinElo,
+        maxElo: avgMaxElo,
+      }; */
+
+      // Get min value of minElo and max value of maxElo
+      const minMinElo =
+        lectures.length > 0
+          ? Math.min(
+              ...lectures
+                .map((l: any) => l.minElo)
+                .filter((e: any) => e !== null)
+            )
+          : null;
+
+      const maxMaxElo =
+        lectures.length > 0
+          ? Math.max(
+              ...lectures
+                .map((l: any) => l.maxElo)
+                .filter((e: any) => e !== null)
+            )
+          : null;
+
+      return {
+        minElo: minMinElo,
+        maxElo: maxMaxElo,
+        ...item,
+        files: undefined,
+        thumbnail: item.files[0]?.path,
+        duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
+        pgnCount: lecturePgns || lecturesPgns || 0,
+      };
+    })
+    .filter((item) => item.discount > 0);
   return result
     .map((item) => {
       const lectureDuration = item.lecture?.duration || 0;
@@ -82,13 +176,6 @@ export const getDiscountedProducts = async () => {
       };
     })
     .filter((item) => item.discount > 0);
-  return result
-    .map((item) => ({
-      ...item,
-      files: undefined,
-      thumbnail: item.files[0]?.path,
-    }))
-    .filter((item) => item.discount > 0);
 };
 
 export const getAllProducts = async () => {
@@ -115,6 +202,34 @@ export const getAllProducts = async () => {
     files: undefined,
     thumbnail: item.files[0]?.path,
   }));
+};
+
+export const getAllTickets = async () => {
+  const result: any[] = await productService.findMany(
+    {
+      status: true,
+      eventTicket: { isNot: null, is: { date: { gte: new Date() } } }, // Ensures the event date is in the future
+    },
+    {
+      eventTicket: true,
+      /*  files: {
+        take: 1,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          path: true,
+        },
+      }, */
+    },
+    {
+      // order: "desc",
+    },
+    1,
+    6
+  );
+
+  return result;
 };
 
 export const getAllProductsAdmin = async () => {
@@ -156,14 +271,101 @@ export const createProduct = async (data: any /* Partial<Product> */) => {
 
 export const getProductBySlug = async (slug: string) => {
   try {
-    console.log(slug);
-    const result = await productService.findByUniqueProperty(
+    const result: any = await productService.findByUniqueProperty(
       "slug",
       slug,
-      false
+      {
+        files: {
+          take: 1,
+          orderBy: {
+            createdAt: "desc",
+          },
+          select: {
+            path: true,
+          },
+        },
+        lecture: {
+          select: {
+            id: true,
+            duration: true,
+            resources: { select: { type: true } },
+            minElo: true,
+            maxElo: true,
+          },
+        },
+        lectures: {
+          select: {
+            lecture: {
+              select: {
+                id: true,
+                slug: true,
+                name: true,
+                duration: true,
+                minElo: true,
+                maxElo: true,
+                resources: { select: { type: true } },
+              },
+            },
+          },
+        },
+        eventTicket: {
+          select: {
+            id: true,
+            name: true,
+            date: true,
+            location: true,
+            capacity: true,
+            url: true,
+            sold: true,
+          },
+        },
+      }
     );
+
+    const lectureDuration = result.lecture?.duration || 0;
+    const lecturesDuration = result.lectures?.reduce(
+      (
+        sum: number,
+        lectureContainer: { lecture: { duration: number | null } }
+      ) => sum + (lectureContainer.lecture?.duration || 0),
+      0
+    );
+
+    const lecturePgns = result.lecture?.pgnCount || 0;
+    const lecturesPgns = result.lectures?.reduce(
+      (sum: number, lectureContainer: { lecture: { resources: any[] } }) =>
+        sum + (lectureContainer.lecture?.resources.length || 0),
+      0
+    );
+    const minMinElo =
+      result.lectures?.length > 0
+        ? Math.min(
+            ...result.lectures
+              .map((l: any) => l.lecture.minElo)
+              .filter((e: any) => e !== null)
+          )
+        : null;
+
+    const maxMaxElo =
+      result.lectures?.length > 0
+        ? Math.max(
+            ...result.lectures
+              .map((l: any) => l.lecture.maxElo)
+              .filter((e: any) => e !== null)
+          )
+        : null;
+
+    return {
+      minElo: minMinElo,
+      maxElo: maxMaxElo,
+      ...result,
+      files: undefined,
+      thumbnail: result.files[0]?.path,
+      duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
+      pgnCount: lecturePgns || lecturesPgns || 0,
+    };
     console.log(result);
-    return result;
+    return { ...result, files: undefined, thumbnail: result.files[0]?.path };
   } catch (e: unknown) {
     console.log(e);
     return null;
@@ -184,7 +386,10 @@ export const getProductById = async (id: string) => {
 
 export const updateProduct = async (id: string, data: Partial<Product>) => {
   try {
-    const result = await productService.update(id, data);
+    const result = await productService.update(id, {
+      ...data,
+      discount: !!data.discount ? Number(data.discount) : undefined,
+    });
     return result;
   } catch (e) {
     return null;

@@ -44,10 +44,10 @@ export default async function LecturePage({
   const hasAccess =
     lecture && permissions?.some((p: any) => p.lectureId === lecture.id);
 
-  const opts = {
+  /* const opts = {
     auth: !!userId,
     hasAccess,
-  };
+  }; */
 
   if (!lecture) {
     return (
@@ -70,9 +70,7 @@ export default async function LecturePage({
 
   return (
     <>
-      <>
-        <LectureMain slug={slug} data={lecture} opts={opts} />
-      </>
+      <LectureMain data={lecture} hasAccess={hasAccess} />
     </>
   );
 }

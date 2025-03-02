@@ -17,7 +17,8 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
     (item) => item.product.id === data.mainProduct.id
   );
 
-  const onCart = () => {
+  const onCart = (e: any) => {
+    e.stopPropagation();
     if (!added) {
       dispatch({
         type: "ADD_ITEM",
@@ -79,15 +80,22 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
                   bgcolor: "grey",
                 }}
               />
-              <Price value={mainProduct?.price} fontSize={16} />
+              <Price
+                value={mainProduct?.price}
+                fontSize={16}
+                isSign={""}
+                isDecimal
+              />
             </Box>
           )}
 
           <Price
             value={mainProduct?.price - mainProduct?.discount}
+            isDecimal
             fontSize={18}
             sx={{ fontWeight: 600 }}
             color={"primary.main"}
+            isSign={""}
           />
         </Box>
 

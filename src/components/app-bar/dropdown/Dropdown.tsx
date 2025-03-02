@@ -62,7 +62,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
                   sx={{
                     display: "flex",
                     justifyContent: "flex-end",
-                    pr: 2,
+                    pr: 0.5,
                     pb: 0.5,
                   }}
                 >
@@ -71,12 +71,9 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
               ) : (
                 <Box sx={{ pl: { xs: 0.6, md: 0 } }}>
                   <NavigationBar
-                    links={[{ title: "Ayarlar", href: "/ayarlar" }]}
+                    links={[{ title: "Hesabım", href: "/hesabim" }]}
                   />
-                  {/* <Divider sx={{ my: 0 }} /> */}
-                  {/* <NavigationBar
-                    links={[{ title: "Çıkış Yap", href: "/cikis" }]}
-                  /> */}
+
                   <Button
                     onClick={handleLogout}
                     sx={{

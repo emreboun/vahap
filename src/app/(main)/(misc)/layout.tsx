@@ -10,7 +10,7 @@ export default function MiscLayout({
       className='responsive'
       sx={{
         //py: { xs: 2, sm: 8, md: 12 },
-        whiteSpace: "break-spaces",
+        //whiteSpace: "break-spaces",
         fontFamily: "Montserrat, Lexend, sans-serif",
       }}
     >

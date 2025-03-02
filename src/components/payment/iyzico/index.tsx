@@ -1,5 +1,8 @@
+import {
+  initialize3DPayment,
+  initializePayment,
+} from "@/app/(main)/(misc)/odeme/actions";
 import React, { useState } from "react";
-import axios from "axios";
 
 export const IyzicoPayment: React.FC<any> = ({ onSubmit }) => {
   const [loading, setLoading] = useState(false);
@@ -8,6 +11,10 @@ export const IyzicoPayment: React.FC<any> = ({ onSubmit }) => {
   const handlePayment = async () => {
     setLoading(true);
     try {
+      const result = await initializePayment();
+      console.log(result);
+      const res = await initialize3DPayment();
+      console.log(res);
       onSubmit();
       /* const response = await axios.post("/api/payment/initialize", {
         price: "5.2",

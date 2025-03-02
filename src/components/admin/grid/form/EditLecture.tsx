@@ -59,6 +59,8 @@ const EditLecture: React.FC<EditLectureProps> = ({ data }) => {
     order,
     status,
     resources,
+    minElo,
+    maxElo,
     //thumbnail,
   } = lecture;
 
@@ -154,10 +156,14 @@ const EditLecture: React.FC<EditLectureProps> = ({ data }) => {
       ...lecture,
     };
     Object.keys(req).forEach((key) => {
-      if (req[key] === data[key]) {
+      if (req[key] === data[key] || Number(req[key]) === data[key]) {
         req[key] = undefined;
       }
     });
+    req.duration = req.duration ? req.duration * 60 : undefined;
+    req.minElo = req.minElo ? req.minElo * 1 : undefined;
+    req.maxElo = req.maxElo ? req.maxElo * 1 : undefined;
+
     const result = await updateLecture(id, req);
     let imageResult;
     if (selectedFiles.length > 0 && !!result) {
@@ -340,41 +346,53 @@ const EditLecture: React.FC<EditLectureProps> = ({ data }) => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
+            flexDirection: { xs: "column", md: "row" },
             gap: { xs: 0.8, md: 1.2, lg: 2 },
           }}
         >
           <Box
-            sx={{ display: "flex", gap: { xs: 0.8, md: 1.2, lg: 2 }, flex: 1 }}
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: { xs: 0.8, md: 1.2, lg: 2 },
+            }}
           >
-            <BoxCard
-              title={"Durum:"}
+            <Box
               sx={{
-                bgcolor: "background.paper",
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 2,
-                py: 0,
-                //px: { xs: 2, sm: 3, md: 4 },
-                minWidth: { xs: 150, sm: 160, md: 180 },
+                gap: { xs: 0.8, md: 1.2, lg: 2 },
+                flex: 1,
               }}
             >
-              <Typography>{status ? "Aktif" : "Pasif"}</Typography>
-              <Switch
-                name={"status"}
-                checked={status}
-                sx={{}}
-                onChange={onLectureChange}
-              />
-            </BoxCard>
+              <BoxCard
+                title={"Durum:"}
+                sx={{
+                  bgcolor: "background.paper",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                  py: 0,
+                  //px: { xs: 2, sm: 3, md: 4 },
+                  minWidth: { xs: 150, sm: 160, md: 180 },
+                }}
+              >
+                <Typography>{status ? "Aktif" : "Pasif"}</Typography>
+                <Switch
+                  name={"status"}
+                  checked={status}
+                  sx={{}}
+                  onChange={onLectureChange}
+                />
+              </BoxCard>
 
-            <TextField
-              name={"order"}
-              defaultValue={order}
-              label={"Sıra"}
-              sx={{ flex: 1 }}
-            />
+              <TextField
+                name={"order"}
+                defaultValue={order}
+                label={"Sıra"}
+                sx={{ flex: 1 }}
+              />
+            </Box>
           </Box>
 
           <TextField
@@ -384,6 +402,39 @@ const EditLecture: React.FC<EditLectureProps> = ({ data }) => {
             onChange={onLectureChange}
             sx={{ minWidth: { xs: 150, md: 180 }, flex: 1 }}
           />
+
+          <BoxCard
+            title={"Seviye Aralığı:"}
+            sx={{
+              bgcolor: "background.paper",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 2,
+              py: 0,
+              //px: { xs: 2, sm: 3, md: 4 },
+              minWidth: { xs: 150, sm: 160, md: 180 },
+              minHeight: 56,
+            }}
+          >
+            <TextField
+              variant={"standard"}
+              name={"minElo"}
+              type={"number"}
+              sx={{ flex: 1 }}
+              defaultValue={minElo}
+              onChange={onLectureChange}
+            />
+            {"-"}
+            <TextField
+              variant={"standard"}
+              name={"maxElo"}
+              type={"number"}
+              defaultValue={maxElo}
+              onChange={onLectureChange}
+              sx={{ flex: 1 }}
+            />
+          </BoxCard>
         </Box>
 
         <BoxCard

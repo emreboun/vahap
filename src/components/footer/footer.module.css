@@ -165,7 +165,7 @@
 .socialIcon {
   transform: scale(0.7);
   border-radius: 50%;
-  box-shadow: 2px 2px grey;
+  /* box-shadow: 2px 2px grey; */
 }
 
 .socialIcon:hover{
