@@ -122,7 +122,7 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
       if (!minElo || !maxElo) list.push("elo");
 
       if (list.length > 0 || slugError) {
-        console.log("error");
+        //console.log("error");
         setErrors(list);
         return;
       }

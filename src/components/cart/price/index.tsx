@@ -49,7 +49,8 @@ export const Price: React.FC<PriceProps> = ({
           <Typography
             fontSize={fontSize}
             fontWeight={600}
-            fontFamily={"__Inter_e66fe9"}
+            fontFamily={"Lexend, Roboto, __Inter_e66fe9"}
+            letterSpacing={-0.4}
           >
             {Math.floor(Number(value))}
           </Typography>
@@ -61,14 +62,19 @@ export const Price: React.FC<PriceProps> = ({
               marginTop: !isDecimal ? 1.5 : 0,
             }}
             fontSize={fontSize - 4}
-            fontFamily={"__Inter_e66fe9"}
+            fontFamily={"Lexend, Roboto, __Inter_e66fe9"}
             fontWeight={600}
+            letterSpacing={-0.6}
           >
             {!isDecimal || <>{"."}</>}
             {Number(value).toFixed(2).split(".")[1]}
           </Typography>
 
-          <Typography fontSize={fontSize - 4} sx={{ pl: 0.2 }}>
+          <Typography
+            fontSize={fontSize - 4}
+            letterSpacing={-0.4}
+            sx={{ pl: 0.2 }}
+          >
             {"TL"}
           </Typography>
 

@@ -1,7 +1,7 @@
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
-import { useCart } from "../CartProvider";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { Product } from "@prisma/client";
+
 import {
   Circle,
   Close,
@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import { formatDuration } from "@/utils/data";
 import { turkcetarih_formati } from "@/utils";
+import { useCart } from "../CartProvider";
 
 export const CartList = () => {
   const { state, dispatch } = useCart();

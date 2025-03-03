@@ -96,30 +96,6 @@ export const getDiscountedProducts = async () => {
         0
       );
 
-      // Calculate average minElo and maxElo
-      /* const allMinElos = lectures
-        .map((l) => l.minElo)
-        .filter((e) => e !== null);
-      const allMaxElos = lectures
-        .map((l) => l.maxElo)
-        .filter((e) => e !== null);
-
-      const avgMinElo =
-        allMinElos.length > 0
-          ? allMinElos.reduce((sum, elo) => sum + elo, 0) / allMinElos.length
-          : null;
-
-      const avgMaxElo =
-        allMaxElos.length > 0
-          ? allMaxElos.reduce((sum, elo) => sum + elo, 0) / allMaxElos.length
-          : null;
-
-      const elos = {
-        minElo: avgMinElo,
-        maxElo: avgMaxElo,
-      }; */
-
-      // Get min value of minElo and max value of maxElo
       const minMinElo =
         lectures.length > 0
           ? Math.min(
@@ -141,33 +117,6 @@ export const getDiscountedProducts = async () => {
       return {
         minElo: minMinElo,
         maxElo: maxMaxElo,
-        ...item,
-        files: undefined,
-        thumbnail: item.files[0]?.path,
-        duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
-        pgnCount: lecturePgns || lecturesPgns || 0,
-      };
-    })
-    .filter((item) => item.discount > 0);
-  return result
-    .map((item) => {
-      const lectureDuration = item.lecture?.duration || 0;
-      const lecturesDuration = item.lectures?.reduce(
-        (
-          sum: number,
-          lectureContainer: { lecture: { duration: number | null } }
-        ) => sum + (lectureContainer.lecture.duration || 0),
-        0
-      );
-
-      const lecturePgns = item.lecture?.pgnCount || 0;
-      const lecturesPgns = item.lectures?.reduce(
-        (sum: number, lectureContainer: { lecture: { resources: any[] } }) =>
-          sum + (lectureContainer.lecture.resources.length || 0),
-        0
-      );
-
-      return {
         ...item,
         files: undefined,
         thumbnail: item.files[0]?.path,
@@ -212,19 +161,8 @@ export const getAllTickets = async () => {
     },
     {
       eventTicket: true,
-      /*  files: {
-        take: 1,
-        orderBy: {
-          createdAt: "desc",
-        },
-        select: {
-          path: true,
-        },
-      }, */
     },
-    {
-      // order: "desc",
-    },
+    {},
     1,
     6
   );
@@ -232,9 +170,111 @@ export const getAllTickets = async () => {
   return result;
 };
 
-export const getAllProductsAdmin = async () => {
-  const result: any[] = await productService.findMany(undefined, false);
+export const getAllSets = async () => {
+  const result: any[] = await productService.findMany(
+    {
+      status: true,
+      lectures: { some: {} }, // Ensures the event date is in the future
+    },
+    {
+      files: {
+        take: 1,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          path: true,
+        },
+      },
+      lecture: {
+        select: {
+          id: true,
+          duration: true,
+          resources: { select: { type: true } },
+          minElo: true,
+          maxElo: true,
+        },
+      },
+      lectures: {
+        select: {
+          lecture: {
+            select: {
+              id: true,
+              duration: true,
+              minElo: true,
+              maxElo: true,
+              resources: { select: { type: true } },
+            },
+          },
+        },
+      },
+      eventTicket: {
+        select: {
+          id: true,
+          name: true,
+          date: true,
+          location: true,
+          capacity: true,
+          url: true,
+          sold: true,
+        },
+      },
+    },
+    {},
+    1,
+    6
+  );
 
+  return result.map((item) => {
+    const lectures = item.lectures?.map((l: any) => l.lecture) || [];
+
+    const lectureDuration = item.lecture?.duration || 0;
+    const lecturesDuration = item.lectures?.reduce(
+      (
+        sum: number,
+        lectureContainer: { lecture: { duration: number | null } }
+      ) => sum + (lectureContainer.lecture.duration || 0),
+      0
+    );
+
+    const lecturePgns = item.lecture?.pgnCount || 0;
+    const lecturesPgns = item.lectures?.reduce(
+      (sum: number, lectureContainer: { lecture: { resources: any[] } }) =>
+        sum + (lectureContainer.lecture.resources.length || 0),
+      0
+    );
+
+    const minMinElo =
+      lectures.length > 0
+        ? Math.min(
+            ...lectures.map((l: any) => l.minElo).filter((e: any) => e !== null)
+          )
+        : null;
+
+    const maxMaxElo =
+      lectures.length > 0
+        ? Math.max(
+            ...lectures.map((l: any) => l.maxElo).filter((e: any) => e !== null)
+          )
+        : null;
+
+    return {
+      minElo: minMinElo,
+      maxElo: maxMaxElo,
+      ...item,
+      files: undefined,
+      thumbnail: item.files[0]?.path,
+      duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
+      pgnCount: lecturePgns || lecturesPgns || 0,
+    };
+  });
+};
+
+export const getAllProductsAdmin = async () => {
+  const result: any[] = await productService.findMany(undefined, {
+    eventTicket: true,
+    lecture: true,
+  });
   return result;
 };
 

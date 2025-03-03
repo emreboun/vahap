@@ -67,28 +67,6 @@ export const purchaseItems = async (productIds: string[]) => {
   }
 };
 
-/* export const purchaseItems = async (productIds: string[]) => {
-  try {
-    const cookieStore = await cookies();
-    const userId = cookieStore.get("userid")?.value;
-    if (!userId) {
-      return null;
-    }
-    const result = await purchaseService.createMany(
-      productIds.map((productId) => ({
-        userId,
-        productId,
-        purchasedAt: new Date(),
-      }))
-    );
-
-    return result;
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
-}; */
-
 export const purchaseItem = async (userId: string, productId: string) => {
   try {
     const result = await purchaseService.create({

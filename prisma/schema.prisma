@@ -191,7 +191,7 @@ model File {
 
 
 model Page {
-  id          String   @id @default(uuid()) @db.Uuid
+  id          String   @id  @db.Uuid @default(uuid())
   slug        String   @unique
   title       String
   description String?  @default("")

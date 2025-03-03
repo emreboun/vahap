@@ -82,7 +82,7 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
               />
               <Price
                 value={mainProduct?.price}
-                fontSize={16}
+                fontSize={14}
                 isSign={""}
                 isDecimal
               />

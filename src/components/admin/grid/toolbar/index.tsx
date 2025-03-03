@@ -94,7 +94,6 @@ export const CustomToolbar: React.FC<Props> = ({ data }) => {
             <NavLink href={`/admin/${table}/add`}>
               <Button
                 variant={"contained"}
-                className={"limitedLine"}
                 sx={{
                   fontSize: 13,
                   alignSelf: "center",

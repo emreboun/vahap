@@ -2,6 +2,7 @@ import { getPageBySlug } from "@/api/pages";
 import { Divider, Paper, Typography } from "@mui/material";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
 export default async function MiscPage({ params }: any) {
   const { slug } = await params;
   const page = await getPageBySlug(slug);

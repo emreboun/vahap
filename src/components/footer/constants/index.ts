@@ -3,6 +3,10 @@ export const SECTIONS = [
     title: "Kurumsal",
     links: [
       {
+        href: "/iletisim",
+        title: "İletişim",
+      },
+      {
         href: "/uyelik-sozlesmesi",
         title: "Üyelik Sözleşmesi",
       },

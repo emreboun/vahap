@@ -5,9 +5,15 @@ import {
   VerifiedRounded,
   LinkRounded,
 } from "@mui/icons-material";
-import { Box, Button, InputBase, TextField, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputBase,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import { use } from "react";
 
 export const statusColumnDef: GridColDef = {
   field: "status",
@@ -81,6 +87,38 @@ export const statusColumnDef: GridColDef = {
   },
 };
 
+export const slugColumnDef: GridColDef = {
+  field: "slug",
+  headerName: "Sayfa",
+  width: 60,
+  resizable: false,
+  sortable: false,
+  filterable: false,
+  disableColumnMenu: true,
+  hideSortIcons: true,
+  renderCell: (params) => {
+    return (
+      <>
+        <Button
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+            ml: "-12px",
+          }}
+          target='_blank'
+          rel='noopener noreferrer'
+          href={`/egitimler/${params.value}`}
+        >
+          <LinkRounded sx={{ color: "cyan", fontSize: 21 }} />
+        </Button>
+      </>
+    );
+  },
+};
+
 export const idColumnDef: GridColDef = {
   field: "id",
   headerName: "",
@@ -129,37 +167,7 @@ export const userColumns: GridColDef[] = [
 ];
 
 export const lectureColumns: GridColDef[] = [
-  {
-    field: "slug",
-    headerName: "Sayfa",
-    width: 60,
-    resizable: false,
-    sortable: false,
-    filterable: false,
-    disableColumnMenu: true,
-    hideSortIcons: true,
-    renderCell: (params) => {
-      return (
-        <>
-          <Button
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              width: "100%",
-              ml: "-12px",
-            }}
-            target='_blank'
-            rel='noopener noreferrer'
-            href={`/egitimler/${params.value}`}
-          >
-            <LinkRounded sx={{ color: "cyan", fontSize: 21 }} />
-          </Button>
-        </>
-      );
-    },
-  },
+  slugColumnDef,
   statusColumnDef,
   //idColumnDef,
   {
@@ -264,6 +272,67 @@ export const lectureColumns: GridColDef[] = [
 const productColumns: GridColDef[] = [
   statusColumnDef,
   //idColumnDef,
+  {
+    field: "type",
+    headerName: "Tür",
+    width: 60,
+    valueGetter: (val, row) => {
+      return row.lecture ? "lecture" : row.eventTicket ? "ticket" : "set";
+    },
+    renderCell: (params) => {
+      switch (params.value) {
+        case "lecture":
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                height: "100%",
+                pl: "4px",
+              }}
+            >
+              <Typography fontSize={14} letterSpacing={-0.1}>
+                {"Ders"}
+              </Typography>
+            </Box>
+          );
+        case "ticket":
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                height: "100%",
+                pl: "4px",
+              }}
+            >
+              <Typography fontSize={14} letterSpacing={-0.1}>
+                {"Bilet"}
+              </Typography>
+            </Box>
+          );
+        case "set":
+        default:
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                height: "100%",
+                pl: "4px",
+              }}
+            >
+              <Typography fontSize={14} letterSpacing={-0.1}>
+                {"Set"}
+              </Typography>
+            </Box>
+          );
+      }
+    },
+  },
   {
     field: "name",
     headerName: "Başlık",

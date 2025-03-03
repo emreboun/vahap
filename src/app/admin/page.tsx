@@ -9,7 +9,7 @@ import { Box, List, ListItem, Paper, Typography } from "@mui/material";
 
 export default async function AdminPage() {
   const purchases = await getAllPurchasesAdmin();
-  console.log(purchases);
+
   return (
     <>
       <Box
@@ -49,6 +49,16 @@ export default async function AdminPage() {
               <Typography>{"Hakkımda"}</Typography>
 
               <NavLink href={`/admin/pages/hakkimda`}>
+                <EditButton />
+              </NavLink>
+            </ListItem>
+
+            <ListItem
+              sx={{ borderBottom: "1px solid rgb(128,128,128,0.15)", gap: 1.5 }}
+            >
+              <Typography>{"İletişim"}</Typography>
+
+              <NavLink href={`/admin/pages/iletisim`}>
                 <EditButton />
               </NavLink>
             </ListItem>

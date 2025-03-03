@@ -31,8 +31,9 @@ const ProductGrid: React.FC<{ items: ProductEntity[] }> = ({ items }) => {
       sx={{
         display: "grid",
         gridTemplateColumns: {
+          lg: "repeat(3,1fr)",
           md: "repeat(2,1fr)",
-          sm: "repeat(1,1fr)",
+          sm: "repeat(2,1fr)",
           xs: "repeat(1,1fr)",
         },
         gap: { xs: 3, sm: 3.2, md: 3.6, lg: 6, xl: 5 },
@@ -243,7 +244,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 gap: 0.2,
-                pl: { xs: 0.6, sm: 0.7, md: 0.8, lg: 1 },
+                pl: { xs: 0.6, sm: 0.7, md: 0.8, lg: 0.8 },
                 pt: 0.2,
               }}
             >
@@ -258,7 +259,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                     letterSpacing={{
                       xs: -0.7,
                       sm: -0.6,
-                      md: -0.5,
+                      //md: -0.5,
                     }}
                     className={"limitedLine"}
                   >
@@ -286,7 +287,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                       letterSpacing={{
                         xs: -0.7,
                         sm: -0.6,
-                        md: -0.5,
+                        //md: -0.5,
                       }}
                       className={"limitedLine"}
                     >
@@ -315,8 +316,8 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                       fontSize={{ xs: 13, md: 14 }}
                       letterSpacing={{
                         xs: -0.7,
-                        sm: -0.6,
-                        md: -0.5,
+                        //sm: -0.6,
+                        //md: -0.5,
                       }}
                       className={"limitedLine"}
                       sx={{ pl: 0.1 }}
@@ -324,6 +325,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                       {`${turkcetarih_formati(eventTicket.date)}`}
                     </Typography>
                   </Box>
+
                   <Box
                     sx={{
                       display: "flex",
@@ -349,9 +351,10 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                 </>
               )}
             </Box>
+
             <AddToCartButtonSecondary
               data={{ mainProduct: item, duration, thumbnail }}
-              long={true}
+              //long={true}
             />
             {/* <Box
               sx={{

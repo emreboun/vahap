@@ -24,7 +24,7 @@ interface AddTicketFormProps {
 const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
   const router = useRouter();
 
-  const [form, setForm] = useState<any>({});
+  const [form, setForm] = useState<any>({ status: true });
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -279,4 +279,5 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
     </>
   );
 };
+
 export default AddTicket;

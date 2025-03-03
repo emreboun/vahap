@@ -55,7 +55,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
             flexDirection: "column",
             alignItems: "flex-end",
             position: "relative",
-            pl: { xs: 1.2, sm: 1, md: 1.2, lg: 1.4, xl: 1.6 },
+            pl: { xs: 1.2, sm: 1, md: 1.2, lg: 1, xl: 1.4 },
           }}
         >
           {!!discount && (
@@ -79,7 +79,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
               />
               <Price
                 value={mainProduct?.price}
-                fontSize={15}
+                fontSize={14}
                 isSign={""}
                 isDecimal
               />
@@ -89,7 +89,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
           <Price
             value={mainProduct?.price - mainProduct?.discount}
             isDecimal
-            fontSize={17}
+            fontSize={16}
             sx={{ fontWeight: 600 }}
             color={"primary.main"}
             isSign={""}
@@ -100,10 +100,13 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
           variant={"contained"}
           sx={{
             borderRadius: 0.6,
-            px: !long ? 0.5 : 0.9,
+            px: !long
+              ? { xs: 1.2, sm: 0.7, md: 0.7, lg: 0.7, xl: 1.2 }
+              : { xs: 1.4, sm: 1.2, md: 1, lg: 0.8, xl: 2.4 },
             py: 1.2,
             boxShadow: 1,
-            gap: { xs: 0.4, sm: 0.5, md: 0.6 },
+            //gap: { xs: 0.4, sm: 0.4, md: 0.5, lg: 0.4, xl: 0 },
+            justifyContent: "space-around",
             //minWidth: { xs: 120, sm: 112, md: 112, lg: 120 },
             textTransform: "none",
             transition: "all 0.24s ease-in-out",
@@ -124,7 +127,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
           )}
           <Typography
             //fontFamily={"Montserrat"}
-            letterSpacing={{ xs: -0.6, sm: -0.5, md: -0.4 }}
+            letterSpacing={{ xs: -0.6, sm: -0.5, md: -0.4, lg: -0.6, xl: -0.4 }}
             fontWeight={500}
             fontSize={{ xs: 14, sm: 15 }}
             className={"limitedLine"}
