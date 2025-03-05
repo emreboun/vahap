@@ -1,10 +1,9 @@
-import { getAllLectures } from "@/api/lectures";
+import { Metadata } from "next";
+import { Box } from "@mui/material";
+
 import { getUserAccess } from "@/api/lectures/access";
 import { getAllSets } from "@/api/products";
-import ResponsiveGrid from "@/components/grid";
 import ProductGrid from "@/components/grid/ProductGrid";
-import { Box } from "@mui/material";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Eğitimler - Online Satranç Okulu",
@@ -13,17 +12,21 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic"; // Force dynamic rendering
 
-export default async function LecturesPage() {
+export default async function SetsPage() {
   const sets: any[] = await getAllSets();
-  /* const permissions = await getUserAccess();
+  const permissions = await getUserAccess();
+  const lectureIds = permissions?.map((perm) => perm.lectureId);
 
-  const items = sets.map((lecture) => ({
-    ...lecture,
-    hasAccess: permissions?.some((perm) => perm.lectureId === lecture.id),
-  })); */
+  const items = sets.map((product) => ({
+    ...product,
+    hasAccess: !product.lectures.some(
+      (lect: any) => !lectureIds?.some((id) => id === lect.lecture.id)
+    ),
+  }));
+
   return (
     <Box className='responsive'>
-      <ProductGrid items={sets} />
+      <ProductGrid items={items} />
     </Box>
   );
 }

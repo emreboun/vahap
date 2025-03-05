@@ -21,7 +21,8 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(adminUrl);
     }
   }
-  if (pathname.endsWith("giris") || pathname.endsWith("kayit")) {
+
+  if (pathname === "/giris" || pathname === "/kayit") {
     if (valid) {
       const homeUrl = new URL("/", req.url);
       return NextResponse.redirect(homeUrl);

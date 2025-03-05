@@ -1,26 +1,16 @@
 import {
   Box,
   Button,
-  ButtonBase,
   CircularProgress,
-  Collapse,
   FormControl,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
   Paper,
-  Switch,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 
-import { formatText } from "../../utils";
 import { NavLink } from "@/components/app-bar/link";
 import { useRouter } from "next/navigation";
-import { BoxCard } from "@/components/box";
 import { updateTicket } from "@/api/products/tickets";
 
 interface EditTicketFormProps {
@@ -53,18 +43,10 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
     Object.keys(req).forEach((key) => {
       if (req[key] === data[key]) {
         delete req[key];
-        //req[key] = undefined;
       }
     });
-    //req.discount = req.discount ? req.discount * 1 : undefined;
 
     const result = await updateTicket(id, req);
-    /* let imageResult;
-    if (selectedFiles.length > 0 && !!result) {
-      imageResult = await uploadFiles(result.id, "product");
-    } else {
-      imageResult = true;
-    } */
 
     if (!!result /* && imageResult */) {
       router.push(`/admin/tickets`);

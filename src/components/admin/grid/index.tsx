@@ -62,10 +62,9 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   const handleEditClick = (id: GridRowId) => () => {
     if (table === "products") {
       router.push(`/admin/products/edit/${id}`);
-
-      //setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     } else if (table === "users") {
-      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+      router.push(`/admin/users/edit/${id}`);
+      //setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     } else if (table === "lectures") {
       router.push(`/admin/lectures/edit/${id}`);
       //setEditSelected(id);

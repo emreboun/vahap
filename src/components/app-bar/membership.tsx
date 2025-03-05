@@ -40,7 +40,7 @@ export const Membership: React.FC<MembershipProps> = ({
   return (
     <>
       {!auth ? (
-        <Box sx={{ display: "flex", width: 240 }}>
+        <Box sx={{ display: "flex", width: 240, justifyContent: "flex-end" }}>
           <Collapse
             in={!isEmpty}
             orientation='horizontal'

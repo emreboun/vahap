@@ -21,7 +21,6 @@ interface FormProps {
 export const DeleteForm: React.FC<FormProps> = ({ itemId, onClose }) => {
   const params = useParams();
   const { table } = params;
-  //const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState<string>("");
 
@@ -41,7 +40,6 @@ export const DeleteForm: React.FC<FormProps> = ({ itemId, onClose }) => {
         break;
       case "products":
         result = await deleteProduct(id);
-        console.log(result);
         break;
     }
     if (!!result) {

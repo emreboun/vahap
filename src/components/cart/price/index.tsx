@@ -57,7 +57,6 @@ export const Price: React.FC<PriceProps> = ({
 
           <Typography
             style={{
-              //fontSize: !isDecimal ? fontSize - 4 : fontSize,
               marginLeft: !isDecimal ? 1 : 0,
               marginTop: !isDecimal ? 1.5 : 0,
             }}
@@ -74,6 +73,7 @@ export const Price: React.FC<PriceProps> = ({
             fontSize={fontSize - 4}
             letterSpacing={-0.4}
             sx={{ pl: 0.2 }}
+            fontFamily={"Lexend"}
           >
             {"TL"}
           </Typography>

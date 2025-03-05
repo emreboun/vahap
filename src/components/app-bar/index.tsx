@@ -27,7 +27,7 @@ export const AppBar: React.FC<AppBarProps> = async ({}) => {
             display: "flex",
             alignItems: "stretch",
             justifyContent: "space-between",
-            gap: { md: "8px", lg: "64px", xl: "100px" },
+            gap: { md: "8px", lg: "48px", xl: "100px" },
             zIndex: 4,
           }}
         >

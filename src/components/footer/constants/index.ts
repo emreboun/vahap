@@ -22,37 +22,31 @@ export const SECTIONS = [
     ],
   },
   {
-    title: "Hızlı Erişim",
+    title: "Menü",
     links: [
       {
         href: "/egitimler",
         title: "Eğitimler",
       },
       {
+        href: "/egitim-setleri",
+        title: "Eğitim Setleri",
+      },
+      { href: "/etkinlikler", title: "Etkinlik Biletleri" },
+    ],
+  },
+
+  {
+    title: "Hızlı Erişim",
+    links: [
+      {
         href: "/hakkimda",
         title: "Hakkımda",
       },
       { href: "/sss", title: "Sıkça Sorulan Sorular" },
       {
-        //href: "/sepet",
         title: "Sepetim",
       },
     ],
   },
-
-  /* {
-    title: "Dökümanlar",
-    links: [
-      { href: "/yenisoru", title: "Yeni Soru Oluştur" },
-      { href: "/sorular", title: "Tüm Sorular" },
-      {
-        href: "https://www.elektromarketim.com/uye-girisi-sayfasi",
-        title: "Hesabım",
-      },
-      {
-        href: "https://www.elektromarketim.com/uye-siparisleri",
-        title: "Siparişlerim",
-      },
-    ],
-  }, */
 ];

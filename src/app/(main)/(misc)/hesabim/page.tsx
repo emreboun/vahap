@@ -40,6 +40,7 @@ const AccountPage: React.FC = async () => {
               bgcolor: "lightgrey",
               border: "1px solid rgb(128,128,128,0.2)",
               boxShadow: 1,
+              display: { xs: "none", md: "block" },
             }}
           >
             <AccountCircleRounded color={"primary"} sx={{ fontSize: 128 }} />
@@ -48,7 +49,8 @@ const AccountPage: React.FC = async () => {
           <Box
             sx={{
               pt: 1.5,
-              px: 2,
+              pb: 1,
+              px: { xs: 0.8, sm: 1.2, md: 2 },
               display: "flex",
               flexDirection: "column",
               gap: 1.2,
@@ -56,13 +58,23 @@ const AccountPage: React.FC = async () => {
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
               <Email color='primary' />
-              <Typography color={"textSecondary"}>{email}</Typography>
+
+              <Typography
+                color={"textSecondary"}
+                fontSize={{ xs: 15, sm: 16 }}
+                sx={{ mt: 0.1 }}
+              >
+                {email}
+              </Typography>
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
               <Badge color='primary' />
+
               <Typography
                 color={"textSecondary"}
+                fontSize={{ xs: 15, sm: 16 }}
+                sx={{ mt: 0.1 }}
               >{`${firstName} ${lastName}`}</Typography>
             </Box>
           </Box>
@@ -103,6 +115,10 @@ const AccountPage: React.FC = async () => {
                       display: "flex",
                       flexDirection: "column",
                       gap: 0.5,
+                      "&:hover": {
+                        boxShadow: 3,
+                        transform: "scale(1.02)",
+                      },
                     }}
                     elevation={0}
                   >

@@ -70,9 +70,10 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
       >
         <Box
           sx={{
-            flex: 0,
+            flex: 1,
             display: "flex",
-            alignItems: "flex-end",
+            //alignItems: "flex-end",
+            alignItems: "center",
             position: "relative",
             zIndex: 1,
           }}
@@ -194,20 +195,48 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
                 <TimerOutlined
                   sx={{
                     fontSize: 19,
-                    color: "primary.main", //"text.secondary"
+                    color: "primary.main",
                   }}
                 />
+
                 <Typography
                   color={"textSecondary"}
                   fontSize={{ xs: 13, md: 14 }}
                   letterSpacing={{
                     xs: -0.8,
-                    //sm: -0.7,
-                    //md: -0.6,
                   }}
                   className={"limitedLine"}
                 >
-                  {formatDuration(duration)}
+                  <Box
+                    component={"span"}
+                    sx={{
+                      display: {
+                        xs: "block",
+                        sm: "none",
+                        md: "block",
+                        lg: "none",
+                        xl: "block",
+                      },
+                    }}
+                  >
+                    {formatDuration(duration)}
+                  </Box>
+                  <Box
+                    component={"span"}
+                    sx={{
+                      display: {
+                        xs: "none",
+                        sm: "block",
+                        md: "none",
+                        lg: "block",
+                        xl: "none",
+                      },
+                    }}
+                  >
+                    {formatDuration(duration)
+                      .replace("saat", "sa.")
+                      .replace("dakika", "dk.")}
+                  </Box>
                 </Typography>
               </Box>
 
@@ -224,7 +253,7 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
                     <AttachFileRounded
                       sx={{
                         fontSize: 19,
-                        color: "primary.main", //"text.secondary"
+                        color: "primary.main",
                       }}
                     />
                     <Typography
@@ -232,8 +261,6 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
                       fontSize={{ xs: 13, md: 14 }}
                       letterSpacing={{
                         xs: -0.8,
-                        //sm: -0.6,
-                        //md: -0.5,
                       }}
                       className={"limitedLine"}
                     >

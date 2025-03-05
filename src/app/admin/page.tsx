@@ -9,7 +9,6 @@ import { Box, List, ListItem, Paper, Typography } from "@mui/material";
 
 export default async function AdminPage() {
   const purchases = await getAllPurchasesAdmin();
-
   return (
     <>
       <Box
@@ -116,7 +115,7 @@ export default async function AdminPage() {
             >
               {purchases.map((purchase: any) => (
                 <ListItem
-                  key={purchase.purchasedAt.getMilliseconds()}
+                  key={`${purchase.user.id}-${purchase.product.id}`}
                   sx={{ borderBottom: "1px solid rgb(128,128,128,0.15)" }}
                 >
                   <PurchaseItem item={purchase} />

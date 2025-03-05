@@ -57,9 +57,7 @@ export const getAllTicketsAdmin = async () => {
 
 export const getTicketById = async (id: string) => {
   try {
-    console.log(id);
     const result = await ticketService.findById(id, true);
-    console.log(result);
     return result;
   } catch (e: unknown) {
     console.log(e);

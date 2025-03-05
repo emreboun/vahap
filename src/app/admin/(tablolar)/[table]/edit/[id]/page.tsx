@@ -1,10 +1,12 @@
 import { getLectureById } from "@/api/lectures";
+import { getUserWithLecturesById } from "@/api/lectures/access";
 import { getProductById } from "@/api/products";
 import { getTicketById } from "@/api/products/tickets";
 import {
   EditLecture,
   EditProduct,
   EditTicket,
+  EditUser,
 } from "@/components/admin/grid/form";
 
 export default async function EditEntityPage({ params }: { params: any }) {
@@ -25,6 +27,9 @@ export default async function EditEntityPage({ params }: { params: any }) {
     case "tickets":
       data = await getTicketById(id);
       break;
+    case "users":
+      data = await getUserWithLecturesById(id);
+      break;
   }
 
   if (!data) {
@@ -36,6 +41,7 @@ export default async function EditEntityPage({ params }: { params: any }) {
       {table === "lectures" && <EditLecture data={data} />}
       {table === "products" && <EditProduct data={data} />}
       {table === "tickets" && <EditTicket data={data} />}
+      {table === "users" && <EditUser data={data} />}
     </>
   );
 }

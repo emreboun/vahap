@@ -63,6 +63,7 @@ export const ArticleSection: React.FC<ArticleSectionProps> = ({
           textAlign: "justify",
           pb: 1,
         }}
+        whiteSpace={"break-spaces"}
       >
         {content}
       </Typography>

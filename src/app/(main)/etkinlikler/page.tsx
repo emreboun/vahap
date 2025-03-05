@@ -15,12 +15,7 @@ export const dynamic = "force-dynamic"; // Force dynamic rendering
 
 export default async function TicketsPage() {
   const tickets: any[] = await getAllTickets();
-  /*  const permissions = await getUserAccess();
 
-  const items = lectures.map((lecture) => ({
-    ...lecture,
-    hasAccess: permissions?.some((perm) => perm.lectureId === lecture.id),
-  })); */
   return (
     <Box className='responsive'>
       <ProductGrid items={tickets} />

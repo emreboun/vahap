@@ -26,7 +26,7 @@ export const ProductMain: React.FC<any> = ({ data }) => {
     lecture,
     lectures,
     eventTicket,
-    hasAccess = false,
+    hasAccess,
   } = data;
 
   return (
@@ -410,10 +410,17 @@ export const ProductMain: React.FC<any> = ({ data }) => {
                         display: "flex",
                         flexDirection: "column",
                         gap: 0.5,
+                        "&:hover": {
+                          boxShadow: 3,
+                          transform: "scale(1.02)",
+                          "& .lecture-title": {
+                            color: "primary.main",
+                          },
+                        },
                       }}
                       elevation={0}
                     >
-                      <Typography sx={{ pl: 0.5 }}>
+                      <Typography sx={{ pl: 0.5 }} className={"lecture-title"}>
                         {lec.lecture.name}
                       </Typography>
 
@@ -430,6 +437,7 @@ export const ProductMain: React.FC<any> = ({ data }) => {
                           <TimerOutlined
                             sx={{ fontSize: 19, color: "primary.main" }}
                           />
+
                           <Typography
                             color={"textSecondary"}
                             fontSize={{ xs: 13, md: 14 }}

@@ -136,14 +136,14 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
         mainVideo: formatUrl(mainVideo),
         thumbnail: "",
         price: Number(price),
-        discount: Number(discount),
+        discount: discount ? Number(discount) : undefined,
         duration: Number(duration) * 60,
         minElo,
         maxElo,
         description: formatText(description),
         status,
       };
-
+      console.log(temp);
       const result = await createLecture({ ...temp });
       let imageResult;
       if (selectedFiles.length > 0 && !!result) {

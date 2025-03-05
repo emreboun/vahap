@@ -1,9 +1,10 @@
 "use client";
+import { Box, Button, Typography } from "@mui/material";
 import {
   AddShoppingCartRounded,
   ShoppingCartCheckoutRounded,
 } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+
 import { useCart } from "../cart/CartProvider";
 import { useSidebar } from "../app-bar/sidebars/SidebarProvider";
 import { Price } from "../cart/price";
@@ -20,11 +21,20 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
   const onCart = (e: any) => {
     e.stopPropagation();
     if (!added) {
+      const duration =
+        data.duration ??
+        mainProduct.lectures?.reduce(
+          (
+            sum: number,
+            lectureContainer: { lecture: { duration: number | null } }
+          ) => sum + (lectureContainer.lecture.duration || 0),
+          0
+        );
       dispatch({
         type: "ADD_ITEM",
         payload: {
           ...mainProduct,
-          duration: data.duration,
+          duration,
           imgUrl: !!mainProduct.imgUrl
             ? mainProduct.imgUrl
             : (data.thumbnail ?? `/thumbnail_main.jpg`),
@@ -76,10 +86,11 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
                   height: 2,
                   left: -2,
                   right: -2,
-                  top: "48%",
+                  top: "42%",
                   bgcolor: "grey",
                 }}
               />
+
               <Price
                 value={mainProduct?.price}
                 fontSize={14}

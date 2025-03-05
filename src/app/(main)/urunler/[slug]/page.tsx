@@ -1,3 +1,4 @@
+import { getUserAccess } from "@/api/lectures/access";
 import { getProductBySlug } from "@/api/products";
 import { parseUrlSlug } from "@/components/admin/utils";
 import { ProductMain } from "@/components/product";
@@ -27,9 +28,8 @@ export default async function ProductPage({
 }) {
   const { slug } = await params;
   const productSlug = decodeURIComponent(slug);
-
   const product = await getProductBySlug(productSlug);
-
+  let hasAccess = false;
   if (!product) {
     return (
       <Typography
@@ -49,9 +49,17 @@ export default async function ProductPage({
     );
   }
 
+  if (product.lectures && product.lectures.length > 0) {
+    const permissions = await getUserAccess();
+    const lectureIds = permissions?.map((perm) => perm.lectureId);
+    hasAccess = !product.lectures.some(
+      (lect: any) => !lectureIds?.some((id) => id === lect.lecture.id)
+    );
+  }
+
   return (
     <>
-      <ProductMain data={product} />
+      <ProductMain data={{ ...product, hasAccess }} />
     </>
   );
 }

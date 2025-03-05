@@ -64,7 +64,7 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
         location,
         capacity: Number(capacity),
         price: Number(price),
-        discount: Number(discount),
+        discount: discount ? Number(discount) : undefined,
         status,
       };
       const result = await createTicket({ ...temp });

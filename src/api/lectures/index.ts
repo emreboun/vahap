@@ -98,7 +98,7 @@ export const getAllLecturesAdmin = async () => {
 };
 
 export const createLecture = async (
-  data: Partial<Lecture> & { price: number; discount: number }
+  data: Partial<Lecture> & { price: number; discount?: number }
 ) => {
   try {
     const {
@@ -149,7 +149,7 @@ export const createLecture = async (
         name,
         description,
         price: Number(price),
-        discount: Number(discount),
+        discount: discount ? Number(discount) : undefined,
         status,
         //imgUrl: thumbnail,
       },

@@ -53,7 +53,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
               paddingBottom: 12,
             }}
           >
-            <Box sx={{ pl: { xs: 0.4, md: 0 } }}>
+            <Box sx={{ pt: 0.8, pl: { xs: 0.4, md: 0 } }}>
               <NavigationBar />
             </Box>
             <Box sx={{}}>
@@ -62,8 +62,8 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
                   sx={{
                     display: "flex",
                     justifyContent: "flex-end",
-                    pr: 0.5,
-                    pb: 0.5,
+                    pr: 2.4,
+                    pb: 1.2,
                   }}
                 >
                   <Membership auth={!!auth} />

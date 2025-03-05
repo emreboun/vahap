@@ -20,7 +20,7 @@ Aşağıdaki Durumlarda Üyelik İptal Edilemez
 Aşağıdaki Durumlarda Üyelik Tarafımızdan İptal Edilir
  1 - Üye Ahlak dışı, mesajlar gönderiyor ya da yorum yazıyorsa
  2 - Sahtekarlık girişiminde bulunduysa
- 3 - Sisteme veya ********************** ismine zarar vermeye yönelik girişimde bulunduysa.
+ 3 - Sisteme veya gmvahap.com ismine zarar vermeye yönelik girişimde bulunduysa.
 `,
     },
     {
@@ -46,7 +46,8 @@ export const SATIS_SOZLESMESI: ArticleProps = {
     {
       title: "",
       content: `Tüm kullanıcılar üyelik işlemlerini gerçekleştirdikleri anda şatış sözleşmesini okuduklarını ve onayladıklarını kabul etmiş sayılırlar.
-Satış Sözleşmesi ************ ile Müşteri arasındaki Sanal Ortamda  Satış Sözleşmesidir.`,
+
+Satış Sözleşmesi gmvahap.com ile Müşteri arasındaki Sanal Ortamda Satış Sözleşmesidir.`,
     },
     {
       title: "Madde-1: ",
@@ -54,15 +55,15 @@ Satış Sözleşmesi ************ ile Müşteri arasındaki Sanal Ortamda  Satı
     },
     {
       title: "Madde-2: Satıcı Bilgileri",
-      content: `*****`,
+      content: `gmvahap.com - İletişim`,
     },
     {
       title: "Madde-3: Alıcı Bilgileri",
-      content: `Tüm üyeler: ***************** Firmasının e-ticaret mağazası  **************** a üye olup alışveriş yapan tüm alıcılar. (Bundan sonra alıcı veya müşteri olarak anılacaktır).`,
+      content: `Tüm üyeler: gmvahap.com'a üye olup alışveriş yapan tüm alıcılar. (Bundan sonra alıcı veya müşteri olarak anılacaktır).`,
     },
     {
       title: "Madde-4: Sözleşme Konusu Ve Ürün Bilgileri",
-      content: `Mal/Ürün veya Hizmetin; Türü, Miktarı, Marka/Modeli, Rengi, Adedi, Satış Bedeli ve Ödeme Sekli, sitede belirtildiği gibi olup, bu vaatler alıcıya bildirilmeden deişiklik gösterebilmektedir.`,
+      content: `Mal/Ürün veya Hizmetin; Türü, Miktarı, Marka/Modeli, Rengi, Adedi, Satış Bedeli ve Ödeme Sekli, sitede belirtildiği gibi olup, bu vaatler alıcıya bildirilmeden değişiklik gösterebilmektedir.`,
     },
     {
       title: "Madde-5: Genel Hükümler",
@@ -74,7 +75,7 @@ Satış Sözleşmesi ************ ile Müşteri arasındaki Sanal Ortamda  Satı
 5.6 - Ürünün tesliminden sonra aliciya ait kredi kartinin alicinin kusurundan kaynaklanmayan bir sekilde yetkisiz kisilerce haksiz veya hukuka aykiri olarak kullanilmasi nedeni ile ilgili banka veya finans kurulusun ürün bedelini SATICI ya ödememesi halinde, ALICI kendisi veya satis sözlesmesinde belirttigi kisi veya kuruma teslim edilmis olan ürünü 3 isgünü içinde SATICI ya göndermek zorundadir. Böyle bir durumda nakliye giderleri aliciya aittir.
 5.7 - SATICI mücbir sebepler veya nakliyeyi engelleyen hava muhalefeti, ulasimin kesilmesi gibi olaganüstü durumlar nedeni ile sözlesme konusu ürünü süresi içinde teslim edemez ise, durumu aliciya bildirmekle yükümlüdür. Bu takdirde alici siparisinin iptal edilmesini, sözlesme konusu ürünün varsa emsali ile degistirilmesini, ve/veya teslimat süresinin engelleyici durumun ortadan kalkmasina kadar ertelenmesi haklarindan birini kullanabilir. Alicinin siparisi iptal etmesi halinde, SATICI 7 gün içinde aliciya ait kredi karti fisinin iptali ve ilgili tutarin alicinin hesabina iade edilmesi konusunda ilgili banka nezdinde girisimde bulunur ve yapilan islem elektronik posta araciligi ile ALICIya bildirilir. Böyle bir durumda ilgili bankadan kaynaklanan gecikmelerden dolayi SATICI sorumlu tutulamaz.
 5.8 - ALICI ve/veya ALICInin teslimat yapilmasi istedigi kisi ve/veya kurumlara teslim edilmis olan ürünlerin arizali veya bozuk olmasi durumunda, garanti sartlari içinde gerekli onarim veya degistirme isleminin yapilmasi için ilgili ürün veya ürünler SATICIya, ALICI tarafinin teslim aldigi tarihten baslayarak 7 gün içinde gönderilir ve nakliye giderleri SATICI tarafindan karsilanir. Böyle bir durumda 7 günlük sürenin dolmasi halinde, ALICI teslim almis oldugu ürünü ilgili servisine götürmek zorundadir.
-5.9- Is bu sözlesme, alici tarafindan elektronik olarak onaylandiktan(üyelik gerçeklestirikdikten sonra) ................................ adresine ulastirildiktan sonra geçerlilik kazanir.`,
+5.9- Is bu sözlesme, alici tarafindan elektronik olarak onaylandiktan(üyelik gerçeklestirikdikten sonra) sonra geçerlilik kazanir.`,
     },
     {
       title: "Madde-6: Cayma Hakkı",
@@ -159,10 +160,6 @@ Kanuni sebeplerle verilerinizin silinmesini veya yok edilmesini talep etme
     {
       title: "6. İletişim Bilgileri",
       content: `KVKK kapsamında haklarınızı kullanmak veya sorularınız için bizimle iletişime geçebilirsiniz:
-
-📩 E-posta: [destek@siteadı.com]
-📞 Telefon: [+90 XXX XXX XX XX]
-📍 Adres: [Şirket Adresi]
 
 Bu aydınlatma metni, ihtiyaçlara göre güncellenebilir. Güncellemeleri web sitemiz üzerinden takip edebilirsiniz.`,
     },

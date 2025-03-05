@@ -40,6 +40,19 @@ export const getUserAccess = async () => {
   }
 };
 
+export const grantUserAccess = async (userId: string, ids: string[]) => {
+  try {
+    const result = await lectureAccessService.createMany(
+      ids.map((lectureId) => ({ userId, lectureId }))
+    );
+
+    return result;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
 export const getUserWithLectures = async () => {
   try {
     const userId = await getCurrentUserId();
@@ -48,6 +61,41 @@ export const getUserWithLectures = async () => {
       return null;
     }
 
+    const user = await userService.findById(userId);
+
+    const permissions: any[] = await lectureAccessService.findAll(
+      { userId },
+      {
+        //user: { select: { firstName: true, email: true, lastName: true } },
+        lecture: {
+          select: {
+            slug: true,
+            name: true,
+            duration: true,
+            minElo: true,
+            maxElo: true,
+            resources: true,
+          },
+        },
+      },
+      { grantedAt: "desc" }
+    );
+
+    return {
+      user,
+      permissions: permissions.map((per) => ({
+        ...per,
+        lecture: { ...per.lecture, pgnCount: per.lecture.resources.length },
+      })),
+    };
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
+export const getUserWithLecturesById = async (userId: string) => {
+  try {
     const user = await userService.findById(userId);
 
     const permissions: any[] = await lectureAccessService.findAll(

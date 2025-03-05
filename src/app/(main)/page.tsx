@@ -1,4 +1,4 @@
-import { getLatestThreeLectures, getThreeLectures } from "@/api/lectures";
+import { getAllLectures } from "@/api/lectures";
 import { Box, Paper, Typography } from "@mui/material";
 import ResponsiveGrid from "@/components/grid";
 import { getAllTickets, getDiscountedProducts } from "@/api/products";
@@ -6,7 +6,20 @@ import ProductGrid from "@/components/grid/ProductGrid";
 import { getUserAccess } from "@/api/lectures/access";
 
 export default async function Home() {
+  const lectures: any[] = await getAllLectures();
   const permissions = await getUserAccess();
+
+  const items = lectures.map((lecture) => ({
+    ...lecture,
+    hasAccess: permissions?.some((perm) => perm.lectureId === lecture.id),
+  }));
+  return (
+    <Box className='responsive'>
+      <ResponsiveGrid items={items} slug={"egitimler"} />
+    </Box>
+  );
+
+  /* const permissions = await getUserAccess();
 
   const tickets = await getAllTickets();
   const three = await getThreeLectures();
@@ -88,7 +101,7 @@ export default async function Home() {
                 </Typography>
               </Box>
 
-              {/* <Divider sx={{ display: { xs: "none", sm: "block" }, mx: 4 }} /> */}
+             
 
               <Box sx={{ px: { xs: 3, sm: 8, md: 3, lg: 5 } }}>
                 <ProductGrid items={tickets.filter((ticket, i) => i < 2)} />
@@ -139,7 +152,7 @@ export default async function Home() {
                   fontSize: { xs: 17, sm: 20, md: 22 },
                   fontWeight: 600,
                   letterSpacing: { xs: -0.5, sm: -0.4, md: -0.3 },
-                  pl: 0, //{ xs: 0, md: 1 },
+                  pl: 0,
                   py: { xs: 2, sm: 2.5 },
                 }}
               >
@@ -147,9 +160,8 @@ export default async function Home() {
               </Typography>
             </Box>
 
-            {/* <Divider sx={{ display: { xs: "none", sm: "block" }, mx: 4 }} /> */}
 
-            <Box sx={{ px: { xs: 1, sm: 2 /* lg: 24 */ } }}>
+            <Box sx={{ px: { xs: 1, sm: 2 } }}>
               <ResponsiveGrid
                 items={three}
                 slug={"egitimler"}
@@ -279,5 +291,5 @@ export default async function Home() {
         </Paper>
       </Box>
     </>
-  );
+  ); */
 }

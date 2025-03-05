@@ -32,15 +32,15 @@ export const Footer: React.FC = () => {
           justifyContent: "center",
           alignItems: "flex-start",
           gridTemplateColumns: {
-            lg: "repeat(3,1fr)",
+            lg: "repeat(4,1fr)",
             md: "repeat(2,1fr)",
             sm: "repeat(2,1fr)",
             xs: "repeat(1,1fr)",
           },
           mx: { xs: 0, sm: 16, md: 10, lg: 24, xl: 32 },
           pb: { xs: 8, sm: 8, md: 16, lg: 8, xl: 0 },
-          gap: { xs: "24px", sm: "32px", md: "40px", lg: "40px" },
-          columnGap: { xs: "24px", sm: "64px", md: "128px", lg: "64px" },
+          rowGap: { xs: "32px", sm: "64px", md: "48px", lg: "40px" },
+          columnGap: { xs: "24px", sm: "80px", md: "128px", lg: "40px" },
         }}
       >
         <Box
@@ -51,9 +51,6 @@ export const Footer: React.FC = () => {
             gap: { xs: "16px", sm: "24px", md: "24px", lg: "24px" },
             marginRight: { xs: 0, sm: 0, md: 0, lg: 8.7, xl: 14 },
             alignItems: { xs: "flex-start" },
-            /* bgcolor: "secondary.main",
-            p: 4,
-            borderRadius: 1, */
           }}
         >
           <NavigationLink

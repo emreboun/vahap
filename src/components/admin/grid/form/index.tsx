@@ -7,6 +7,7 @@ import AddTicket from "./AddTicket";
 import EditLecture from "./EditLecture";
 import EditProduct from "./EditProduct";
 import EditTicket from "./EditTicket";
+import EditUser from "./EditUser";
 
 export {
   EditLecture,
@@ -15,4 +16,5 @@ export {
   EditProduct,
   AddTicket,
   EditTicket,
+  EditUser,
 };

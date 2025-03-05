@@ -22,7 +22,7 @@ export default class CrudService<
   }
 
   async createMany(
-    data: Omit<Omit<Omit<T, "id">, "createdAt">, "updatedAt">[]
+    data: any[] //Omit<Omit<Omit<T, "id">, "createdAt">, "updatedAt">[]
   ) {
     return this.repository.createMany(data);
   }

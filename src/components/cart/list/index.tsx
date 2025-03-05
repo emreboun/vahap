@@ -284,10 +284,17 @@ export const CartList = () => {
                             showSeconds: false,
                           })}
 
-                        {turkcetarih_formati(
-                          new Date(item.product.eventTicket?.date),
-                          { showYear: false }
-                        )}
+                        {!!item.product.eventTicket &&
+                          turkcetarih_formati(
+                            new Date(item.product.eventTicket?.date),
+                            { showYear: false }
+                          )}
+
+                        {/*  {!!item.product.duration &&
+                          turkcetarih_formati(
+                            new Date(item.product.eventTicket?.date),
+                            { showYear: false }
+                          )} */}
                       </Typography>
                     </Box>
                   </Box>

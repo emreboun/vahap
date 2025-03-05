@@ -26,13 +26,14 @@ export const Form: React.FC = () => {
         }}
       >
         <MailOutlineRounded />
+
         <Typography
-          sx={{
-            fontWeight: 500,
-            fontSize: 16,
-          }}
+          sx={{}}
+          fontSize={{ xs: 15, sm: 16 }}
+          fontFamily={"Lexend"}
+          letterSpacing={-0.2}
         >
-          {"vahapsanal@hotmail.com"}
+          {"gmvahap@gmail.com"}
         </Typography>
       </Box>
 
@@ -51,12 +52,12 @@ export const Form: React.FC = () => {
           className={styles.socialIcon}
         />
 
-        <SocialIcon
+        {/* <SocialIcon
           target='_blank'
           rel='noopener noreferrer'
           url={"https://www.linkedin.com/in/vahap-sanal-a9543734b"}
           className={styles.socialIcon}
-        />
+        /> */}
       </div>
     </>
   );

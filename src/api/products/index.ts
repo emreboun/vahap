@@ -162,9 +162,9 @@ export const getAllTickets = async () => {
     {
       eventTicket: true,
     },
-    {},
-    1,
-    6
+    {}
+    /* 1,
+    6 */
   );
 
   return result;

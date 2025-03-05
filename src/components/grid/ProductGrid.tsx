@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Chip, Paper, Typography } from "@mui/material";
+import { Box, Chip, Paper, Tooltip, Typography } from "@mui/material";
 import {
   AccessTimeFilledRounded,
   AttachFileRounded,
@@ -8,6 +8,7 @@ import {
   LocationOn,
   SignalCellularAltRounded,
   TimerOutlined,
+  Verified,
 } from "@mui/icons-material";
 import AddToCartButton from "../lecture/AddToCartButton";
 import { formatDuration } from "@/utils/data";
@@ -71,6 +72,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
     lecture,
     minElo,
     maxElo,
+    hasAccess,
   } = item;
 
   const { length } = name;
@@ -135,9 +137,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
 
         <Box
           sx={{
-            flex: 0,
+            flex: 1,
             display: "flex",
-            alignItems: "flex-end",
+            //alignItems: "flex-end",
+            alignItems: "center",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           <Image
@@ -268,15 +273,16 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                 </Box>
               )}
 
-              {pgnCount > 0 && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.2,
-                    minHeight: 22,
-                  }}
-                >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.2,
+                  // TODO:
+                  minHeight: !eventTicket ? 22 : "",
+                }}
+              >
+                {pgnCount > 0 && (
                   <>
                     <AttachFileRounded
                       sx={{ fontSize: 19, color: "text.secondary" }}
@@ -287,15 +293,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                       letterSpacing={{
                         xs: -0.7,
                         sm: -0.6,
-                        //md: -0.5,
                       }}
                       className={"limitedLine"}
                     >
                       {`${pgnCount} Döküman`}
                     </Typography>
                   </>
-                </Box>
-              )}
+                )}
+              </Box>
 
               {eventTicket && (
                 <>
@@ -352,24 +357,15 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
               )}
             </Box>
 
-            <AddToCartButtonSecondary
-              data={{ mainProduct: item, duration, thumbnail }}
-              //long={true}
-            />
-            {/* <Box
-              sx={{
-                //transformOrigin: "right",
-                transform: {
-                  xs: "scale(0.86)",
-                  sm: "scale(0.88)",
-                  md: "scale(0.9)",
-                },
-              }}
-            >
-              <AddToCartButton
+            {hasAccess ? (
+              <Tooltip title={"Satın Alındı"}>
+                <Verified color={"secondary"} sx={{ fontSize: 36, mr: 1.6 }} />
+              </Tooltip>
+            ) : (
+              <AddToCartButtonSecondary
                 data={{ mainProduct: item, duration, thumbnail }}
               />
-            </Box> */}
+            )}
           </Box>
         </Box>
       </Paper>

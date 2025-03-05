@@ -56,15 +56,15 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
             alignItems: "flex-end",
             position: "relative",
             pl: { xs: 1.2, sm: 1, md: 1.2, lg: 1, xl: 1.4 },
+            transform: { xs: "scale(0.98)", sm: "scale()" },
           }}
         >
           {!!discount && (
             <Box
               sx={{
                 position: "relative",
-                opacity: 0.85,
+                opacity: 0.8,
                 mb: -0.5,
-                //mr: -0.4,
               }}
             >
               <Box
@@ -73,10 +73,11 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
                   height: 2,
                   left: -2,
                   right: -2,
-                  top: "48%",
-                  bgcolor: "grey",
+                  top: "41%",
+                  bgcolor: "text.secondary",
                 }}
               />
+
               <Price
                 value={mainProduct?.price}
                 fontSize={14}
@@ -99,6 +100,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
         <Button
           variant={"contained"}
           sx={{
+            minWidth: { xs: 110, md: 116 },
             borderRadius: 0.6,
             px: !long
               ? { xs: 1.2, sm: 0.7, md: 0.7, lg: 0.7, xl: 1.2 }
@@ -106,7 +108,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
             py: 1.2,
             boxShadow: 1,
             //gap: { xs: 0.4, sm: 0.4, md: 0.5, lg: 0.4, xl: 0 },
-            justifyContent: "space-around",
+            justifyContent: "space-evenly",
             //minWidth: { xs: 120, sm: 112, md: 112, lg: 120 },
             textTransform: "none",
             transition: "all 0.24s ease-in-out",
