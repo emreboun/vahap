@@ -28,7 +28,23 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(homeUrl);
     }
   }
+  /* const ip = req.headers.get("x-forwarded-for") || "Unknown IP";
+  console.log("User IP:", ip); */
 
+  /* const allowedHosts = [
+    "sandbox-cpp.iyzipay.com",
+    "drama-catherine-loaded-proceedings.trycloudflare.com",
+    "",
+  ];
+
+  const origin = req.headers.get("origin") || "";
+  const forwardedHost = req.headers.get("x-forwarded-host") || "";
+
+  if (allowedHosts.includes(forwardedHost) || allowedHosts.includes(origin)) {
+    return NextResponse.next();
+  } else {
+    return new NextResponse("Forbidden: Host mismatch", { status: 403 });
+  } */
   // Continue with the request if not an admin path or if valid token exists
   return NextResponse.next();
 }

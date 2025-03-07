@@ -26,7 +26,6 @@ interface ProductEntity {
 }
 
 const ProductGrid: React.FC<{ items: ProductEntity[] }> = ({ items }) => {
-  //console.log(items);
   return (
     <Box
       sx={{
@@ -38,7 +37,7 @@ const ProductGrid: React.FC<{ items: ProductEntity[] }> = ({ items }) => {
           xs: "repeat(1,1fr)",
         },
         gap: { xs: 3, sm: 3.2, md: 3.6, lg: 6, xl: 5 },
-        px: { xs: 0, sm: 4, md: 0 },
+        px: { xs: 2, sm: 0, md: 2, lg: 0 },
       }}
     >
       {items.map((item, index) => (
@@ -53,10 +52,6 @@ const ProductGrid: React.FC<{ items: ProductEntity[] }> = ({ items }) => {
 export default ProductGrid;
 
 export interface ProductItemProps {
-  /* imgUrl: string;
-  href: string;
-  title: string; */
-  //description?: string;
   item: any;
 }
 
@@ -98,7 +93,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
           "&:hover": {
             boxShadow: 5,
             borderColor: "rgb(211,178,107, 0.6)",
-            //transform: "scale(1.06)",
             "& .MuiBox-root": {},
             "& .MuiTypography-root": {},
           },
@@ -139,7 +133,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
           sx={{
             flex: 1,
             display: "flex",
-            //alignItems: "flex-end",
             alignItems: "center",
             position: "relative",
             zIndex: 1,
@@ -218,7 +211,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                 color={"textSecondary"}
                 fontSize={{ xs: 13, md: 14 }}
                 fontWeight={600}
-                //fontFamily={"Lexend"}
                 letterSpacing={{
                   xs: -0.8,
                   sm: -0.6,
@@ -264,7 +256,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                     letterSpacing={{
                       xs: -0.7,
                       sm: -0.6,
-                      //md: -0.5,
                     }}
                     className={"limitedLine"}
                   >
@@ -321,8 +312,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
                       fontSize={{ xs: 13, md: 14 }}
                       letterSpacing={{
                         xs: -0.7,
-                        //sm: -0.6,
-                        //md: -0.5,
                       }}
                       className={"limitedLine"}
                       sx={{ pl: 0.1 }}

@@ -3,7 +3,6 @@ import { EventTicket } from "@prisma/client";
 import { CrudRepository, CrudService } from "../prisma/crud";
 
 import prisma from "../prisma/init";
-import { getCurrentUserId } from "../user/auth";
 import { getProductSlugPrefix } from ".";
 import { generateUrlSlug } from "@/components/admin/utils";
 

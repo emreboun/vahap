@@ -1,4 +1,4 @@
-/* "use server";
+"use server";
 //import Iyzipay, { PaymentRequestData } from "iyzipay";
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -95,4 +95,3 @@ export const init = async () => {
     console.error(error);
   }
 };
- */

@@ -1,4 +1,4 @@
-import { Box, Toolbar } from "@mui/material";
+import { Box, Button, Toolbar } from "@mui/material";
 
 import React from "react";
 import { AppLogo } from "./logo";
@@ -54,7 +54,6 @@ export const AppBar: React.FC<AppBarProps> = async ({}) => {
 
             <Box sx={{ display: { xs: "block", md: "none" }, zIndex: 1 }}>
               <DropdownButton />
-              {/*  <Dropdown auth={!!auth} /> */}
             </Box>
           </Box>
         </Toolbar>

@@ -105,3 +105,22 @@ export function dropProperty<T, K extends keyof T>(
   const { [prop]: _, ...rest } = obj;
   return rest;
 }
+
+export function getEditedFields<T extends Record<string, any>>(
+  init: T,
+  edited: T,
+  exclude: (keyof T)[] = []
+): Partial<T> {
+  const changes: Partial<T> = {};
+
+  Object.keys(edited).forEach((key) => {
+    if (
+      !exclude.includes(key as keyof T) &&
+      JSON.stringify(init[key]) !== JSON.stringify(edited[key])
+    ) {
+      changes[key as keyof T] = edited[key];
+    }
+  });
+
+  return changes;
+}

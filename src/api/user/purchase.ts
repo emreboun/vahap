@@ -18,13 +18,13 @@ export const getAllPurchasesAdmin = async () => {
   return result;
 };
 
-export const purchaseItems = async (productIds: string[]) => {
+export const purchaseItems = async (userId: string, productIds: string[]) => {
   try {
-    const cookieStore = await cookies();
+    /* const cookieStore = await cookies();
     const userId = cookieStore.get("userid")?.value;
     if (!userId) {
       return null;
-    }
+    } */
 
     // Fetch all lectures associated with the purchased products
     const lectures = await prisma.lecture.findMany({

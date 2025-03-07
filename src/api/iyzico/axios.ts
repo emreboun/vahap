@@ -2,9 +2,9 @@ import axios, { AxiosInstance } from "axios";
 import crypto from "crypto";
 import { encode } from "base-64";
 
-const apiKey = process.env.IYZICO_API_KEY || "your-api-key";
-const secretKey = process.env.IYZICO_SECRET_KEY || "your-secret-key";
-const baseUrl = "https://api.iyzipay.com";
+export const apiKey = process.env.IYZIPAY_API_KEY || "your-api-key";
+export const secretKey = process.env.IYZIPAY_SECRET_KEY || "your-secret-key";
+const baseUrl = "https://sandbox-api.iyzipay.com"; //"https://api.iyzipay.com";
 
 export function generateAuthorizationString(
   uriPath: string,

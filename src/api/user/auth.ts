@@ -25,29 +25,42 @@ export const signup = async (data: {
 };
 
 export const login = async (email: string, password: string) => {
-  const user: any = await userService.findByUniqueProperty(
-    "email",
-    email,
-    true
-  );
+  const user: any = await userService.findByUniqueProperty("email", email, {
+    purchases: true,
+    permissions: true,
+    addresses: {
+      select: {
+        id: true,
+        title: true,
+        fullName: true,
+        address: true,
+        city: true,
+        country: true,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    },
+  });
   if (!user) return null;
 
   const isValid = await bcrypt.compare(password, user.password);
   if (!isValid) return null;
 
-  const { id, firstName, lastName, phone, role, purchases } = user;
+  const {
+    id,
+    firstName,
+    lastName,
+    phone,
+    role,
+    purchases = [],
+    addresses = [],
+  } = user;
 
-  /* const token = jwt.sign(
-    { id: user.id, password: user.password, role: user["role"] ?? "user" },
-    jwtConfig.secret,
-    {
-      expiresIn: "1y",
-    }
-  ); */
-  return { user: { id, email, firstName, lastName, phone, role, purchases } };
+  return {
+    user: { id, email, firstName, lastName, phone, role, purchases, addresses },
+  };
 };
-
-//export const logout = async (email: string, password: string) => {};
 
 export const getCurrentUserId = async () => {
   try {

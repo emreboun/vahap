@@ -6,7 +6,7 @@ import { getAllSets } from "@/api/products";
 import ProductGrid from "@/components/grid/ProductGrid";
 
 export const metadata: Metadata = {
-  title: "Eğitimler - Online Satranç Okulu",
+  title: "Eğitim Setleri - Online Satranç Okulu",
   description: "Tüm Eğitim Serileri - Online Satranç Okulu - Vahap Şanal",
 };
 

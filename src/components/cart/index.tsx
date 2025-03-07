@@ -45,7 +45,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ auth }) => {
   const handleLogin = () => {
     setShowLogin(false);
   };
-  console.log(state.items);
+
   return (
     <>
       {!showLogin ? (

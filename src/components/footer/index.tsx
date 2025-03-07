@@ -37,8 +37,9 @@ export const Footer: React.FC = () => {
             sm: "repeat(2,1fr)",
             xs: "repeat(1,1fr)",
           },
-          mx: { xs: 0, sm: 16, md: 10, lg: 24, xl: 32 },
+          mx: { xs: 0, sm: 12, md: 10, lg: 24, xl: 32 },
           pb: { xs: 8, sm: 8, md: 16, lg: 8, xl: 0 },
+          ml: { xs: -4, sm: 0 },
           rowGap: { xs: "32px", sm: "64px", md: "48px", lg: "40px" },
           columnGap: { xs: "24px", sm: "80px", md: "128px", lg: "40px" },
         }}

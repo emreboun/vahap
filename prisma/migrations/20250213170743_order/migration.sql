@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "lectures" ADD COLUMN     "order" INTEGER NOT NULL DEFAULT 0;

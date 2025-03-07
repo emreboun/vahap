@@ -36,7 +36,7 @@ export const Membership: React.FC<MembershipProps> = ({
   const handleCart = () => {
     onSidebar("cart");
   };
-
+  const onClick = async () => {};
   return (
     <>
       {!auth ? (
@@ -89,7 +89,6 @@ export const Membership: React.FC<MembershipProps> = ({
               </Button>
             </Badge>
           </Collapse>
-
           <Link href={`/giris?redirect=${encodeURIComponent(path)}`} passHref>
             <Button
               variant='outlined'
@@ -112,7 +111,6 @@ export const Membership: React.FC<MembershipProps> = ({
               {"Giriş Yap"}
             </Button>
           </Link>
-
           <Collapse
             in={isEmpty}
             orientation='horizontal'

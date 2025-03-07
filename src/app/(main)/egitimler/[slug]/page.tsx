@@ -33,20 +33,10 @@ export default async function LecturePage({
   if (userId) {
     permissions = (await getUserPermissions(userId)) ?? [];
   }
-  console.log(permissions);
-  /* let purchases: string[] = [];
-  if (userId) {
-    purchases = (await getUserPurchases(userId)) ?? [];
-  } */
 
   const lecture = await getLectureBySlug(slug);
   const hasAccess =
     lecture && permissions?.some((p: any) => p.lectureId === lecture.id);
-
-  /* const opts = {
-    auth: !!userId,
-    hasAccess,
-  }; */
 
   if (!lecture) {
     return (

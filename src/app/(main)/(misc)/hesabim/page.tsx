@@ -5,8 +5,10 @@ import {
   AttachFileRounded,
   Badge,
   Email,
+  Phone,
   SignalCellularAltRounded,
   TimerOutlined,
+  EditLocation,
 } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import Link from "next/link";
@@ -18,7 +20,7 @@ const AccountPage: React.FC = async () => {
     return null;
   }
   const { permissions, user } = account;
-  const { email, firstName, lastName } = user;
+  const { email, firstName, lastName, phone } = user;
 
   return (
     <>
@@ -76,6 +78,18 @@ const AccountPage: React.FC = async () => {
                 fontSize={{ xs: 15, sm: 16 }}
                 sx={{ mt: 0.1 }}
               >{`${firstName} ${lastName}`}</Typography>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
+              <Phone color='primary' />
+
+              <Typography
+                color={"textSecondary"}
+                fontSize={{ xs: 15, sm: 16 }}
+                sx={{ mt: 0.1 }}
+              >
+                {phone}
+              </Typography>
             </Box>
           </Box>
         </Box>

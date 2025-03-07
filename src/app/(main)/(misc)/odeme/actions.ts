@@ -1,8 +1,11 @@
 "use server";
+import { headers } from "next/headers";
+
 import { generateAuthorizationString } from "@/api/iyzico/axios";
+import { cfRequest, dRequest } from "@/api/iyzico/constants";
 import axios from "axios";
 
-export const initialize3DPayment = async (body: any = INIT_PAYMENT) => {
+export const initialize3DPayment = async (body: any = dRequest) => {
   try {
     const result = await axios.post(
       "https://sandbox-api.iyzipay.com/payment/3dsecure/initialize",
@@ -33,7 +36,7 @@ export const initializePayment = async (body: any = INIT_PAYMENT) => {
       {
         headers: {
           Authorization: generateAuthorizationString(
-            "/payment/pay-with-iyzico/initialize",
+            "/payment/iyzipos/checkoutform/initialize/auth/ecom",
             body
           ), //"IYZWSv2 YXBpS2V5OnlvdXItYXBpLWtleSZyYW5kb21LZXk6MTczOTY1ODAwNjUzMiZzaWduYXR1cmU6ZjY1NzAxYzNmMjNhMGJlODlkYmE1ZTM4NGNhYmE1MDI2NGY2ZWJkNjllNjM1ZTM4ZjUyYjM5NjcwZTIzZWZhZg==",
           "x-iyzi-rnd": 123456789,
@@ -44,6 +47,59 @@ export const initializePayment = async (body: any = INIT_PAYMENT) => {
     return result.data;
   } catch (e) {
     console.error(e);
+  }
+};
+
+export const initializeCF = async (body: any = cfRequest) => {
+  try {
+    const headersList = await headers();
+    const ip = headersList.get("x-forwarded-for") || "Unknown IP";
+    console.log(ip);
+    const result = await axios.post(
+      //"https://sandbox-api.iyzipay.com/payment/pay-with-iyzico/initialize",
+      "https://sandbox-api.iyzipay.com/payment/iyzipos/checkoutform/initialize/auth/ecom",
+      { ...body, buyer: { ...body.buyer, ip } },
+      {
+        headers: {
+          Authorization: generateAuthorizationString(
+            "/payment/iyzipos/checkoutform/initialize/auth/ecom",
+            { ...body, buyer: { ...body.buyer, ip } }
+          ), //"IYZWSv2 YXBpS2V5OnlvdXItYXBpLWtleSZyYW5kb21LZXk6MTczOTY1ODAwNjUzMiZzaWduYXR1cmU6ZjY1NzAxYzNmMjNhMGJlODlkYmE1ZTM4NGNhYmE1MDI2NGY2ZWJkNjllNjM1ZTM4ZjUyYjM5NjcwZTIzZWZhZg==",
+          "x-iyzi-rnd": 123456789,
+        },
+      }
+    );
+    return result.data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const retrieveCF = async (token: string) => {
+  try {
+    const result = await axios.post(
+      "https://sandbox-api.iyzipay.com/payment/iyzipos/checkoutform/auth/ecom/detail",
+      {
+        conservationId: "sampleConversationId",
+        token,
+      },
+      {
+        headers: {
+          Authorization: generateAuthorizationString(
+            "/payment/iyzipos/checkoutform/auth/ecom/detail",
+            {
+              conservationId: "sampleConversationId",
+              token,
+            }
+          ), //"IYZWSv2 YXBpS2V5OnlvdXItYXBpLWtleSZyYW5kb21LZXk6MTczOTY1ODAwNjUzMiZzaWduYXR1cmU6ZjY1NzAxYzNmMjNhMGJlODlkYmE1ZTM4NGNhYmE1MDI2NGY2ZWJkNjllNjM1ZTM4ZjUyYjM5NjcwZTIzZWZhZg==",
+          "x-iyzi-rnd": 123456789,
+        },
+      }
+    );
+    console.log(result.data);
+    return result.data;
+  } catch (e) {
+    console.log(e);
   }
 };
 
