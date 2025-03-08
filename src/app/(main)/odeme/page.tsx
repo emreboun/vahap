@@ -2,6 +2,7 @@ import { Paper } from "@mui/material";
 import PaymentClient from "../../../components/payment/iyzico/PaymentClient";
 
 import type { Metadata } from "next";
+import { Suspense } from "@/components/suspense";
 
 export const metadata: Metadata = {
   title: "Ödeme Ekranı - Online Satranç Okulu",
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
 export default async function PaymentPage() {
   return (
     <>
-      <PaymentClient />
+      <Suspense>
+        <PaymentClient />
+      </Suspense>
     </>
   );
 }

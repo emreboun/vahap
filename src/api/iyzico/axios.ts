@@ -1,11 +1,9 @@
 import axios, { AxiosInstance } from "axios";
 import crypto from "crypto";
 import { encode } from "base-64";
+import { iyzicoConfig } from "@/config";
 
-export const apiKey = process.env.IYZIPAY_API_KEY || "your-api-key";
-export const secretKey = process.env.IYZIPAY_SECRET_KEY || "your-secret-key";
-export const iyzicoUrl =
-  process.env.IYZIPAY_URI || "https://sandbox-api.iyzipay.com"; //"https://api.iyzipay.com";
+const { url, secretKey, apiKey } = iyzicoConfig;
 
 export function generateAuthorizationString(
   uriPath: string,
@@ -25,7 +23,7 @@ export function generateAuthorizationString(
 }
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: iyzicoUrl,
+  baseURL: url,
   headers: {
     "Content-Type": "application/json",
   },

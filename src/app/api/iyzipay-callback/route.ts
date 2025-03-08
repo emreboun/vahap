@@ -1,7 +1,7 @@
 import { getCartByToken, updateCart } from "@/api/products/carts";
 import { purchaseItems } from "@/api/user/purchase";
 import { retrieveCF } from "@/app/(main)/odeme/actions";
-import { NextApiRequest, NextApiResponse } from "next";
+
 import { redirect } from "next/navigation";
 
 async function readStream(stream: ReadableStream) {
@@ -24,7 +24,7 @@ async function readStream(stream: ReadableStream) {
   return result;
 }
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: any) {
   const result = await readStream(request.body);
   if (!result) {
     redirect(`/`);

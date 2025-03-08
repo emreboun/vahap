@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  if (pathname.startsWith("/odeme")) {
+  if (pathname.startsWith("/odeme") || pathname.startsWith("/hesabim")) {
     if (!valid) {
       const homeUrl = new URL("/", req.url);
       return NextResponse.redirect(homeUrl);
