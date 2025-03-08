@@ -40,6 +40,8 @@ const formFields: FormField[] = [
     validate: (value) =>
       !validateEmail(value) ? "Geçersiz e-posta adresi" : undefined,
   },
+  { name: "idNumber", label: "Tc Kimlik No", type: "text", required: false },
+
   { name: "phone", label: "Telefon", type: "tel" },
   {
     name: "password",
@@ -146,6 +148,7 @@ const SignupFormClient = () => {
           phone: formState.phone.value,
           firstName: formState.firstName.value,
           lastName: formState.lastName.value,
+          idNumber: formState.idNumber.value,
         });
       } catch (e: any) {
         console.log(e);

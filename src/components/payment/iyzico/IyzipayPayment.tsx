@@ -1,71 +1,202 @@
 import { useEffect, useState } from "react";
 import useIyzipayScript from "./useIyzipayScript";
-import { initializeCF } from "@/app/(main)/(misc)/odeme/actions";
 
-const IyzipayPayment = ({ userData, address, items, sum }: any) => {
-  const [checkoutFormContent, setCheckoutFormContent] = useState("");
-  console.log(checkoutFormContent);
+const IyzipayPayment = ({
+  initPayload,
+  initResponse,
+}: {
+  initPayload: any;
+  initResponse: any;
+}) => {
   useIyzipayScript();
+  const [checkoutFormContent, setCheckoutFormContent] = useState("");
 
   useEffect(() => {
-    if (!userData || !address || !items || !sum) return;
+    if (typeof window === "undefined") return;
 
-    const billingAddress = {
-      contactName: address.fullName,
-      address: address.address,
-      city: address.city,
-      country: address.country,
-    };
-
-    const buyer = {
-      id: userData.id,
-      name: userData.firstName,
-      surname: userData.lastName,
-      identityNumber: "74300864791",
-      email: userData.email,
-      gsmNumber: `+9${userData.phone}`,
-      registrationAddress: billingAddress.address,
-      city: billingAddress.city,
-      country: billingAddress.country,
-    };
-
-    const basketItems = items.map((item: any) => ({
-      id: item.product.id,
-      name: item.product.name,
-      price: (item.product.price - item.product.discount).toString(),
-      itemType: "VIRTUAL",
-      category1: "Eğitim",
-    }));
-
-    const payload = {
-      billingAddress,
-      shippingAddress: billingAddress,
-      basketItems,
-      buyer,
-      locale: "tr",
+    (window as any).iyziInit = {
       currency: "TRY",
-      paymentSource: "zooz",
-      enabledInstallments: [2, 3],
-      paymentGroup: "PRODUCT",
-      basketId: "qweqwe",
-      price: sum.toString(),
-      paidPrice: sum.toString(),
-      callbackUrl: "http://127.0.0.1:3000/api/iyzipay-callback",
-      conversationId: "sampleConversationId",
+      ...initPayload,
+      token: initResponse.token,
+      pwiPrice: initPayload.price,
+      baseUrl: "https://sandbox-api.iyzipay.com",
+      merchantGatewayBaseUrl: "https://sandbox-merchantgw.iyzipay.com",
+      consumerGatewayBaseUrl: "https://sandbox-consumerapigw.iyzipay.com",
+      //registerCardEnabled: false,
+      //storeNewCardEnabled: true,
+      //payWithIyzicoEnabled: true,
+      //paymentWithNewCardEnabled: true,
+
+      registerCardEnabled: true,
+      bankTransferEnabled: false,
+      bankTransferTimeLimit: { value: 5, type: "day" },
+      bankTransferRedirectUrl: "",
+      bankTransferCustomUIProps: {},
+      bkmEnabled: false,
+      campaignEnabled: false,
+      campaignMarketingUiDisplay: null,
+      paymentSourceName: "zooz",
+      plusInstallmentResponseList: null,
+      payWithIyzicoSingleTab: false,
+      payWithIyzicoSingleTabV2: false,
+      payWithIyzicoOneTab: false,
+      mixPaymentEnabled: true,
+      creditCardEnabled: true,
+      bankTransferAccounts: [],
+      userCards: [],
+      fundEnabled: true,
+      memberCheckoutOtpData: {},
+      force3Ds: false,
+      //isSandbox: true,
+      storeNewCardEnabled: false,
+      paymentWithNewCardEnabled: false,
+      // enabledApmTypes: ["SOFORT", "IDEAL", "QIWI", "GIROPAY"],
+      payWithIyzicoUsed: false,
+      payWithIyzicoEnabled: true,
+      payWithIyzicoCustomUI: {},
+      buyerProtectionEnabled: false,
+      hide3DS: false,
+      checkConsumerDetail: {},
+      subscriptionPaymentEnabled: false,
+      disabledCardStorageInfoCheckbox: false,
+      ucsEnabled: false,
+      fingerprintEnabled: false,
+      payWithIyzicoFirstTab: false,
+      creditEnabled: false,
+      payWithIyzicoLead: false,
+      zeroAuth: false,
+      goBackUrl: "",
+      quickPwiEnabled: false,
+      quickPwiNewCardEnabled: false,
+      consumerCardList: [],
+      metadata: {},
+      createTag: function () {
+        const iyziJSTag = document.createElement("script");
+        iyziJSTag.src =
+          "https://sandbox-static.iyzipay.com/checkoutform/v2/bundle.js?v=1741215875529";
+        document.head.appendChild(iyziJSTag);
+      },
     };
 
-    initializeCF(payload).then((result: any) => {
-      if (result && result.checkoutFormContent) {
-        setCheckoutFormContent(result.checkoutFormContent);
-      }
-    });
-  }, [userData, address, items, sum]);
+    if (initResponse.checkoutFormContent) {
+      setCheckoutFormContent(initResponse.checkoutFormContent);
 
-  return (
-    <div id='iyzipay-checkout-form'>
-      {/* <div dangerouslySetInnerHTML={{ __html: checkoutFormContent }}></div> */}
-    </div>
-  );
+      // Create a wrapper div and inject checkout form safely
+      const wrapperDiv = document.createElement("div");
+      wrapperDiv.innerHTML = initResponse.checkoutFormContent;
+
+      // Append the form inside #iyzipay-checkout-form
+      const checkoutForm = document.getElementById("iyzipay-checkout-form");
+      if (checkoutForm) {
+        checkoutForm.innerHTML = "";
+        checkoutForm.appendChild(wrapperDiv);
+      }
+    }
+  }, [initPayload, initResponse]);
+
+  return <div id='iyzipay-checkout-form'></div>;
 };
 
 export default IyzipayPayment;
+/* import { useEffect, useState } from "react";
+import useIyzipayScript from "./useIyzipayScript";
+
+const IyzipayPayment = ({
+  initPayload,
+  initResponse,
+}: {
+  initPayload: any;
+  initResponse: any;
+}) => {
+  useIyzipayScript();
+  const [checkoutFormContent, setCheckoutFormContent] = useState(
+    initResponse.checkoutFormContent || ""
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    (window as any).iyziInit = {
+      currency: "TRY",
+      ...initPayload,
+      token: initResponse.token,
+      createTag: function () {
+        const iyziJSTag = document.createElement("script");
+        iyziJSTag.src =
+          "https://sandbox-static.iyzipay.com/checkoutform/v2/bundle.js?v=1741215875529";
+        document.head.appendChild(iyziJSTag);
+      },
+    };
+
+    if (initResponse.checkoutFormContent) {
+      setCheckoutFormContent(initResponse.checkoutFormContent);
+      const scriptTag = document.createElement("script");
+      scriptTag.type = "text/javascript";
+      scriptTag.text = initResponse.checkoutFormContent;
+      document.head.appendChild(scriptTag);
+    }
+  }, [initPayload, initResponse]);
+
+  return (
+    <div
+      id='iyzipay-checkout-form'
+      dangerouslySetInnerHTML={{ __html: checkoutFormContent }}
+    ></div>
+  );
+};
+
+export default IyzipayPayment; */
+/* import { useEffect } from "react";
+import useIyzipayScript from "./useIyzipayScript";
+
+const IyzipayPayment = ({
+  initPayload,
+  initResponse,
+}: {
+  initPayload: any;
+  initResponse: any;
+}) => {
+  useIyzipayScript();
+  console.log(initResponse.checkoutFormContent);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    (window as any).iyziInit = {
+      currency: "TRY",
+      ...initPayload,
+      //token: "aef389a1-7e0a-49cb-8114-f4c816cd2a16",
+      token: initResponse.token,
+
+      price: 5.2,
+      pwiPrice: 5.2,
+      locale: "en",
+      baseUrl: "https://sandbox-api.iyzipay.com",
+      merchantGatewayBaseUrl: "https://sandbox-merchantgw.iyzipay.com",
+      consumerGatewayBaseUrl: "https://sandbox-consumerapigw.iyzipay.com",
+      registerCardEnabled: true,
+      bkmEnabled: true,
+      bankTransferEnabled: false,
+      enabledApmTypes: ["SOFORT", "IDEAL", "QIWI", "GIROPAY"],
+      payWithIyzicoEnabled: true,
+      buyerName: "Higher",
+      buyerSurname: "Faster",
+      merchantName: "Sandbox Merchant Name - 3403015",
+      gsmNumber: "+905555434332",
+      //email: "stronger@implementation.com",
+      //payWithIyzicoUsed: false,
+      createTag: function () {
+        const iyziJSTag = document.createElement("script");
+        iyziJSTag.src =
+          "https://sandbox-static.iyzipay.com/checkoutform/v2/bundle.js?v=1741215875529";
+        document.head.appendChild(iyziJSTag);
+      },
+    };
+    //initResponse.checkoutFormContent;
+    (window as any).iyziInit.createTag();
+  }, [initPayload, initResponse]);
+
+  return <div id='iyzipay-checkout-form'></div>;
+};
+
+export default IyzipayPayment;
+ */

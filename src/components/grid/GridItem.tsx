@@ -73,6 +73,7 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
             flex: 1,
             display: "flex",
             //alignItems: "flex-end",
+            justifyContent: "flex-start",
             alignItems: "center",
             position: "relative",
             zIndex: 1,
@@ -86,6 +87,8 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
             style={{
               width: "100%",
               height: "auto",
+              top: hasAccess ? -3 : 0,
+              position: "relative",
             }}
           />
         </Box>
@@ -272,9 +275,11 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
             </Box>
 
             {hasAccess ? (
-              <Tooltip title={"Satın Alındı"}>
-                <Verified color={"secondary"} sx={{ fontSize: 36, mr: 1.6 }} />
-              </Tooltip>
+              <Box sx={{ pr: 1.6 }}>
+                <Tooltip title={"Satın Alındı"}>
+                  <Verified color={"secondary"} sx={{ fontSize: 36 }} />
+                </Tooltip>
+              </Box>
             ) : (
               <>
                 <AddToCartButtonSecondary

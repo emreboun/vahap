@@ -2,10 +2,9 @@
 import { headers } from "next/headers";
 
 import { generateAuthorizationString } from "@/api/iyzico/axios";
-import { cfRequest, dRequest } from "@/api/iyzico/constants";
 import axios from "axios";
 
-export const initialize3DPayment = async (body: any = dRequest) => {
+/* export const initialize3DPayment = async (body: any = dRequest) => {
   try {
     const result = await axios.post(
       "https://sandbox-api.iyzipay.com/payment/3dsecure/initialize",
@@ -26,7 +25,7 @@ export const initialize3DPayment = async (body: any = dRequest) => {
     console.error(e);
   }
 };
-
+ */
 export const initializePayment = async (body: any = INIT_PAYMENT) => {
   try {
     const result = await axios.post(
@@ -50,11 +49,10 @@ export const initializePayment = async (body: any = INIT_PAYMENT) => {
   }
 };
 
-export const initializeCF = async (body: any = cfRequest) => {
+export const initializeCF = async (body: any) => {
   try {
     const headersList = await headers();
     const ip = headersList.get("x-forwarded-for") || "Unknown IP";
-    console.log(ip);
     const result = await axios.post(
       //"https://sandbox-api.iyzipay.com/payment/pay-with-iyzico/initialize",
       "https://sandbox-api.iyzipay.com/payment/iyzipos/checkoutform/initialize/auth/ecom",

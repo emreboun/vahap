@@ -4,7 +4,8 @@ export const getCfPayload = (
   address: any,
   userData: any,
   sum: number,
-  items: any[]
+  items: any[],
+  cartId: string
 ) => {
   const billingAddress = {
     contactName: address.fullName,
@@ -16,7 +17,7 @@ export const getCfPayload = (
     id: userData.id,
     name: userData.firstName,
     surname: userData.lastName,
-    identityNumber: "74300864791",
+    identityNumber: userData.idNumber ?? "74300864791",
     email: userData.email,
     gsmNumber: `+9${userData.phone}`,
     registrationAddress: billingAddress.address,
@@ -40,7 +41,7 @@ export const getCfPayload = (
     paymentSource: "zooz",
     enabledInstallments: [2, 3],
     paymentGroup: "PRODUCT",
-    basketId: "qweqwe",
+    basketId: cartId,
     price: sum.toString(),
     paidPrice: sum.toString(),
     callbackUrl: `${appConfig.url}/api/iyzipay-callback`,

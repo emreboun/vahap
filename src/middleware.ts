@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/giris")) {
     // If there is no token or token is invalid, redirect to login
 
-    if (!token || !valid || valid.role === "user") {
+    if (!token || !valid || valid.role === "user" || valid.role !== "gm") {
       const loginUrl = new URL("/admin/giris", req.url);
       return NextResponse.redirect(loginUrl);
     }
@@ -19,6 +19,13 @@ export async function middleware(req: NextRequest) {
     if (valid && valid.role !== "user") {
       const adminUrl = new URL("/admin", req.url);
       return NextResponse.redirect(adminUrl);
+    }
+  }
+
+  if (pathname.startsWith("/odeme")) {
+    if (!valid) {
+      const homeUrl = new URL("/", req.url);
+      return NextResponse.redirect(homeUrl);
     }
   }
 

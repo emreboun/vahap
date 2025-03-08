@@ -1,5 +1,5 @@
 import { Paper } from "@mui/material";
-import PaymentClient from "./PaymentClient";
+import PaymentClient from "../../../components/payment/iyzico/PaymentClient";
 
 import type { Metadata } from "next";
 
@@ -11,12 +11,7 @@ export const metadata: Metadata = {
 export default async function PaymentPage() {
   return (
     <>
-      <Paper
-        sx={{ px: 4, py: 3, boxShadow: 2, minHeight: { xs: 320, md: 480 } }}
-        elevation={0}
-      >
-        <PaymentClient />
-      </Paper>
+      <PaymentClient />
     </>
   );
 }

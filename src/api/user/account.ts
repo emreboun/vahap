@@ -16,6 +16,12 @@ export const updateUser = async (id: string, data: any) => {
   }
 };
 
+export const addIdNumber = async (id: string, idNumber: string) => {
+  console.log(id);
+  console.log(idNumber);
+  return await updateUser(id, { idNumber });
+};
+
 export const getUserById = async (id: string) => {
   try {
     const result = await userService.findById(id, true);

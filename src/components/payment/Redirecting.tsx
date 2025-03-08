@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export const Redirecting: React.FC = () => {
   const router = useRouter();
-  const [counter, setCounter] = useState(4);
+  const [counter, setCounter] = useState(2);
 
   useEffect(() => {
     if (counter > 0) {
@@ -36,6 +36,7 @@ export const Redirecting: React.FC = () => {
             transform: "translate(-50%, -50%)",
             fontWeight: "bold",
           }}
+          color={"primary"}
         >
           {counter}
         </Typography>

@@ -23,7 +23,6 @@ export const processPayment = async (
   }
 }; */
 import Iyzipay from "iyzipay";
-import { apiKey } from "./axios";
 
 const PAYLOAD = {
   locale: "en",

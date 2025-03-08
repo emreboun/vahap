@@ -9,6 +9,7 @@ export const signup = async (data: {
   lastName: string;
   password: string;
   phone?: string;
+  idNumber?: string;
 }) => {
   const hashedPassword = await bcrypt.hash(data.password, 10);
   const user = await userService.create({
@@ -18,10 +19,11 @@ export const signup = async (data: {
     email: data.email,
     password: hashedPassword,
     phone: data.phone,
+    idNumber: data.idNumber,
   });
-  const { id, email, firstName, lastName, phone, role } = user;
+  const { id, idNumber, email, firstName, lastName, phone, role } = user;
 
-  return { id, email, firstName, lastName, phone, role };
+  return { id, idNumber, email, firstName, lastName, phone, role };
 };
 
 export const login = async (email: string, password: string) => {
@@ -51,6 +53,7 @@ export const login = async (email: string, password: string) => {
     id,
     firstName,
     lastName,
+    idNumber,
     phone,
     role,
     purchases = [],
@@ -58,7 +61,17 @@ export const login = async (email: string, password: string) => {
   } = user;
 
   return {
-    user: { id, email, firstName, lastName, phone, role, purchases, addresses },
+    user: {
+      id,
+      email,
+      firstName,
+      lastName,
+      phone,
+      idNumber,
+      role,
+      purchases,
+      addresses,
+    },
   };
 };
 
