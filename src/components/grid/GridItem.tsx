@@ -78,7 +78,7 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
           }}
         >
           <Image
-            src={thumbnail ?? "/thumbnail_main.jpg"}
+            src={/* thumbnail ??  */ "/thumbnail_main.jpg"}
             alt={`${name} Resim - Thumbnail`}
             height={180}
             width={320}
