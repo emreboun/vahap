@@ -261,10 +261,10 @@ INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name
 -- Data for Name: user_accounts; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', 'burakuysal3455@gmail.com', '(507) 084-1294', 'Burak', 'UYSAL', '$2a$10$i2mqBXuBjjlKqMJdr5pQr.GMIAqjKJibfz5odJKfhOz/GwVq2VQE.', 'gm', '2025-02-23 18:00:43.321', '2025-02-23 18:00:43.321', NULL);
-INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('6106ca80-6b15-48ef-baad-8af3e1f399e4', 'gmvahap@gmail.com', '05333539237', 'Vahap', 'Şanal', '$2a$10$kjghpqz7zOrAFJZBB2g1Te.MyEEx4ifbXREoWoh6SZ.9F9aLVM9qm', 'gm', '2025-02-13 17:52:37.087', '2025-02-13 17:52:37.087', NULL);
 INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('7bf440f9-ff8a-48ed-995f-4dcbcf37e9b9', 'lord_aurain@hotmail.com', '+905396706753', 'Emre', 'Yılmaz', '$2a$10$RNvAJIYEayxk52/rvyEZsOfjnADK7yXcPc.UAEGNI9G7H2HV9ERZu', 'user', '2025-03-09 02:21:27.555', '2025-03-09 02:22:02.617', '50518098556');
 INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'abdurrahmanemreyilmaz@gmail.com', '05396706753', 'Emre', 'Yılmaz', '$2a$10$NLGnh/bSwTJrfZPZ/MbuHuaK9kRfbh4TX9Wv.TNXRtUbYyYprWyBC', 'gm', '2025-02-12 11:57:11.24', '2025-03-09 04:49:23.09', NULL);
+INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', 'burakuysal3455@gmail.com', '+905070841294', 'Burak', 'UYSAL', '$2a$10$i2mqBXuBjjlKqMJdr5pQr.GMIAqjKJibfz5odJKfhOz/GwVq2VQE.', 'gm', '2025-02-23 18:00:43.321', '2025-03-09 06:31:52.963', NULL);
+INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('6106ca80-6b15-48ef-baad-8af3e1f399e4', 'gmvahapcom1998@gmail.com', '+905333539237', 'Vahap', 'Şanal', '$2a$10$kjghpqz7zOrAFJZBB2g1Te.MyEEx4ifbXREoWoh6SZ.9F9aLVM9qm', 'gm', '2025-02-13 17:52:37.087', '2025-03-09 06:32:42.354', NULL);
 
 
 --
@@ -361,6 +361,7 @@ Sizlerle yıllar içinde profesyonel kariyerimde öğrendiğim bilgileri paylaş
 * 2017 ve 2019 yıllarında Lienz Open turnuvasında 1.''lik
 * 2021 Fagernes Open turnuvasında 1.''lik
 * Dünya 16 Yaş Altı Satranç Olimpiyatı''nda birinci masa 1.''liği', true, 1, '2024-02-22 10:00:00', '2025-02-23 23:13:43.65');
+INSERT INTO public.pages (id, slug, title, description, content, status, "order", created_at, updated_at) VALUES ('550e8400-e29b-41d4-a716-446655440002', 'iletisim', 'İletişim', '', '', true, 3, '2025-03-09 09:37:29.667', '2025-03-09 06:37:41.651');
 
 
 --
@@ -377,12 +378,6 @@ INSERT INTO public.products_lectures (product_id, lecture_id) VALUES ('78c4e500-
 -- Data for Name: purchases; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'bb1f3d44-51c2-47af-90a4-950e32ce299e', '2025-02-23 17:29:00.441');
-INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', '7eafb08e-8030-4a4f-9bfe-0ca2835703d3', '2025-02-23 18:01:19.35');
-INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', '8d17eb7a-f856-418a-9170-e35aab014d2a', '2025-02-23 18:05:37.448');
-INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', 'bb1f3d44-51c2-47af-90a4-950e32ce299e', '2025-02-23 18:07:14.5');
-INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', '78c4e500-9b64-48ff-84df-b96c8723e1b7', '2025-02-23 21:12:44.259');
-INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', '405606f0-38d4-46b2-b8fd-0e61cda2b4b0', '2025-03-02 12:30:40.077');
 
 
 --
@@ -404,6 +399,7 @@ INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES 
 INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'f6e3f8f4-090c-4377-807c-45f1414aef25', '2025-02-23 21:12:44.262');
 INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', '45ec24c4-1372-4682-a9da-7fc78ac044f1', '2025-02-23 21:12:44.262');
 INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'c9771da4-4453-4c1f-92c8-af1ecb7cfd1a', '2025-02-23 21:12:44.262');
+INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', 'f6e3f8f4-090c-4377-807c-45f1414aef25', '2025-03-09 06:31:52.762');
 
 
 --
@@ -432,7 +428,7 @@ SELECT pg_catalog.setval('public.lectures_order_seq', 9, true);
 -- Name: pages_order_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.pages_order_seq', 1, false);
+SELECT pg_catalog.setval('public.pages_order_seq', 3, true);
 
 
 --
