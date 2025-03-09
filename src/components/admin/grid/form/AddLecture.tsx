@@ -122,7 +122,7 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
       if (!mainVideo) list.push("mainVideo");
       if (!price || Number(price) <= 0) list.push("price");
       if (!duration || Number(duration) <= 0) list.push("duration");
-      if (selectedFiles.length === 0) list.push("image");
+      //if (selectedFiles.length === 0) list.push("image");
       if (!minElo || !maxElo) list.push("elo");
 
       if (list.length > 0 || slugError) {

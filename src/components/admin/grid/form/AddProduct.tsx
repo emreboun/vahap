@@ -111,7 +111,7 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
       if (!slug) list.push("slug");
       if (!name) list.push("name");
       if (!price || Number(price) <= 0) list.push("price");
-      if (selectedFiles.length === 0) list.push("image");
+      //if (selectedFiles.length === 0) list.push("image");
       if (lectures.length === 0) list.push("lectures");
       if (list.length > 0 || slugError) {
         setErrors(list);
@@ -132,7 +132,6 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
       };
 
       const result = await createProduct({ ...temp });
-      console.log(result);
 
       let imageResult;
       if (selectedFiles.length > 0 && !!result) {
