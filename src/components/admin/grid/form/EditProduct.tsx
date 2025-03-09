@@ -24,7 +24,6 @@ import { useFileUpload } from "@/components/image/hooks";
 import { NavLink } from "@/components/app-bar/link";
 import { updateProduct } from "@/api/products";
 import { useRouter } from "next/navigation";
-import { GridItemCore } from "@/components/grid/GridItem";
 import { formatDuration } from "@/utils/data";
 import { SearchBar } from "@/components/search/SearchBar";
 import { searchLectures } from "@/api/lectures";

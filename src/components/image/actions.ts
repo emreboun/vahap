@@ -5,9 +5,9 @@ import { pipeline } from "stream";
 import { promisify } from "util";
 import prisma from "@/api/prisma/init";
 import { createFile } from "@/api/files";
+import { fileConfig } from "@/config/file";
 
 const pump = promisify(pipeline);
-const FILE_ROOT_PATH = "./public/resources";
 
 export const uploadImage = async (
   formData: any,
@@ -17,7 +17,7 @@ export const uploadImage = async (
   try {
     const subFolderPath =
       type === "lecture" ? `egitimler/${entityId}` : `urunler/${entityId}`;
-    const targetDirectory = path.join(FILE_ROOT_PATH, subFolderPath);
+    const targetDirectory = path.join(fileConfig.path, subFolderPath);
 
     // Ensure the directory exists
     fs.mkdirSync(targetDirectory, { recursive: true });
