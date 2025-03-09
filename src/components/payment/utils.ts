@@ -47,5 +47,6 @@ export const getCfPayload = (
     callbackUrl: `${appConfig.url}/api/iyzipay-callback`,
     conversationId: "sampleConversationId",
   };
+  console.log(payload);
   return payload;
 };

@@ -62,7 +62,8 @@ export const CartList = () => {
                 >
                   {item.product.imgUrl ? (
                     <Image
-                      src={item.product.imgUrl}
+                      src={`/thumbnail_main.jpg`}
+                      //src={item.product.imgUrl}
                       alt=''
                       width={160}
                       height={100}
@@ -71,6 +72,7 @@ export const CartList = () => {
                         width: "auto",
                         borderRadius: 3,
                       }}
+                      priority
                     />
                   ) : (
                     <Box
