@@ -119,7 +119,7 @@ export const getDiscountedProducts = async () => {
         maxElo: maxMaxElo,
         ...item,
         files: undefined,
-        thumbnail: item.files[0]?.path,
+        thumbnail: "", //item.files[0]?.path,
         duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
         pgnCount: lecturePgns || lecturesPgns || 0,
       };
@@ -149,7 +149,7 @@ export const getAllProducts = async () => {
   return result.map((item) => ({
     ...item,
     files: undefined,
-    thumbnail: item.files[0]?.path,
+    thumbnail: "", //item.files[0]?.path,
   }));
 };
 
@@ -269,7 +269,7 @@ export const getAllSets = async () => {
       maxElo: maxMaxElo,
       ...item,
       files: undefined,
-      thumbnail: item.files[0]?.path,
+      thumbnail: "", //item.files[0]?.path,
       duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
       pgnCount: lecturePgns || lecturesPgns || 0,
     };
@@ -406,7 +406,7 @@ export const getProductBySlug = async (slug: string) => {
       maxElo: maxMaxElo,
       ...result,
       files: undefined,
-      thumbnail: result.files[0]?.path,
+      thumbnail: "", //result.files[0]?.path,
       duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
       pgnCount: lecturePgns || lecturesPgns || 0,
     };

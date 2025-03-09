@@ -33,7 +33,7 @@ export const getLatestThreeLectures = async () => {
   return result.map((item) => ({
     ...item,
     files: undefined,
-    thumbnail: item.files[0].path,
+    thumbnail: "", //item.files[0].path,
   }));
 };
 
@@ -62,7 +62,7 @@ export const getThreeLectures = async () => {
   return result.map((item) => ({
     ...item,
     files: undefined,
-    thumbnail: item.files[0].path,
+    thumbnail: "", // item.files[0].path,
   }));
 };
 
@@ -89,7 +89,7 @@ export const getAllLectures = async (userId?: string) => {
   return result.map((item) => ({
     ...item,
     files: undefined,
-    thumbnail: item.files[0].path,
+    thumbnail: "", //item.files[0].path,
   }));
 };
 
@@ -179,7 +179,11 @@ export const getLectureBySlug = async (slug: string) => {
       }
     );
     const { files = [] } = result;
-    return { ...result, files: undefined, thumbnail: files[0].path };
+    return {
+      ...result,
+      files: undefined,
+      thumbnail: "", //files[0].path
+    };
   } catch (e: unknown) {
     console.log(e);
     return null;
@@ -191,7 +195,11 @@ export const getLectureById = async (id: string) => {
     const result: any = await lectureService.findById(id, true);
 
     const { files = [] } = result;
-    return { ...result, files: undefined, thumbnail: files[0].path };
+    return {
+      ...result,
+      files: undefined,
+      thumbnail: "", // files[0].path
+    };
   } catch (e: unknown) {
     console.log(e);
     return null;
