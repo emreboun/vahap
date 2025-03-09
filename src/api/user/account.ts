@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { sendEmail } from "./email";
 
 export const getAllUsers = async () => {
-  return await userService.findAll(/* { role: "user" } */);
+  return await userService.findAll({ role: "user" });
 };
 
 export const updateUser = async (id: string, data: any) => {
