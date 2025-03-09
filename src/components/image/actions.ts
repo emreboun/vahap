@@ -38,8 +38,6 @@ export const uploadImage = async (
         productId: type === "product" ? entityId : undefined,
       };
 
-      console.log(temp);
-
       const item = await createFile(temp);
 
       result.push(item);

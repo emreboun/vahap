@@ -50,7 +50,6 @@ export const formatText = (text: string) => {
 
   //formatted = formatted.replace(/\s+/g, " ");
   //formatted = formatted.replace(/\n+/g, "\n");
-  console.log(formatted);
   return formatted;
 };
 

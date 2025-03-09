@@ -50,7 +50,6 @@ export default class CrudRepository<
     data: Omit<Omit<Omit<T, "id">, "createdAt">, "updatedAt">
   ): Promise<T> {
     this.getCreates(data);
-    console.log(data);
     return await this.prisma[this.model].create({
       data,
       include: this.getIncludes(),

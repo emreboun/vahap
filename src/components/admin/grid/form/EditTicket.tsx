@@ -39,7 +39,6 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
     };
     req.date = form.date ? new Date(form.date) : undefined;
     req.capacity = req.capacity ? req.capacity * 1 : undefined;
-    console.log(req);
     Object.keys(req).forEach((key) => {
       if (req[key] === data[key]) {
         delete req[key];

@@ -452,7 +452,6 @@ export const deleteProduct = async (id: string) => {
 export const getProductSlugPrefix = async (slug: string) => {
   try {
     const result = await productRepository.getListBySlugPrefix(slug);
-    console.log(result);
     return result;
   } catch (e) {
     return null;

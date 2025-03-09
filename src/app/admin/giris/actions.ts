@@ -2,15 +2,6 @@
 import { cookies } from "next/headers";
 import { SignJWT } from "jose";
 import { jwtConfig } from "@/config";
-import { NextResponse } from "next/server";
-
-/* export const loginApi = async (userId: string) => {
-  const token = await generateToken({ userId }, jwtConfig.secret, "1y");
-  const cookieStore = await cookies();
-  console.log(token);
-  cookieStore.set("token", token);
-  return true;
-}; */
 
 export const loginApi = async (user: any) => {
   const { id, password, role = "user" } = user;

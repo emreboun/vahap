@@ -30,7 +30,6 @@ interface EditUserFormProps {
 
 const EditUser: React.FC<EditUserFormProps> = ({ data, onClose }) => {
   const { user, permissions } = data;
-  console.log(permissions);
   const router = useRouter();
   const { id } = user;
 

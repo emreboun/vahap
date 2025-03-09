@@ -20,7 +20,6 @@ export const getPageBySlug = async (slug: string) => {
 export const getPageById = async (id: string) => {
   try {
     const result: any = await pageService.findById(id, true);
-    console.log(result);
 
     return result;
   } catch (e: unknown) {

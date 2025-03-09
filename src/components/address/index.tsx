@@ -43,7 +43,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     setIdNumber(value);
     setEdited(true);
   };
-  //console.log(form.toString);
   const handleSubmit = async () => {
     const list: any = [];
     const PROPS = ["country", "city", "fullName", "address"];

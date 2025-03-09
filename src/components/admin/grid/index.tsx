@@ -116,9 +116,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
 
   const processRowUpdate = async (newRow: GridRowModel) => {
     try {
-      //console.log(newRow);
       const result = await handleSubmit(newRow);
-      //console.log(result);
       if (!!result) {
         const updatedRow = { ...newRow, isNew: false };
 
@@ -303,11 +301,6 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
         setRowModesModel({});
       }
     }
-    /* if (e.key === "Enter") {
-      console.log("Enter");
-      e.preventDefault();
-      return null;
-    } */
   });
 
   return (

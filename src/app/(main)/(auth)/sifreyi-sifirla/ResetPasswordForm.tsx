@@ -36,10 +36,7 @@ const ResetPasswordForm: React.FC<any> = ({ token }) => {
         return;
       }
 
-      const result = await resetUserPassword(userId, form.password);
-      console.log(result);
-      if (!!result) {
-      }
+      await resetUserPassword(userId, form.password);
     } catch (e) {
       console.log(e);
     }

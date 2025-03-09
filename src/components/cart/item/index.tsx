@@ -9,12 +9,7 @@ interface ItemProps {
 }
 
 export const CartItem: React.FC<ItemProps> = ({ item }) => {
-  const onSelect = (v: unknown) => {
-    console.log(v);
-    //const {product, quantity} = cart[i];
-    //
-    //dispatch(updateCartAct({ product: result[i].product, quantity: v }));
-  };
+  const onSelect = (v: unknown) => {};
 
   return (
     <>

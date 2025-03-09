@@ -55,8 +55,6 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
       if (!validateDate(date)) list.push("date");
       if (!capacity || Number(capacity) <= 0) list.push("capacity");
 
-      //if (!discount || Number(discount) <= 0) list.push("duration");
-      console.log(list);
       if (list.length > 0) {
         setErrors(list);
         return;

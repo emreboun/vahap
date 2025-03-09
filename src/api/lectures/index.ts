@@ -189,7 +189,6 @@ export const getLectureBySlug = async (slug: string) => {
 export const getLectureById = async (id: string) => {
   try {
     const result: any = await lectureService.findById(id, true);
-    console.log(result);
 
     const { files = [] } = result;
     return { ...result, files: undefined, thumbnail: files[0].path };
@@ -224,7 +223,6 @@ export const deleteLecture = async (id: string) => {
 export const getLectureSlugPrefix = async (slug: string) => {
   try {
     const result = await lectureRepository.getListBySlugPrefix(slug);
-    console.log(result);
     return result;
   } catch (e) {
     return null;

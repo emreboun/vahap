@@ -24,22 +24,7 @@ export const createFile = async (data: Partial<File>) => {
   });
 
   return result;
-  /* } catch (e: unknown) { 
-    console.log(e);
-    return null;
-  } */
 };
-
-/* export const getFileBySlug = async (slug: string) => {
-  try {
-    const result = await fileService.findByUniqueProperty("slug", slug, true);
-    console.log(result);
-    return result;
-  } catch (e: unknown) {
-    console.log(e);
-    return null;
-  }
-}; */
 
 export const updateFile = async (id: string, data: Partial<File>) => {
   try {

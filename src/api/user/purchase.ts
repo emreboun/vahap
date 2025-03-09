@@ -72,7 +72,6 @@ export const purchaseItems = async (userId: string, productIds: string[]) => {
         })
       ),
     ]);
-    console.log(result);
     return result;
   } catch (e) {
     console.log(e);

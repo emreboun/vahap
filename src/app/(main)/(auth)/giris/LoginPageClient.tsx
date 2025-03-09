@@ -82,7 +82,6 @@ export const LoginPageClient = ({
     if (!!result) {
       setForgot(true);
     }
-    console.log(result);
   };
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
