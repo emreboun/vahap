@@ -5,14 +5,14 @@ import {
 } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useCart } from "../cart/CartProvider";
-import { useSidebar } from "../app-bar/sidebars/SidebarProvider";
 import { Price } from "../cart/price";
+import useMenu from "../app-bar/sidebars/useMenu";
 
 const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
   const { mainProduct } = data;
   const { discount } = mainProduct;
   const { dispatch, state } = useCart();
-  const { onSidebar } = useSidebar();
+  const { onMenu } = useMenu();
   const added = state.items.some(
     (item) => item.product.id === data.mainProduct.id
   );
@@ -32,7 +32,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
         },
       });
     } else {
-      onSidebar("cart");
+      onMenu("cart");
     }
   };
 
@@ -107,9 +107,7 @@ const AddToCartButtonSecondary: React.FC<any> = ({ data, long = false }) => {
               : { xs: 1.4, sm: 1.2, md: 1, lg: 0.8, xl: 2.4 },
             py: 1.2,
             boxShadow: 1,
-            //gap: { xs: 0.4, sm: 0.4, md: 0.5, lg: 0.4, xl: 0 },
             justifyContent: "space-evenly",
-            //minWidth: { xs: 120, sm: 112, md: 112, lg: 120 },
             textTransform: "none",
             transition: "all 0.24s ease-in-out",
             border: "1px solid",

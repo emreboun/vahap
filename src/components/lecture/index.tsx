@@ -44,7 +44,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               alignItems: "center",
               justifyContent: "space-between",
               pt: { xs: 0.2, sm: 0.5 },
-              pr: { xs: 3, sm: 4, md: 5, lg: 6 },
+              pr: { xs: 2.4, sm: 4, md: 5, lg: 6 },
               pl: { xs: 3, md: 5 },
               pb: {
                 xs: hasAccess
@@ -78,11 +78,11 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               <Box
                 sx={{
                   position: {
-                    xs: name.length > 32 ? "absolute" : "",
+                    xs: name.length > 32 ? "absolute" : "relative",
                     sm: "relative",
                   },
                   bottom: { xs: name.length > 32 ? 5 : 0, sm: 0 },
-                  right: { xs: name.length > 32 ? 10 : 0, sm: 0 },
+                  right: { xs: name.length > 32 ? 10 : -8, sm: 0 },
                 }}
               >
                 <AddToCartButton data={data} />

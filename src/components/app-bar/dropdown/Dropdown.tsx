@@ -4,9 +4,8 @@ import { Box, Button, Collapse, Typography } from "@mui/material";
 import { NavigationBar } from "../navigation";
 import { useScrollHandler } from "@/hooks/scroll";
 import { Membership } from "../membership";
-import { useSidebar } from "../sidebars/SidebarProvider";
 import { logoutApi } from "@/app/admin/giris/actions";
-import { logout } from "@/api/firebase";
+import useMenu from "../sidebars/useMenu";
 
 interface DropdownProps {
   auth?: boolean;
@@ -14,12 +13,11 @@ interface DropdownProps {
 
 export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
   const { scrollY, direction } = useScrollHandler();
-  const { dropdown, handleDropdown } = useSidebar();
+  const { menu, onMenu } = useMenu();
 
   const handleLogout = async () => {
     try {
       localStorage.clear();
-      await logout();
       await logoutApi();
 
       location.reload();
@@ -39,13 +37,18 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
           paddingTop: 16,
           backgroundColor: "#fff",
           top: direction === "up" || scrollY < 64 ? 32 : 48,
-          opacity: dropdown ? 1 : 0,
+          opacity: menu === "mobile" ? 1 : 0,
           transition:
             "top 0.3s ease-in-out, " +
-            (dropdown ? "opacity 0.1s" : "opacity 0.1s linear 0.2s"),
+            (menu === "mobile" ? "opacity 0.1s" : "opacity 0.1s linear 0.2s"),
         }}
       >
-        <Collapse in={dropdown} timeout='auto' mountOnEnter unmountOnExit>
+        <Collapse
+          in={menu === "mobile"}
+          timeout='auto'
+          mountOnEnter
+          unmountOnExit
+        >
           <Box
             style={{
               paddingTop: 12,
@@ -116,7 +119,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
         </Collapse>
       </Box>
 
-      {dropdown && (
+      {menu === "mobile" && (
         <Box
           component={"span"}
           sx={{
@@ -128,7 +131,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
             zIndex: 0,
             bgcolor: "rgba(0, 0, 0, 0.25)",
           }}
-          onClick={() => handleDropdown()}
+          onClick={() => onMenu(null)}
         />
       )}
     </>

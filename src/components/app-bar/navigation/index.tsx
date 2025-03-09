@@ -2,7 +2,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { NavLink } from "../link";
 import { NAV_LINKS, NavLinkProps } from "../constants";
-import { useSidebar } from "../sidebars/SidebarProvider";
+import useMenu from "../sidebars/useMenu";
 
 type NavigationBarProps = {
   links?: NavLinkProps[];
@@ -13,9 +13,9 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   style,
   links = NAV_LINKS,
 }) => {
-  const { handleDropdown } = useSidebar();
+  const { onMenu } = useMenu();
   const closeDropdown = () => {
-    handleDropdown(false);
+    onMenu(null);
   };
 
   return (

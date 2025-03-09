@@ -11,7 +11,6 @@ import { useCart } from "./CartProvider";
 import { CartList } from "./list";
 import { LoginPageClient } from "@/app/(main)/(auth)/giris/LoginPageClient";
 import { useRouter } from "next/navigation";
-import { useSidebar } from "../app-bar/sidebars/SidebarProvider";
 
 interface CartSidebarProps {
   auth: boolean;
@@ -19,7 +18,6 @@ interface CartSidebarProps {
 
 export const CartSidebar: React.FC<CartSidebarProps> = ({ auth }) => {
   const router = useRouter();
-  const { onSidebar } = useSidebar();
   const { state, dispatch } = useCart();
   const { sum } = state;
 
@@ -38,7 +36,6 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ auth }) => {
   };
 
   const goToPayment = () => {
-    onSidebar("");
     router.push("/odeme");
   };
 

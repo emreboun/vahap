@@ -1,13 +1,13 @@
 "use client";
 
 import { ButtonBase } from "@mui/material";
-import { useSidebar } from "../app-bar/sidebars/SidebarProvider";
+import useMenu from "../app-bar/sidebars/useMenu";
 
 interface CartButtonProps {
   title?: string;
 }
 export const CartButton: React.FC<CartButtonProps> = () => {
-  const { onSidebar } = useSidebar();
+  const { onMenu } = useMenu();
 
   return (
     <>
@@ -25,7 +25,7 @@ export const CartButton: React.FC<CartButtonProps> = () => {
             boxShadow: 2,
           },
         }}
-        onClick={() => onSidebar("cart")}
+        onClick={() => onMenu("cart")}
       >
         {"Sepetim"}
       </ButtonBase>

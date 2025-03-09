@@ -1,4 +1,3 @@
-import styles from "./page.module.css";
 import { AppBar } from "@/components/app-bar";
 import { Footer } from "@/components/footer";
 import { Box } from "@mui/material";

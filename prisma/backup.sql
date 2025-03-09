@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.15 (Ubuntu 14.15-0ubuntu0.22.04.1)
--- Dumped by pg_dump version 14.15 (Ubuntu 14.15-0ubuntu0.22.04.1)
+-- Dumped from database version 14.17 (Ubuntu 14.17-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.17 (Ubuntu 14.17-0ubuntu0.22.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -26,7 +26,7 @@ SET row_security = off;
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('bb1f3d44-51c2-47af-90a4-950e32ce299e', 'Daha kaliteli oyunlar oynamak,stratejik anlayışınızı geliştirmek,oyununuza istikrar sağlamak için ''''Uyumlu Taşlar'''' konulu dersin çok faydalı olacağını düşünüyorum.
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('bb1f3d44-51c2-47af-90a4-950e32ce299e', 'uyumlu-taslar', '', 'Uyumlu Taşlar', 'Daha kaliteli oyunlar oynamak,stratejik anlayışınızı geliştirmek,oyununuza istikrar sağlamak için ''''Uyumlu Taşlar'''' konulu dersin çok faydalı olacağını düşünüyorum.
 
 Derste anlattığım konular:
 *Örnek oyun analizleri: Bu konunun uzmanlıkla uygulandığı,elit oyuncuların oyunlarının detaylı anlatımı
@@ -39,8 +39,8 @@ Bu soruların hepsinin yanıtlarını,kariyerimde bu beceriyi nasıl geliştirdi
 
 Kimler İçin Uygun?
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 1500, '2025-02-18 18:31:47.97', '2025-02-18 19:26:46.604', 100, true, 'Uyumlu Taşlar', '', 'uyumlu-taslar', 1);
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('ef220e1f-a90a-4f58-9009-6a2314e7e396', 'Satranç oyuncularının en zorlandığı konulardan bir tanesi,hamle ararken hangi metodları kullanacağını bilmemesi,veya karar verememesidir.Profesyonel kariyerimde dünyanın en iyi antrenörlerinden öğrendiğim bu metodları sizlerle paylaşıyorum.
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, 1, 1500, 100, '2025-02-18 18:31:47.97', '2025-02-18 19:26:46.604');
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('ef220e1f-a90a-4f58-9009-6a2314e7e396', 'stratejik-konumlarda-hamle-bulma-metodlari', NULL, 'Stratejik konumlarda hamle bulma metodları', 'Satranç oyuncularının en zorlandığı konulardan bir tanesi,hamle ararken hangi metodları kullanacağını bilmemesi,veya karar verememesidir.Profesyonel kariyerimde dünyanın en iyi antrenörlerinden öğrendiğim bu metodları sizlerle paylaşıyorum.
 
 **Derste anlattığım konular:**
 
@@ -54,8 +54,8 @@ Bu soruların hepsinin yanıtlarını,kariyerimde bu beceriyi nasıl geliştirdi
 
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
 
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 1500, '2025-02-21 19:41:46.433', '2025-02-21 19:41:46.433', 0, true, 'Stratejik konumlarda hamle bulma metodları', NULL, 'stratejik-konumlarda-hamle-bulma-metodlari', 3);
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('7eafb08e-8030-4a4f-9bfe-0ca2835703d3', 'Şah güvenliği konusunun satrancın en önemli konularından biri olduğunu,ve oyunlarınıza çok faydalı olacağını düşünüyorum.
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, 3, 1500, 0, '2025-02-21 19:41:46.433', '2025-02-21 19:41:46.433');
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('7eafb08e-8030-4a4f-9bfe-0ca2835703d3', 'sah-guvenligi', NULL, 'Şah Güvenliği', 'Şah güvenliği konusunun satrancın en önemli konularından biri olduğunu,ve oyunlarınıza çok faydalı olacağını düşünüyorum.
 
  
 
@@ -78,8 +78,8 @@ Bu soruların hepsinin yanıtlarını,kariyerimde bu beceriyi nasıl geliştirdi
 Kimler İçin Uygun?
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
 
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 1500, '2025-02-21 22:15:46.433', '2025-02-21 22:15:46.433', 0, true, 'Şah Güvenliği', NULL, 'sah-guvenligi', 4);
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('8d17eb7a-f856-418a-9170-e35aab014d2a', 'Satrançta plan kurma konusu benim kariyerim için en faydalı konulardan bir tanesi oldu. Oyunu kazanmak için çok daha kontrollü bir yol izleyebildim. Bu yüzden dersin sizlere de çok faydalı olacağını düşünüyorum.
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, 4, 1500, 0, '2025-02-21 22:15:46.433', '2025-02-21 22:15:46.433');
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('8d17eb7a-f856-418a-9170-e35aab014d2a', 'satrancta-plan-kurma', '', 'Satrançta plan kurma', 'Satrançta plan kurma konusu benim kariyerim için en faydalı konulardan bir tanesi oldu. Oyunu kazanmak için çok daha kontrollü bir yol izleyebildim. Bu yüzden dersin sizlere de çok faydalı olacağını düşünüyorum.
 
 Derste anlatacağım konular:
 *Plan kurmanız gereken doğru anı nasıl anlarsınız?
@@ -91,8 +91,8 @@ Bu soruların hepsinin yanıtlarını,kariyerimde bu beceriyi nasıl geliştirdi
 
 Kimler İçin Uygun?
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 1500, '2025-02-17 23:57:54.004', '2025-03-02 06:37:00.752', 100, true, 'Satrançta plan kurma', '', 'satrancta-plan-kurma', 2);
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('78c4e500-9b64-48ff-84df-b96c8723e1b7', 'Tüm Dersler (4 Ders-Video Kayıt) ürününü satın aldığınızda:
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, 2, 1500, 100, '2025-02-17 23:57:54.004', '2025-03-02 06:37:00.752');
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('78c4e500-9b64-48ff-84df-b96c8723e1b7', 'tum-dersler-4-ders-video-kayit', NULL, 'Tüm Dersler (4 Ders - Video Kayıt)', 'Tüm Dersler (4 Ders-Video Kayıt) ürününü satın aldığınızda:
 
 ''''Uyumlu Taşlar’’ konulu satranç dersi (Video Kayıt)
 
@@ -124,17 +124,17 @@ Dersleri önerdiğim izleme sırası:
 
 3)Satrançta Plan kurma
 
-4)Stratejik konumlarda hamle bulma', 6000, '2025-02-23 11:20:03.74', '2025-02-23 11:20:03.74', 1500, true, 'Tüm Dersler (4 Ders - Video Kayıt)', NULL, 'tum-dersler-4-ders-video-kayit', 17);
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('30d733e8-55ec-42f3-a9d8-de96a6307660', '', 1000, '2025-02-26 20:38:50.371', '2025-03-02 07:41:08.488', 300, true, 'Deneme Bileti', NULL, 'qwe', 18);
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('156366e3-2116-4288-9eaf-90e79579dad4', '', 1000, '2025-03-02 08:24:20.779', '2025-03-02 08:24:20.779', 300, true, 'Yeni Bilet', NULL, 'yeni-bilet', 19);
-INSERT INTO public.products (id, description, price, created_at, updated_at, discount, status, name, image_url, slug, "order") VALUES ('405606f0-38d4-46b2-b8fd-0e61cda2b4b0', '', 1000, '2025-03-02 08:25:49.944', '2025-03-02 08:25:49.944', 200, true, 'Yeni Bilet 2 - Workshop', NULL, 'yeni-bilet-2-workshop', 20);
+4)Stratejik konumlarda hamle bulma', true, 17, 6000, 1500, '2025-02-23 11:20:03.74', '2025-02-23 11:20:03.74');
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('30d733e8-55ec-42f3-a9d8-de96a6307660', 'qwe', NULL, 'Deneme Bileti', '', true, 18, 1000, 300, '2025-02-26 20:38:50.371', '2025-03-02 07:41:08.488');
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('156366e3-2116-4288-9eaf-90e79579dad4', 'yeni-bilet', NULL, 'Yeni Bilet', '', true, 19, 1000, 300, '2025-03-02 08:24:20.779', '2025-03-02 08:24:20.779');
+INSERT INTO public.products (id, slug, image_url, name, description, status, "order", price, discount, created_at, updated_at) VALUES ('405606f0-38d4-46b2-b8fd-0e61cda2b4b0', 'yeni-bilet-2-workshop', NULL, 'Yeni Bilet 2 - Workshop', '', true, 20, 1000, 200, '2025-03-02 08:25:49.944', '2025-03-02 08:25:49.944');
 
 
 --
 -- Data for Name: lectures; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-INSERT INTO public.lectures (id, description, slug, intro_video, main_video, duration, created_at, updated_at, status, name, product_id, "order", thumbnail, misc, max_elo, min_elo) VALUES ('f6e3f8f4-090c-4377-807c-45f1414aef25', 'Satranç oyuncularının en zorlandığı konulardan bir tanesi,hamle ararken hangi metodları kullanacağını bilmemesi,veya karar verememesidir.Profesyonel kariyerimde dünyanın en iyi antrenörlerinden öğrendiğim bu metodları sizlerle paylaşıyorum.
+INSERT INTO public.lectures (id, slug, name, description, status, intro_video, main_video, thumbnail, min_elo, max_elo, misc, duration, "order", created_at, updated_at, product_id) VALUES ('f6e3f8f4-090c-4377-807c-45f1414aef25', 'stratejik-konumlarda-hamle-bulma-metodlari', 'Stratejik konumlarda hamle bulma metodları', 'Satranç oyuncularının en zorlandığı konulardan bir tanesi,hamle ararken hangi metodları kullanacağını bilmemesi,veya karar verememesidir.Profesyonel kariyerimde dünyanın en iyi antrenörlerinden öğrendiğim bu metodları sizlerle paylaşıyorum.
 
 **Derste anlattığım konular:**
 
@@ -148,8 +148,8 @@ Bu soruların hepsinin yanıtlarını,kariyerimde bu beceriyi nasıl geliştirdi
 
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
 
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 'stratejik-konumlarda-hamle-bulma-metodlari', NULL, 'https://vimeo.com/1050368189?share=copy', 7920, '2025-02-21 19:41:46.433', '2025-03-02 02:03:06.328', true, 'Stratejik konumlarda hamle bulma metodları', 'ef220e1f-a90a-4f58-9009-6a2314e7e396', 2, '', NULL, 2400, 1600);
-INSERT INTO public.lectures (id, description, slug, intro_video, main_video, duration, created_at, updated_at, status, name, product_id, "order", thumbnail, misc, max_elo, min_elo) VALUES ('45ec24c4-1372-4682-a9da-7fc78ac044f1', 'Şah güvenliği konusunun satrancın en önemli konularından biri olduğunu,ve oyunlarınıza çok faydalı olacağını düşünüyorum.
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, NULL, 'https://vimeo.com/1050368189?share=copy', '', 1600, 2400, NULL, 7920, 2, '2025-02-21 19:41:46.433', '2025-03-02 02:03:06.328', 'ef220e1f-a90a-4f58-9009-6a2314e7e396');
+INSERT INTO public.lectures (id, slug, name, description, status, intro_video, main_video, thumbnail, min_elo, max_elo, misc, duration, "order", created_at, updated_at, product_id) VALUES ('45ec24c4-1372-4682-a9da-7fc78ac044f1', 'sah-guvenligi', 'Şah Güvenliği', 'Şah güvenliği konusunun satrancın en önemli konularından biri olduğunu,ve oyunlarınıza çok faydalı olacağını düşünüyorum.
 
  
 
@@ -172,8 +172,8 @@ Bu soruların hepsinin yanıtlarını,kariyerimde bu beceriyi nasıl geliştirdi
 Kimler İçin Uygun?
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
 
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 'sah-guvenligi', NULL, 'https://vimeo.com/1049436256?share=copy', 7920, '2025-02-21 22:15:46.433', '2025-03-02 02:03:13.895', true, 'Şah Güvenliği', '7eafb08e-8030-4a4f-9bfe-0ca2835703d3', 4, '', NULL, 2400, 1600);
-INSERT INTO public.lectures (id, description, slug, intro_video, main_video, duration, created_at, updated_at, status, name, product_id, "order", thumbnail, misc, max_elo, min_elo) VALUES ('c9771da4-4453-4c1f-92c8-af1ecb7cfd1a', 'Satrançta plan kurma konusu benim kariyerim için en faydalı konulardan bir tanesi oldu. Oyunu kazanmak için çok daha kontrollü bir yol izleyebildim. Bu yüzden dersin sizlere de çok faydalı olacağını düşünüyorum.
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, NULL, 'https://vimeo.com/1049436256?share=copy', '', 1600, 2400, NULL, 7920, 4, '2025-02-21 22:15:46.433', '2025-03-02 02:03:13.895', '7eafb08e-8030-4a4f-9bfe-0ca2835703d3');
+INSERT INTO public.lectures (id, slug, name, description, status, intro_video, main_video, thumbnail, min_elo, max_elo, misc, duration, "order", created_at, updated_at, product_id) VALUES ('c9771da4-4453-4c1f-92c8-af1ecb7cfd1a', 'satrancta-plan-kurma', 'Satrançta plan kurma', 'Satrançta plan kurma konusu benim kariyerim için en faydalı konulardan bir tanesi oldu. Oyunu kazanmak için çok daha kontrollü bir yol izleyebildim. Bu yüzden dersin sizlere de çok faydalı olacağını düşünüyorum.
 
 **Derste anlatacağım konular:**
 * Plan kurmanız gereken doğru anı nasıl anlarsınız?
@@ -185,8 +185,8 @@ Bu soruların hepsinin yanıtlarını,kariyerimde bu beceriyi nasıl geliştirdi
 
 **Kimler İçin Uygun?**
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 'satrancta-plan-kurma', 'https://vimeo.com/26168268?share=copy', 'https://vimeo.com/1049794483?share=copy', 7560, '2025-02-17 23:57:54.004', '2025-02-26 20:13:52.045', true, 'Satrançta plan kurma', '8d17eb7a-f856-418a-9170-e35aab014d2a', 3, '', '{"pgns":[{"name":"qweqwe","content":"qvweqvw"}]}', 2400, 2000);
-INSERT INTO public.lectures (id, description, slug, intro_video, main_video, duration, created_at, updated_at, status, name, product_id, "order", thumbnail, misc, max_elo, min_elo) VALUES ('1a14a9fe-2330-43ee-b49e-e8f90d407009', 'Daha kaliteli oyunlar oynamak, stratejik anlayışınızı geliştirmek,oyununuza istikrar sağlamak için ''''Uyumlu Taşlar'''' konulu dersin çok faydalı olacağını düşünüyorum.
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, 'https://vimeo.com/26168268?share=copy', 'https://vimeo.com/1049794483?share=copy', '', 2000, 2400, '{"pgns":[{"name":"qweqwe","content":"qvweqvw"}]}', 7560, 3, '2025-02-17 23:57:54.004', '2025-02-26 20:13:52.045', '8d17eb7a-f856-418a-9170-e35aab014d2a');
+INSERT INTO public.lectures (id, slug, name, description, status, intro_video, main_video, thumbnail, min_elo, max_elo, misc, duration, "order", created_at, updated_at, product_id) VALUES ('1a14a9fe-2330-43ee-b49e-e8f90d407009', 'uyumlu-taslar', 'Uyumlu Taşlar', 'Daha kaliteli oyunlar oynamak, stratejik anlayışınızı geliştirmek,oyununuza istikrar sağlamak için ''''Uyumlu Taşlar'''' konulu dersin çok faydalı olacağını düşünüyorum.
 
 **Derste anlattığım konular:**
 * Örnek oyun analizleri: Bu konunun uzmanlıkla uygulandığı, elit oyuncuların oyunlarının detaylı anlatımı
@@ -199,7 +199,7 @@ Bu soruların hepsinin yanıtlarını, kariyerimde bu beceriyi nasıl geliştird
 
 **Kimler İçin Uygun?**
 Dersleri her seviyeden oyuncunun faydalanabileceği şekilde anlatmaya çalışıyorum. Ancak, dersin bazı bölümleri ileri düzey analiz içerdiği için özellikle 1800+ seviyesindeki oyunculara daha faydalı olabilir.
-Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', 'uyumlu-taslar', NULL, 'https://vimeo.com/1048350962?share=copy', 6960, '2025-02-18 18:31:47.97', '2025-03-02 02:03:22.222', true, 'Uyumlu Taşlar', 'bb1f3d44-51c2-47af-90a4-950e32ce299e', 5, '', '{"pgns":[{"name":"Açılışlar-3","content":"[Event \"F/S Return Match\"]\n[Site \"Belgrade, Serbia JUG\"]\n[Date \"1992.11.04\"]\n[Round \"29\"]\n[White \"Fischer, Robert J.\"]\n[Black \"Spassky, Boris V.\"]\n[Result \"1/2-1/2\"]\n\n1.e4 e5 2.Nf3 Nc6 3.Bb5 {This opening is called the Ruy Lopez.} 3...a6\n4.Ba4 Nf6 5.O-O Be7 6.Re1 b5 7.Bb3 d6 8.c3 O-O 9.h3 Nb8 10.d4 Nbd7\n11.c4 c6 12.cxb5 axb5 13.Nc3 Bb7 14.Bg5 b4 15.Nb1 h6 16.Bh4 c5 17.dxe5\nNxe4 18.Bxe7 Qxe7 19.exd6 Qf6 20.Nbd2 Nxd6 21.Nc4 Nxc4 22.Bxc4 Nb6\n23.Ne5 Rae8 24.Bxf7+ Rxf7 25.Nxf7 Rxe1+ 26.Qxe1 Kxf7 27.Qe3 Qg5 28.Qxg5\nhxg5 29.b3 Ke6 30.a3 Kd6 31.axb4 cxb4 32.Ra5 Nd5 33.f3 Bc8 34.Kf2 Bf5\n35.Ra7 g6 36.Ra6+ Kc5 37.Ke1 Nf4 38.g3 Nxh3 39.Kd2 Kb5 40.Rd6 Kc5 41.Ra6\nNf2 42.g4 Bd3 43.Re6 1/2-1/2"},{"name":"Açılışlar-2","content":"[Event \"F/S Return Match\"]\n[Site \"Belgrade, Serbia JUG\"]\n[Date \"1992.11.04\"]\n[Round \"29\"]\n[White \"Fischer, Robert J.\"]\n[Black \"Spassky, Boris V.\"]\n[Result \"1/2-1/2\"]\n\n1.e4 e5 2.Nf3 Nc6 3.Bb5 {This opening is called the Ruy Lopez.} 3...a6\n4.Ba4 Nf6 5.O-O Be7 6.Re1 b5 7.Bb3 d6 8.c3 O-O 9.h3 Nb8 10.d4 Nbd7\n11.c4 c6 12.cxb5 axb5 13.Nc3 Bb7 14.Bg5 b4 15.Nb1 h6 16.Bh4 c5 17.dxe5\nNxe4 18.Bxe7 Qxe7 19.exd6 Qf6 20.Nbd2 Nxd6 21.Nc4 Nxc4 22.Bxc4 Nb6\n23.Ne5 Rae8 24.Bxf7+ Rxf7 25.Nxf7 Rxe1+ 26.Qxe1 Kxf7 27.Qe3 Qg5 28.Qxg5\nhxg5 29.b3 Ke6 30.a3 Kd6 31.axb4 cxb4 32.Ra5 Nd5 33.f3 Bc8 34.Kf2 Bf5\n35.Ra7 g6 36.Ra6+ Kc5 37.Ke1 Nf4 38.g3 Nxh3 39.Kd2 Kb5 40.Rd6 Kc5 41.Ra6\nNf2 42.g4 Bd3 43.Re6 1/2-1/2"},{"name":"qwe","content":"qwe"},{"name":"qwe1","content":"qwe1"},{"name":"qwe2","content":"qwceqwecq"}]}', 2400, 1600);
+Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anlaşılabilir şekilde planladım, böylece her seviyeden oyuncu faydalanabilir.', true, NULL, 'https://vimeo.com/1048350962?share=copy', '', 1600, 2400, '{"pgns":[{"name":"Açılışlar-3","content":"[Event \"F/S Return Match\"]\n[Site \"Belgrade, Serbia JUG\"]\n[Date \"1992.11.04\"]\n[Round \"29\"]\n[White \"Fischer, Robert J.\"]\n[Black \"Spassky, Boris V.\"]\n[Result \"1/2-1/2\"]\n\n1.e4 e5 2.Nf3 Nc6 3.Bb5 {This opening is called the Ruy Lopez.} 3...a6\n4.Ba4 Nf6 5.O-O Be7 6.Re1 b5 7.Bb3 d6 8.c3 O-O 9.h3 Nb8 10.d4 Nbd7\n11.c4 c6 12.cxb5 axb5 13.Nc3 Bb7 14.Bg5 b4 15.Nb1 h6 16.Bh4 c5 17.dxe5\nNxe4 18.Bxe7 Qxe7 19.exd6 Qf6 20.Nbd2 Nxd6 21.Nc4 Nxc4 22.Bxc4 Nb6\n23.Ne5 Rae8 24.Bxf7+ Rxf7 25.Nxf7 Rxe1+ 26.Qxe1 Kxf7 27.Qe3 Qg5 28.Qxg5\nhxg5 29.b3 Ke6 30.a3 Kd6 31.axb4 cxb4 32.Ra5 Nd5 33.f3 Bc8 34.Kf2 Bf5\n35.Ra7 g6 36.Ra6+ Kc5 37.Ke1 Nf4 38.g3 Nxh3 39.Kd2 Kb5 40.Rd6 Kc5 41.Ra6\nNf2 42.g4 Bd3 43.Re6 1/2-1/2"},{"name":"Açılışlar-2","content":"[Event \"F/S Return Match\"]\n[Site \"Belgrade, Serbia JUG\"]\n[Date \"1992.11.04\"]\n[Round \"29\"]\n[White \"Fischer, Robert J.\"]\n[Black \"Spassky, Boris V.\"]\n[Result \"1/2-1/2\"]\n\n1.e4 e5 2.Nf3 Nc6 3.Bb5 {This opening is called the Ruy Lopez.} 3...a6\n4.Ba4 Nf6 5.O-O Be7 6.Re1 b5 7.Bb3 d6 8.c3 O-O 9.h3 Nb8 10.d4 Nbd7\n11.c4 c6 12.cxb5 axb5 13.Nc3 Bb7 14.Bg5 b4 15.Nb1 h6 16.Bh4 c5 17.dxe5\nNxe4 18.Bxe7 Qxe7 19.exd6 Qf6 20.Nbd2 Nxd6 21.Nc4 Nxc4 22.Bxc4 Nb6\n23.Ne5 Rae8 24.Bxf7+ Rxf7 25.Nxf7 Rxe1+ 26.Qxe1 Kxf7 27.Qe3 Qg5 28.Qxg5\nhxg5 29.b3 Ke6 30.a3 Kd6 31.axb4 cxb4 32.Ra5 Nd5 33.f3 Bc8 34.Kf2 Bf5\n35.Ra7 g6 36.Ra6+ Kc5 37.Ke1 Nf4 38.g3 Nxh3 39.Kd2 Kb5 40.Rd6 Kc5 41.Ra6\nNf2 42.g4 Bd3 43.Re6 1/2-1/2"},{"name":"qwe","content":"qwe"},{"name":"qwe1","content":"qwe1"},{"name":"qwe2","content":"qwceqwecq"}]}', 6960, 5, '2025-02-18 18:31:47.97', '2025-03-02 02:03:22.222', 'bb1f3d44-51c2-47af-90a4-950e32ce299e');
 
 
 --
@@ -212,6 +212,14 @@ Bu sadece bir öneridir. Elimden geldiğince dersleri hem üst düzey hem de anl
 -- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: root
 --
 
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('1701b2c5-7a9a-4b57-a7a9-b3cf882f62f3', 'c2cef6c53b51e9fa369ba5758e7dc67f0bb715cdceb75c33c7c0e85d3906c875', '2025-03-09 05:16:42.368471+03', '20250306060540_init', NULL, NULL, '2025-03-09 05:16:42.262705+03', 1);
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('c2caad3b-b7a9-4348-a200-bc0b00f479aa', '9e414db2f95d016ef98922e4399e957e7c216a46c325db933367611a60866bc8', '2025-03-09 05:16:42.373595+03', '20250306110440_addresstitle', NULL, NULL, '2025-03-09 05:16:42.369706+03', 1);
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('b24c03e4-d9ef-42b8-8f6d-fe385b9b8cd9', 'b1463e266bd58d819c3354a2845d8fcd731085d4e4038b82793fd378479d3e91', '2025-03-09 05:16:42.37858+03', '20250306113936_', NULL, NULL, '2025-03-09 05:16:42.37479+03', 1);
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('d05dff45-b204-4111-9a96-db8164c07c3b', 'd6d9811ae89470f220995a07571ae6e53a18feb52d6dfb40f88aa4edc3bc99f0', '2025-03-09 05:16:42.384924+03', '20250306115632_', NULL, NULL, '2025-03-09 05:16:42.379893+03', 1);
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('021e0cf5-3c4a-4a46-8fc0-6d566de23350', 'ff7cdd3b29ae19466000c725d103d98ef0de7630fd8354eeb84de629fe8d3cbb', '2025-03-09 05:16:42.389752+03', '20250306115839_init', NULL, NULL, '2025-03-09 05:16:42.3861+03', 1);
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('6859ef7b-fdfc-4296-b0a1-9f58fa0d4411', 'e60fddf2a40e3a99bed1cdfb27fb9b2d844f70996ed846fb1037e5ac3bcc5577', '2025-03-09 05:16:42.394494+03', '20250306120231_init', NULL, NULL, '2025-03-09 05:16:42.390872+03', 1);
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('3e6e4543-5fd7-46a8-91c5-208ffe322db4', 'e0ba91e82c31d3825b0a90c8f09107fa637cd56d3828e326aa93d950784c238b', '2025-03-09 05:16:42.419165+03', '20250307203941_init', NULL, NULL, '2025-03-09 05:16:42.395662+03', 1);
+INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('cad5b39a-8eb9-4aa8-829c-eef27451c913', '798c77e9bef8305c79727f3ebd4acf77a6eefc29daaa46eb84719cb51dcee8c4', '2025-03-09 05:16:43.657951+03', '20250309021643_add_password_reset', NULL, NULL, '2025-03-09 05:16:43.623544+03', 1);
 INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('5d84931f-8006-427a-991f-7c039f6dc666', '165f179e38a00e33569b4123895eb250f20dd714ff0f2cb3e20016cf1ff19f86', '2025-02-09 21:07:27.581499+03', '20250209180727_init', NULL, NULL, '2025-02-09 21:07:27.519809+03', 1);
 INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('14a0f1ca-e1d1-477d-8c72-09525383880b', '17fb4cc44d193c8b4937ab7f9364af0665e625e89bdbb44e56fc2a43cdd17dae', '2025-02-09 21:27:58.96237+03', '20250209182758_discount', NULL, NULL, '2025-02-09 21:27:58.92675+03', 1);
 INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) VALUES ('2c24db8d-5a64-470c-92f9-3783d9ea1c13', 'f9c78d1714e6242b0f326652b5a1a9f674806894ab7141d0758c6b1417e91254', '2025-02-12 14:49:53.284346+03', '20250212114953_account', NULL, NULL, '2025-02-12 14:49:53.263167+03', 1);
@@ -250,12 +258,36 @@ INSERT INTO public._prisma_migrations (id, checksum, finished_at, migration_name
 
 
 --
+-- Data for Name: user_accounts; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', 'burakuysal3455@gmail.com', '(507) 084-1294', 'Burak', 'UYSAL', '$2a$10$i2mqBXuBjjlKqMJdr5pQr.GMIAqjKJibfz5odJKfhOz/GwVq2VQE.', 'gm', '2025-02-23 18:00:43.321', '2025-02-23 18:00:43.321', NULL);
+INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('6106ca80-6b15-48ef-baad-8af3e1f399e4', 'gmvahap@gmail.com', '05333539237', 'Vahap', 'Şanal', '$2a$10$kjghpqz7zOrAFJZBB2g1Te.MyEEx4ifbXREoWoh6SZ.9F9aLVM9qm', 'gm', '2025-02-13 17:52:37.087', '2025-02-13 17:52:37.087', NULL);
+INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('7bf440f9-ff8a-48ed-995f-4dcbcf37e9b9', 'lord_aurain@hotmail.com', '+905396706753', 'Emre', 'Yılmaz', '$2a$10$RNvAJIYEayxk52/rvyEZsOfjnADK7yXcPc.UAEGNI9G7H2HV9ERZu', 'user', '2025-03-09 02:21:27.555', '2025-03-09 02:22:02.617', '50518098556');
+INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, role, created_at, updated_at, "idNumber") VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'abdurrahmanemreyilmaz@gmail.com', '05396706753', 'Emre', 'Yılmaz', '$2a$10$NLGnh/bSwTJrfZPZ/MbuHuaK9kRfbh4TX9Wv.TNXRtUbYyYprWyBC', 'gm', '2025-02-12 11:57:11.24', '2025-03-09 04:49:23.09', NULL);
+
+
+--
+-- Data for Name: carts; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.carts (id, user_id, token, status, "totalPrice", created_at, updated_at) VALUES ('fe454aea-e642-4d8a-b133-6d0e13c62238', '7bf440f9-ff8a-48ed-995f-4dcbcf37e9b9', 'a4b9ab1c-4694-445d-9975-a15e226c8cde', 'PENDING', 1400, '2025-03-09 02:22:02.952', '2025-03-09 02:22:02.952');
+
+
+--
+-- Data for Name: cart_items; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.cart_items (id, cart_id, product_id, price, "accountId") VALUES ('9845b924-e6aa-442d-8bdd-661ca1aaa81d', 'fe454aea-e642-4d8a-b133-6d0e13c62238', '8d17eb7a-f856-418a-9170-e35aab014d2a', 1400, NULL);
+
+
+--
 -- Data for Name: event_tickets; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-INSERT INTO public.event_tickets (id, product_id, location, capacity, date, name, sold, url) VALUES ('a66ba345-547a-4c08-a0e0-72564403e243', '30d733e8-55ec-42f3-a9d8-de96a6307660', NULL, 32, '2025-02-28 06:39:00', 'qwe', 0, 'qcqwecq');
-INSERT INTO public.event_tickets (id, product_id, location, capacity, date, name, sold, url) VALUES ('83689165-9c64-47ae-8e36-1585db35caf5', '156366e3-2116-4288-9eaf-90e79579dad4', 'qvweqvqwv', 40, '2025-03-13 08:26:00', 'Yeni Bilet', 0, 'qwecqwecq');
-INSERT INTO public.event_tickets (id, product_id, location, capacity, date, name, sold, url) VALUES ('6e91e304-caa8-4268-b845-69f5beb7a1a5', '405606f0-38d4-46b2-b8fd-0e61cda2b4b0', 'Kadıköy Cafe', 32, '2025-03-26 23:30:00', 'Yeni Bilet 2 - Workshop', 0, NULL);
+INSERT INTO public.event_tickets (id, name, date, location, url, capacity, sold, product_id) VALUES ('a66ba345-547a-4c08-a0e0-72564403e243', 'qwe', '2025-02-28 06:39:00', NULL, 'qcqwecq', 32, 0, '30d733e8-55ec-42f3-a9d8-de96a6307660');
+INSERT INTO public.event_tickets (id, name, date, location, url, capacity, sold, product_id) VALUES ('83689165-9c64-47ae-8e36-1585db35caf5', 'Yeni Bilet', '2025-03-13 08:26:00', 'qvweqvqwv', 'qwecqwecq', 40, 0, '156366e3-2116-4288-9eaf-90e79579dad4');
+INSERT INTO public.event_tickets (id, name, date, location, url, capacity, sold, product_id) VALUES ('6e91e304-caa8-4268-b845-69f5beb7a1a5', 'Yeni Bilet 2 - Workshop', '2025-03-26 23:30:00', 'Kadıköy Cafe', NULL, 32, 0, '405606f0-38d4-46b2-b8fd-0e61cda2b4b0');
 
 
 --
@@ -273,7 +305,7 @@ INSERT INTO public.files (id, filename, path, mimetype, size, created_at, lectur
 -- Data for Name: lecture_resources; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-INSERT INTO public.lecture_resources (id, lecture_id, type, url, content, name) VALUES ('581ff9af-0188-4657-ae7a-fb8b2a6b4109', '1a14a9fe-2330-43ee-b49e-e8f90d407009', 'pgn', NULL, '[Event "F/S Return Match"]
+INSERT INTO public.lecture_resources (id, lecture_id, type, name, url, content) VALUES ('581ff9af-0188-4657-ae7a-fb8b2a6b4109', '1a14a9fe-2330-43ee-b49e-e8f90d407009', 'pgn', 'Açılışlar-3', NULL, '[Event "F/S Return Match"]
 [Site "Belgrade, Serbia JUG"]
 [Date "1992.11.04"]
 [Round "29"]
@@ -288,8 +320,8 @@ Nxe4 18.Bxe7 Qxe7 19.exd6 Qf6 20.Nbd2 Nxd6 21.Nc4 Nxc4 22.Bxc4 Nb6
 23.Ne5 Rae8 24.Bxf7+ Rxf7 25.Nxf7 Rxe1+ 26.Qxe1 Kxf7 27.Qe3 Qg5 28.Qxg5
 hxg5 29.b3 Ke6 30.a3 Kd6 31.axb4 cxb4 32.Ra5 Nd5 33.f3 Bc8 34.Kf2 Bf5
 35.Ra7 g6 36.Ra6+ Kc5 37.Ke1 Nf4 38.g3 Nxh3 39.Kd2 Kb5 40.Rd6 Kc5 41.Ra6
-Nf2 42.g4 Bd3 43.Re6 1/2-1/2', 'Açılışlar-3');
-INSERT INTO public.lecture_resources (id, lecture_id, type, url, content, name) VALUES ('ec103bce-719e-47a4-9655-54d8cc589805', '1a14a9fe-2330-43ee-b49e-e8f90d407009', 'pgn', NULL, '[Event "F/S Return Match"]
+Nf2 42.g4 Bd3 43.Re6 1/2-1/2');
+INSERT INTO public.lecture_resources (id, lecture_id, type, name, url, content) VALUES ('ec103bce-719e-47a4-9655-54d8cc589805', '1a14a9fe-2330-43ee-b49e-e8f90d407009', 'pgn', 'Açılışlar-2', NULL, '[Event "F/S Return Match"]
 [Site "Belgrade, Serbia JUG"]
 [Date "1992.11.04"]
 [Round "29"]
@@ -304,7 +336,7 @@ Nxe4 18.Bxe7 Qxe7 19.exd6 Qf6 20.Nbd2 Nxd6 21.Nc4 Nxc4 22.Bxc4 Nb6
 23.Ne5 Rae8 24.Bxf7+ Rxf7 25.Nxf7 Rxe1+ 26.Qxe1 Kxf7 27.Qe3 Qg5 28.Qxg5
 hxg5 29.b3 Ke6 30.a3 Kd6 31.axb4 cxb4 32.Ra5 Nd5 33.f3 Bc8 34.Kf2 Bf5
 35.Ra7 g6 36.Ra6+ Kc5 37.Ke1 Nf4 38.g3 Nxh3 39.Kd2 Kb5 40.Rd6 Kc5 41.Ra6
-Nf2 42.g4 Bd3 43.Re6 1/2-1/2', 'Açılışlar-2');
+Nf2 42.g4 Bd3 43.Re6 1/2-1/2');
 
 
 --
@@ -342,15 +374,6 @@ INSERT INTO public.products_lectures (product_id, lecture_id) VALUES ('78c4e500-
 
 
 --
--- Data for Name: user_accounts; Type: TABLE DATA; Schema: public; Owner: root
---
-
-INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, created_at, updated_at, role) VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', 'burakuysal3455@gmail.com', '(507) 084-1294', 'Burak', 'UYSAL', '$2a$10$i2mqBXuBjjlKqMJdr5pQr.GMIAqjKJibfz5odJKfhOz/GwVq2VQE.', '2025-02-23 18:00:43.321', '2025-02-23 18:00:43.321', 'gm');
-INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, created_at, updated_at, role) VALUES ('6106ca80-6b15-48ef-baad-8af3e1f399e4', 'gmvahap@gmail.com', '05333539237', 'Vahap', 'Şanal', '$2a$10$kjghpqz7zOrAFJZBB2g1Te.MyEEx4ifbXREoWoh6SZ.9F9aLVM9qm', '2025-02-13 17:52:37.087', '2025-02-13 17:52:37.087', 'gm');
-INSERT INTO public.user_accounts (id, email, phone, first_name, last_name, password, created_at, updated_at, role) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'abdurrahmanemreyilmaz@gmail.com', '05396706753', 'Emre', 'Yılmaz', '$2a$10$Kau0cZv0xLLHVjqGFuNbWuEhcSTjuHwdiRnr3voiJavbMUGB7pLyi', '2025-02-12 11:57:11.24', '2025-02-12 11:57:11.24', 'gm');
-
-
---
 -- Data for Name: purchases; Type: TABLE DATA; Schema: public; Owner: root
 --
 
@@ -360,6 +383,14 @@ INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('039c40
 INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('039c4053-e40d-49aa-a100-76bd04b4b8c1', 'bb1f3d44-51c2-47af-90a4-950e32ce299e', '2025-02-23 18:07:14.5');
 INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', '78c4e500-9b64-48ff-84df-b96c8723e1b7', '2025-02-23 21:12:44.259');
 INSERT INTO public.purchases (user_id, product_id, purchased_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', '405606f0-38d4-46b2-b8fd-0e61cda2b4b0', '2025-03-02 12:30:40.077');
+
+
+--
+-- Data for Name: user_addresses; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.user_addresses (id, city, country, address, zip_code, created_at, updated_at, title, user_id, full_name) VALUES ('acb148d2-c3af-4be9-b153-88fd677a0f1f', 'İstanbul', 'Türkiye', 'Mevlanakapı mah. Topkapı Karakol sok. Gündeş Apt. A blok No 22 Dr 2
+Gündeş Apt. A Blok', NULL, '2025-03-09 02:22:02.658', '2025-03-09 02:22:02.658', 'Ev', '7bf440f9-ff8a-48ed-995f-4dcbcf37e9b9', 'Emre Yılmaz');
 
 
 --
@@ -373,6 +404,14 @@ INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES 
 INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'f6e3f8f4-090c-4377-807c-45f1414aef25', '2025-02-23 21:12:44.262');
 INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', '45ec24c4-1372-4682-a9da-7fc78ac044f1', '2025-02-23 21:12:44.262');
 INSERT INTO public.user_lecture_access (user_id, lecture_id, granted_at) VALUES ('3e315cfc-8a0d-4bd4-b845-74592ce84ec7', 'c9771da4-4453-4c1f-92c8-af1ecb7cfd1a', '2025-02-23 21:12:44.262');
+
+
+--
+-- Data for Name: user_pass_tokens; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.user_pass_tokens (token, user_id, expires_at) VALUES ('7e7b32cc2837f0442aa6e56479b1d8e68e281a859620e80487217d9413c3ba10', '7bf440f9-ff8a-48ed-995f-4dcbcf37e9b9', '2025-03-09 03:38:54.301');
+INSERT INTO public.user_pass_tokens (token, user_id, expires_at) VALUES ('a18b1ab32e88e7ed14107f879d93fb25283e6456bb9d6cd529f89868dfb2915e', '3e315cfc-8a0d-4bd4-b845-74592ce84ec7', '2025-03-09 06:19:42.825');
 
 
 --

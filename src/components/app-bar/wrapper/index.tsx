@@ -5,6 +5,7 @@ import { AppBar as MuiAppBar } from "@mui/material";
 import { useScrollHandler } from "@/hooks/scroll";
 import { CartSidebar } from "@/components/cart";
 import { Sidebars } from "../sidebars";
+import { Suspense } from "@/components/suspense";
 
 interface AppBarProps {
   children?: React.ReactNode;
@@ -42,38 +43,17 @@ export const AppBarWrapper: React.FC<AppBarProps> = ({
         <>{children}</>
       </MuiAppBar>
 
-      <Sidebars
-        direction={direction}
-        list={[
-          {
-            value: "account",
-            child: (
-              <div
-                style={{
-                  minWidth: 440,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div
-                  style={{
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <hr style={{ width: "100%", opacity: 0.6 }}></hr>
-                </div>
-              </div>
-            ),
-          },
-          {
-            value: "cart",
-            child: <CartSidebar auth={auth} />,
-          },
-        ]}
-      />
+      <Suspense>
+        <Sidebars
+          direction={direction}
+          list={[
+            {
+              value: "cart",
+              child: <CartSidebar auth={auth} />,
+            },
+          ]}
+        />
+      </Suspense>
     </>
   );
 };

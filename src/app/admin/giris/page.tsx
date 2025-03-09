@@ -1,7 +1,6 @@
 "use client";
 import { FormProps, LoginForm } from "@/components/admin/login";
 import { Box, Paper } from "@mui/material";
-//import { login } from "@/api/firebase";
 import { useRouter } from "next/navigation";
 
 import { loginApi } from "./actions";
@@ -16,10 +15,6 @@ export default function LoginPage() {
         await loginApi(result.user);
       }
 
-      //localStorage.setItem("token", result.user.uid);
-
-      /* const cookieStore = await cookies();
-      cookieStore.set("token", result.user.uid); */
       if (!!result) {
         router.push("/admin");
       }

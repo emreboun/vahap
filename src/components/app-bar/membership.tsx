@@ -13,30 +13,26 @@ import { CircleRounded, ShoppingBagRounded } from "@mui/icons-material";
 import Link from "next/link";
 import { AccountMenu } from "./menu";
 import { NavigationLink } from "./link";
-import { useSidebar } from "./sidebars/SidebarProvider";
 import { useCart } from "../cart/CartProvider";
 import { usePathname } from "next/navigation";
+import useMenu from "./sidebars/useMenu";
 
 interface MembershipProps {
   auth: boolean;
   enabled?: boolean;
 }
 
-export const Membership: React.FC<MembershipProps> = ({
-  auth,
-  //enabled = true,
-}) => {
+export const Membership: React.FC<MembershipProps> = ({ auth }) => {
   const path = usePathname();
-  const { onSidebar, handleDropdown, dropdown } = useSidebar();
+  const { onMenu } = useMenu();
   const { state } = useCart();
   const { items } = state;
 
   const isEmpty = items.length === 0;
 
   const handleCart = () => {
-    onSidebar("cart");
+    onMenu("cart");
   };
-  const onClick = async () => {};
   return (
     <>
       {!auth ? (
@@ -92,7 +88,7 @@ export const Membership: React.FC<MembershipProps> = ({
           <Link href={`/giris?redirect=${encodeURIComponent(path)}`} passHref>
             <Button
               variant='outlined'
-              onClick={() => handleDropdown(false)}
+              onClick={() => onMenu(null)}
               sx={{
                 textTransform: "none",
                 paddingX: 2,
@@ -111,21 +107,12 @@ export const Membership: React.FC<MembershipProps> = ({
               {"Giriş Yap"}
             </Button>
           </Link>
-          <Collapse
-            in={isEmpty}
-            orientation='horizontal'
-            /* sx={{
-              transform: `scaleX(${isEmpty ? 1 : 0})`,
-              width: isEmpty ? 103 : 0,
-              maxHeight: 38.5,
-              transition: "all 0.16s linear",
-            }} */
-          >
+          <Collapse in={isEmpty} orientation='horizontal'>
             <NavigationLink href={"/kayit"}>
               <Button
                 className={"limitedLine"}
                 variant={"contained"}
-                onClick={() => handleDropdown(false)}
+                onClick={() => onMenu(null)}
                 sx={{
                   textTransform: "none",
                   paddingX: 2,

@@ -2,21 +2,20 @@
 import { Box, IconButton } from "@mui/material";
 import { Close, Menu } from "@mui/icons-material";
 
-import { useSidebar } from "../sidebars/SidebarProvider";
+import useMenu from "../sidebars/useMenu";
 
 interface DropdownButtonProps {
   temp?: string;
 }
 
 export const DropdownButton: React.FC<DropdownButtonProps> = ({}) => {
-  const { dropdown, handleDropdown } = useSidebar();
-
+  const { menu, onMenu } = useMenu();
   return (
     <>
       <IconButton
-        onClick={() => handleDropdown()}
+        onClick={() => onMenu(menu === "mobile" ? null : "mobile")}
         sx={{
-          color: dropdown ? "#fff" : "primary.main",
+          color: menu === "mobile" ? "#fff" : "primary.main",
           height: "54px",
           aspectRatio: 1,
           zIndex: 3,
@@ -24,7 +23,7 @@ export const DropdownButton: React.FC<DropdownButtonProps> = ({}) => {
       >
         <Box
           sx={{
-            bgcolor: dropdown ? "primary.main" : "transparent",
+            bgcolor: menu === "mobile" ? "primary.main" : "transparent",
             borderRadius: "50%",
             aspectRatio: 1,
             display: "flex",
@@ -37,9 +36,9 @@ export const DropdownButton: React.FC<DropdownButtonProps> = ({}) => {
             sx={{
               cursor: "pointer",
               transition: "all 0.3s linear",
-              opacity: dropdown ? 1 : 0,
+              opacity: menu === "mobile" ? 1 : 0,
               position: "absolute",
-              transform: dropdown ? "rotate(0deg)" : "rotate(180deg)",
+              transform: menu === "mobile" ? "rotate(0deg)" : "rotate(180deg)",
             }}
           />
 
@@ -47,8 +46,8 @@ export const DropdownButton: React.FC<DropdownButtonProps> = ({}) => {
             sx={{
               cursor: "pointer",
               transition: "all 0.3s linear",
-              opacity: dropdown ? 0 : 1,
-              transform: !dropdown ? "rotate(0deg)" : "rotate(180deg)",
+              opacity: menu === "mobile" ? 0 : 1,
+              transform: menu !== "mobile" ? "rotate(0deg)" : "rotate(180deg)",
             }}
           />
         </Box>

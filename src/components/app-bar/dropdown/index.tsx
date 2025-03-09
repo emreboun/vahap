@@ -5,7 +5,7 @@ import { NavigationBar } from "../navigation";
 import { useScrollHandler } from "@/hooks/scroll";
 import { Close, Menu } from "@mui/icons-material";
 import { Membership } from "../membership";
-import { useSidebar } from "../sidebars/SidebarProvider";
+import useMenu from "../sidebars/useMenu";
 
 interface DropdownProps {
   auth?: boolean;
@@ -13,7 +13,7 @@ interface DropdownProps {
 
 export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
   const { scrollY, direction } = useScrollHandler();
-  const { dropdown, handleDropdown } = useSidebar();
+  const { menu, onMenu } = useMenu();
 
   return (
     <>
@@ -23,9 +23,9 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
         }}
       >
         <IconButton
-          onClick={() => handleDropdown()}
+          onClick={() => onMenu(null)}
           sx={{
-            color: dropdown ? "#fff" : "primary.main",
+            color: menu === "mobile" ? "#fff" : "primary.main",
             height: "54px",
             aspectRatio: 1,
             zIndex: 3,
@@ -34,7 +34,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
         >
           <Box
             sx={{
-              bgcolor: dropdown ? "primary.main" : "transparent",
+              bgcolor: menu === "mobile" ? "primary.main" : "transparent",
               borderRadius: "50%",
               aspectRatio: 1,
               display: "flex",
@@ -47,9 +47,10 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
               sx={{
                 cursor: "pointer",
                 transition: "all 0.3s linear",
-                opacity: dropdown ? 1 : 0,
+                opacity: menu === "mobile" ? 1 : 0,
                 position: "absolute",
-                transform: dropdown ? "rotate(0deg)" : "rotate(180deg)",
+                transform:
+                  menu === "mobile" ? "rotate(0deg)" : "rotate(180deg)",
               }}
             />
 
@@ -57,8 +58,9 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
               sx={{
                 cursor: "pointer",
                 transition: "all 0.3s linear",
-                opacity: dropdown ? 0 : 1,
-                transform: !dropdown ? "rotate(0deg)" : "rotate(180deg)",
+                opacity: menu === "mobile" ? 0 : 1,
+                transform:
+                  menu !== "mobile" ? "rotate(0deg)" : "rotate(180deg)",
               }}
             />
           </Box>
@@ -75,14 +77,19 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
           paddingTop: 16,
           backgroundColor: "#fff",
           top: direction === "up" || scrollY < 64 ? 32 : 48,
-          opacity: dropdown ? 1 : 0,
+          opacity: menu === "mobile" ? 1 : 0,
           transition:
             "top 0.3s ease-in-out, " +
-            (dropdown ? "opacity 0.1s" : "opacity 0.1s linear 0.2s"),
+            (menu === "mobile" ? "opacity 0.1s" : "opacity 0.1s linear 0.2s"),
         }}
         sx={{}}
       >
-        <Collapse in={dropdown} timeout='auto' mountOnEnter unmountOnExit>
+        <Collapse
+          in={menu === "mobile"}
+          timeout='auto'
+          mountOnEnter
+          unmountOnExit
+        >
           <Box
             style={{
               paddingTop: 12,
@@ -104,7 +111,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
         </Collapse>
       </Box>
 
-      {dropdown && (
+      {menu === "mobile" && (
         <Box
           component={"span"}
           sx={{
@@ -116,7 +123,7 @@ export const Dropdown: React.FC<DropdownProps> = ({ auth = false }) => {
             zIndex: 0,
             bgcolor: "rgba(0, 0, 0, 0.25)",
           }}
-          onClick={() => handleDropdown()}
+          onClick={() => onMenu(null)}
         />
       )}
     </>

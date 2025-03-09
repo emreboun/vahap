@@ -1,13 +1,13 @@
 "use client";
 import { Box, Modal, Paper, Slide } from "@mui/material";
 import React, { useRef } from "react";
-import { useSidebar } from "./SidebarProvider";
+import useMenu from "./useMenu";
 
 interface SidebarProps {
   direction: "up" | "down";
   children: React.ReactNode;
   enabled: boolean;
-  handleClose: (x: any) => void;
+  handleClose: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -23,9 +23,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <Modal
         ref={ref}
         open={enabled}
-        onClose={() => handleClose("")}
-        //aria-labelledby='modal-modal-title'
-        //aria-describedby='modal-modal-description'
+        onClose={handleClose}
         sx={{
           zIndex: "modal",
           transition: "top 0.2s ease-in-out",
@@ -95,17 +93,10 @@ interface SideProps {
 interface SidebarsProps {
   list: SideProps[];
   direction: "up" | "down";
-  //value: string | null;
-  //handleClose: (x: any) => void;
 }
 
-export const Sidebars: React.FC<SidebarsProps> = ({
-  list,
-  direction,
-  // value,
-  //handleClose,
-}) => {
-  const { sidebar, onSidebar } = useSidebar();
+export const Sidebars: React.FC<SidebarsProps> = ({ list, direction }) => {
+  const { menu, onMenu } = useMenu();
 
   return (
     <>
@@ -113,8 +104,8 @@ export const Sidebars: React.FC<SidebarsProps> = ({
         <Sidebar
           key={i}
           direction={direction}
-          enabled={sidebar === side.value}
-          handleClose={() => onSidebar("")}
+          enabled={menu === "cart"}
+          handleClose={() => onMenu(null)}
         >
           {side.child}
         </Sidebar>

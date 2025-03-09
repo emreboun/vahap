@@ -16,7 +16,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { useState } from "react";
-import { logout } from "@/api/firebase";
 import { logoutApi } from "@/app/admin/giris/actions";
 import Link from "next/link";
 
@@ -36,22 +35,14 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({}) => {
   };
 
   const handleLogout = async () => {
-    //const res = tempFunction();
-    //console.log(res);
     try {
       localStorage.clear();
-      await logout();
       await logoutApi();
 
       location.reload();
     } catch (e: unknown) {
       console.error(e);
     }
-  };
-
-  const temp = async () => {
-    //init();
-    //await processPayment();
   };
 
   return (
@@ -212,7 +203,6 @@ const MenuItem: React.FC<MenuItemProps> = ({
         padding: "10px 16px",
         margin: 0,
         color: "text.primary",
-        //opacity: 0.8,
         textDecoration: "none",
         ...sx,
       }}
