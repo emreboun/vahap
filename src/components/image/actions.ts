@@ -16,7 +16,7 @@ export const uploadImage = async (
 ) => {
   try {
     const subFolderPath =
-      type === "lecture" ? `egitimler/${entityId}` : `urunler/${entityId}`;
+      type === "lecture" ? `/egitimler/${entityId}` : `/urunler/${entityId}`;
     const targetDirectory = path.join(fileConfig.path, subFolderPath);
 
     // Ensure the directory exists
