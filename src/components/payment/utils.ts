@@ -19,7 +19,7 @@ export const getCfPayload = (
     surname: userData.lastName,
     identityNumber: userData.idNumber ?? "74300864791",
     email: userData.email,
-    gsmNumber: `+9${userData.phone}`,
+    gsmNumber: `${userData.phone}`,
     registrationAddress: billingAddress.address,
     city: billingAddress.city,
     country: billingAddress.country,
@@ -29,7 +29,7 @@ export const getCfPayload = (
     name: item.product.name,
     price: (item.product.price - item.product.discount).toString(),
     itemType: "VIRTUAL",
-    category1: "Eğitim",
+    category1: "Eğitimler",
   }));
   const payload = {
     billingAddress,
