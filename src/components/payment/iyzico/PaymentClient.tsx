@@ -126,7 +126,6 @@ const PaymentClient = () => {
             price: item.product.price - item.product.discount,
           })),
         });
-        console.log(result);
         window.location.href = result.paymentPageUrl;
       }
     }

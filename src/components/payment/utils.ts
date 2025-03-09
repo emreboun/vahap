@@ -1,4 +1,5 @@
 import { appConfig } from "@/config";
+import { v4 } from "uuid";
 
 export const getCfPayload = (
   address: any,
@@ -45,8 +46,7 @@ export const getCfPayload = (
     price: sum.toString(),
     paidPrice: sum.toString(),
     callbackUrl: `${appConfig.url}/api/iyzipay-callback`,
-    conversationId: "sampleConversationId",
+    conversationId: v4(),
   };
-  console.log(payload);
   return payload;
 };
