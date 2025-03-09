@@ -144,7 +144,6 @@ const PaymentClient = () => {
       }}
       elevation={0}
     >
-      {" "}
       <Suspense>
         <Box
           sx={{

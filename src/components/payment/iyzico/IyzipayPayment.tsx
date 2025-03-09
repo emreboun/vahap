@@ -4,7 +4,7 @@ import { iyzicoConfig } from "@/config";
 export { iyzicoConfig } from "@/config";
 
 const { url } = iyzicoConfig;
-
+console.log(url);
 const IyzipayPayment = ({
   initPayload,
   initResponse,
@@ -24,8 +24,8 @@ const IyzipayPayment = ({
       token: initResponse.token,
       pwiPrice: initPayload.price,
       baseUrl: url, //"https://sandbox-api.iyzipay.com",
-      merchantGatewayBaseUrl: "https://sandbox-merchantgw.iyzipay.com",
-      consumerGatewayBaseUrl: "https://sandbox-consumerapigw.iyzipay.com",
+      merchantGatewayBaseUrl: "https://merchant.iyzipay.com/",
+      //consumerGatewayBaseUrl: "https://sandbox-consumerapigw.iyzipay.com",
       //registerCardEnabled: false,
       //storeNewCardEnabled: true,
       //payWithIyzicoEnabled: true,
@@ -84,7 +84,7 @@ const IyzipayPayment = ({
 
     if (initResponse.checkoutFormContent) {
       setCheckoutFormContent(initResponse.checkoutFormContent);
-
+      console.log(initResponse);
       // Create a wrapper div and inject checkout form safely
       const wrapperDiv = document.createElement("div");
       wrapperDiv.innerHTML = initResponse.checkoutFormContent;
