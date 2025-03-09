@@ -126,10 +126,12 @@ const PaymentClient = () => {
             price: item.product.price - item.product.discount,
           })),
         });
-        router.push(result.paymentPageUrl);
+        console.log(result);
+        window.location.href = result.paymentPageUrl;
       }
     }
-    handlePhase();
+
+    //handlePhase();
   };
   return (
     <Paper
