@@ -126,6 +126,7 @@ const PaymentClient = () => {
             price: item.product.price - item.product.discount,
           })),
         });
+        router.push(result.paymentPageUrl);
       }
     }
     handlePhase();
@@ -166,9 +167,9 @@ const PaymentClient = () => {
             />
           )}
 
-          {asama === "odeme" && cfResult && (
+          {/* {asama === "odeme" && cfResult && (
             <IyzipayPayment initPayload={cfPayload} initResponse={cfResult} />
-          )}
+          )} */}
 
           {asama === "onay" && (
             <>
