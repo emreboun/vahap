@@ -13,7 +13,10 @@ export default async function Home() {
   }));
 
   return (
-    <Box className='responsive'>
+    <Box
+      className='responsive'
+      sx={{ pt: { xs: 0.8, sm: 0 }, pb: { xs: 1.6, sm: 0 } }}
+    >
       <ResponsiveGrid items={items} slug={"egitimler"} />
     </Box>
   );

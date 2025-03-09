@@ -37,9 +37,9 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
     const req: any = {
       ...form,
     };
-    req.date = new Date(form.date);
+    req.date = form.date ? new Date(form.date) : undefined;
     req.capacity = req.capacity ? req.capacity * 1 : undefined;
-
+    console.log(req);
     Object.keys(req).forEach((key) => {
       if (req[key] === data[key]) {
         delete req[key];
@@ -48,7 +48,7 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
 
     const result = await updateTicket(id, req);
 
-    if (!!result /* && imageResult */) {
+    if (!!result) {
       router.push(`/admin/tickets`);
     }
   };
@@ -188,61 +188,17 @@ const EditTicket: React.FC<EditTicketFormProps> = ({ data, onClose }) => {
               flex: 4,
             }}
           >
-            {/* <BoxCard
-              title={"Durum:"}
-              sx={{
-                bgcolor: "background.paper",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 2,
-                py: 0,
-                //px: { xs: 2, sm: 3, md: 4 },
-                minWidth: { xs: 150, sm: 160, md: 180 },
-              }}
-            >
-              <Typography>{form.status ? "Aktif" : "Pasif"}</Typography>
-              <Switch
-                name={"status"}
-                sx={{}}
-                defaultChecked={form.status}
-                onChange={handleChange}
-              />
-            </BoxCard> */}
-
             <TextField
               name={"capacity"}
               label={"Kapasite"}
+              defaultValue={data.capacity}
               type={"number"}
               sx={{ flex: 1 }}
               onChange={handleChange}
             />
           </Box>
-
-          {/* <Box
-            sx={{
-              display: "flex",
-              gap: { xs: 0.8, md: 1.2, lg: 2 },
-              flex: 4,
-            }}
-          >
-            <TextField
-              name={"price"}
-              label={"Ücret"}
-              type={"number"}
-              sx={{ flex: 1 }}
-              onChange={handleChange}
-            />
-
-            <TextField
-              name={"discount"}
-              label={"İndirim"}
-              type={"number"}
-              sx={{ flex: 1 }}
-              onChange={handleChange}
-            />
-          </Box> */}
         </Box>
+
         <TextField
           label='Açıklama'
           name='description'

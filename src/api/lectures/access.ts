@@ -42,6 +42,8 @@ export const getUserAccess = async () => {
 
 export const grantUserAccess = async (userId: string, ids: string[]) => {
   try {
+    console.log(userId);
+    console.log(ids);
     const result = await lectureAccessService.createMany(
       ids.map((lectureId) => ({ userId, lectureId }))
     );

@@ -8,8 +8,6 @@ const addressService = new CrudService<Address>(addressRepository);
 
 export const createAddress = async (userId: string, data: any) => {
   try {
-    console.log(userId);
-    console.log(data);
     const { title, address, city, country, fullName } = data;
     const result = await addressService.create({
       userId,

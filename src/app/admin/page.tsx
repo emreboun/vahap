@@ -1,6 +1,3 @@
-//import { AdminMain } from "@/components/admin/home";
-//import { getCategories } from "../(home)/(search)/actions";
-
 import { getAllPurchasesAdmin } from "@/api/user/purchase";
 import EditButton from "@/components/admin/grid/form/EditButton";
 import PurchaseItem from "@/components/admin/home/PurchaseItem";
@@ -16,8 +13,6 @@ export default async function AdminPage() {
           flex: 1,
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          //alignItems: "stretch",
-          //justifyContent: "stretch",
           p: 1,
           gap: 1,
         }}
@@ -76,7 +71,7 @@ export default async function AdminPage() {
 
         <Paper
           sx={{
-            flex: 1, //{ xs: 0, md: 1 },
+            flex: 1,
             display: "flex",
             flexDirection: "column",
           }}

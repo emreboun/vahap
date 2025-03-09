@@ -2,7 +2,6 @@ import { Box, Paper, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import AddToCartButton from "../lecture/AddToCartButton";
 import {
   AttachFileRounded,
   SignalCellularAltRounded,
@@ -72,7 +71,6 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
           sx={{
             flex: 1,
             display: "flex",
-            //alignItems: "flex-end",
             justifyContent: "flex-start",
             alignItems: "center",
             position: "relative",
@@ -90,6 +88,7 @@ export const GridItemCore: React.FC<Omit<GridItemProps, "href">> = ({
               top: hasAccess ? -3 : 0,
               position: "relative",
             }}
+            priority
           />
         </Box>
 

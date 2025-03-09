@@ -84,7 +84,12 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
     const { name, value, checked } = event.target as any;
 
     let val = value;
-    setErrors((prev) => prev.filter((p) => p !== name));
+    if (name === "minElo" || name === "maxElo") {
+      setErrors((prev) => prev.filter((p) => p !== "elo"));
+    } else {
+      setErrors((prev) => prev.filter((p) => p !== name));
+    }
+
     if (name === "slug") {
       setSlugError(false);
       val = formatUrl(val);
@@ -115,14 +120,12 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
       if (!slug) list.push("slug");
       if (!name) list.push("name");
       if (!mainVideo) list.push("mainVideo");
-      //if (!mainThumbnail) list.push("mainThumbnail");
       if (!price || Number(price) <= 0) list.push("price");
       if (!duration || Number(duration) <= 0) list.push("duration");
       if (selectedFiles.length === 0) list.push("image");
       if (!minElo || !maxElo) list.push("elo");
 
       if (list.length > 0 || slugError) {
-        //console.log("error");
         setErrors(list);
         return;
       }
@@ -143,7 +146,7 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
         description: formatText(description),
         status,
       };
-      console.log(temp);
+
       const result = await createLecture({ ...temp });
       let imageResult;
       if (selectedFiles.length > 0 && !!result) {
@@ -257,6 +260,7 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
               label={"Başlık"}
               onChange={handleChange}
               sx={{ flex: 1 }}
+              error={errors.includes("name")}
             />
 
             <div
@@ -429,7 +433,6 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
                   justifyContent: "center",
                   gap: 2,
                   py: 0,
-                  //px: { xs: 2, sm: 3, md: 4 },
                   minWidth: { xs: 150, sm: 160, md: 180 },
                 }}
               >
@@ -460,8 +463,8 @@ const AddLecture: React.FC<FormProps> = ({ onClose }) => {
                 justifyContent: "center",
                 gap: 2,
                 py: 0,
-                //px: { xs: 2, sm: 3, md: 4 },
                 minWidth: { xs: 150, sm: 160, md: 180 },
+                borderColor: errors.includes("elo") && "error.main",
               }}
             >
               <TextField

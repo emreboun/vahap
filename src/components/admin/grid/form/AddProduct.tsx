@@ -104,14 +104,13 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
   };
 
   const handleSubmit = async () => {
-    const { slug, name, price, discount, duration, description, status } = form;
+    const { slug, name, price, discount, description, status } = form;
 
     try {
       const list = [];
       if (!slug) list.push("slug");
       if (!name) list.push("name");
       if (!price || Number(price) <= 0) list.push("price");
-      //if (!discount || Number(discount) <= 0) list.push("duration");
       if (selectedFiles.length === 0) list.push("image");
       if (lectures.length === 0) list.push("lectures");
       if (list.length > 0 || slugError) {
@@ -146,7 +145,7 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
         if (!!onClose) {
           onClose();
         } else {
-          router.push(`/admin/lectures`);
+          router.push(`/admin/products`);
         }
       }
     } catch (e) {
@@ -172,6 +171,7 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
   );
 
   const handleAddLecture = (lectureData: any) => {
+    setErrors((prev) => prev.filter((p) => p !== "lectures"));
     setLectures((prev: any) =>
       !prev.some((p: any) => p.id === lectureData.id)
         ? [...prev, lectureData]
@@ -258,6 +258,7 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
             label={"Başlık"}
             onChange={handleChange}
             sx={{ flex: 1 }}
+            error={errors.includes("name")}
           />
 
           <div
@@ -377,6 +378,7 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
             </Tooltip>
           </Box>
         </Box>
+
         <Box
           sx={{
             display: "flex",
@@ -393,7 +395,6 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
               justifyContent: "center",
               gap: 2,
               py: 0,
-              //px: { xs: 2, sm: 3, md: 4 },
               minWidth: { xs: 150, sm: 160, md: 180 },
             }}
           >
@@ -412,6 +413,7 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
             type={"number"}
             sx={{ flex: 1 }}
             onChange={handleChange}
+            error={errors.includes("price")}
           />
 
           <TextField
@@ -423,7 +425,13 @@ const AddProduct: React.FC<AddProductFormProps> = ({ onClose }) => {
           />
         </Box>
 
-        <BoxCard title={"Eğitimler"} sx={{ bgcolor: "background.paper" }}>
+        <BoxCard
+          title={"Eğitimler"}
+          sx={{
+            bgcolor: "background.paper",
+            borderColor: errors.includes("lectures") && "error.main",
+          }}
+        >
           <Box
             sx={{
               display: "flex",

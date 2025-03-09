@@ -20,12 +20,6 @@ export const getAllPurchasesAdmin = async () => {
 
 export const purchaseItems = async (userId: string, productIds: string[]) => {
   try {
-    /* const cookieStore = await cookies();
-    const userId = cookieStore.get("userid")?.value;
-    if (!userId) {
-      return null;
-    } */
-
     // Fetch all lectures associated with the purchased products
     const lectures = await prisma.lecture.findMany({
       where: {
@@ -45,6 +39,17 @@ export const purchaseItems = async (userId: string, productIds: string[]) => {
       //grantedAt: new Date(),
     }));
 
+    // Fetch all event tickets associated with the purchased products
+    const eventTickets = await prisma.eventTicket.findMany({
+      where: {
+        productId: { in: productIds },
+      },
+      select: {
+        id: true,
+        productId: true,
+      },
+    });
+
     // Transaction: Create purchases & user lecture access
     const result = await prisma.$transaction([
       prisma.purchase.createMany({
@@ -58,6 +63,14 @@ export const purchaseItems = async (userId: string, productIds: string[]) => {
         data: lectureAccessEntries,
         skipDuplicates: true, // Prevent duplicate entries
       }),
+
+      // Increment sold count for event tickets
+      ...eventTickets.map((ticket) =>
+        prisma.eventTicket.update({
+          where: { id: ticket.id },
+          data: { sold: { increment: 1 } },
+        })
+      ),
     ]);
     console.log(result);
     return result;

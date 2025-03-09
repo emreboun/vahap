@@ -157,7 +157,13 @@ export const getAllTickets = async () => {
   const result: any[] = await productService.findMany(
     {
       status: true,
-      eventTicket: { isNot: null, is: { date: { gte: new Date() } } }, // Ensures the event date is in the future
+      eventTicket: {
+        isNot: null,
+        is: {
+          date: { gte: new Date() }, // Ensures the event date is in the future
+          sold: { lt: prisma.eventTicket.fields.capacity }, // Ensures tickets are available
+        },
+      },
     },
     {
       eventTicket: true,
@@ -404,8 +410,6 @@ export const getProductBySlug = async (slug: string) => {
       duration: lectureDuration || lecturesDuration || 0, // Use single lecture duration if exists, otherwise sum multiple lectures
       pgnCount: lecturePgns || lecturesPgns || 0,
     };
-    console.log(result);
-    return { ...result, files: undefined, thumbnail: result.files[0]?.path };
   } catch (e: unknown) {
     console.log(e);
     return null;
@@ -414,9 +418,10 @@ export const getProductBySlug = async (slug: string) => {
 
 export const getProductById = async (id: string) => {
   try {
-    console.log(id);
-    const result = await productService.findById(id, true);
-    console.log(result);
+    const result = await productService.findById(id, {
+      lectures: { select: { lecture: true } },
+      files: true,
+    });
     return result;
   } catch (e: unknown) {
     console.log(e);
@@ -428,7 +433,6 @@ export const updateProduct = async (id: string, data: Partial<Product>) => {
   try {
     const result = await productService.update(id, {
       ...data,
-      discount: !!data.discount ? Number(data.discount) : undefined,
     });
     return result;
   } catch (e) {

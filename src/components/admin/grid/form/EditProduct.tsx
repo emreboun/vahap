@@ -49,8 +49,7 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
     slug,
     name,
     description,
-    /* price,
-    discount, */
+
     lecture,
     order,
     status,
@@ -327,10 +326,16 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
         {!!lecture && (
           <BoxCard title={"Eğitim"} sx={{ bgcolor: "background.paper" }}>
             <Box sx={{ transform: "scale(90%)" }}>
-              {/* <GridItemCore
-                imgUrl={`/resources/egitimler/${lecture.id}/image-1.jpg`}
-                title={lecture.name}
-              /> */}
+              <List>
+                <ListItem>
+                  <Typography sx={{ minWidth: { xs: 160 } }}>
+                    {lecture.name}
+                  </Typography>
+                  <Typography sx={{ minWidth: { xs: 160 } }}>
+                    {formatDuration(lecture.duration)}
+                  </Typography>
+                </ListItem>
+              </List>
             </Box>
           </BoxCard>
         )}
@@ -349,6 +354,19 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
               }}
             >
               <List sx={{ py: 0, width: "100%", alignItems: "stretch" }}>
+                {data.lectures?.map((item: any) => (
+                  <ListItem key={item.id}>
+                    <Typography sx={{ minWidth: { xs: 320 }, flex: 1 }}>
+                      {item.lecture.name}
+                    </Typography>
+                    <Typography sx={{ minWidth: { xs: 160 } }}>
+                      {formatDuration(item.lecture.duration)}
+                    </Typography>
+                    <Typography sx={{ minWidth: { xs: 160 } }}>
+                      {`${item.lecture.minElo}-${item.lecture.maxElo}`}
+                    </Typography>
+                  </ListItem>
+                ))}
                 {lectures.map((item: any) => (
                   <ListItem key={item.id}>
                     <Typography sx={{ minWidth: { xs: 160 } }}>
@@ -394,7 +412,6 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
           label={"Açıklama"}
           multiline
           minRows={4}
-          //maxRows={12}
           onChange={onProductChange}
           sx={{ flex: 1 }}
         />

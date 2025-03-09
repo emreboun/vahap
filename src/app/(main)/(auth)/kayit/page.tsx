@@ -9,14 +9,16 @@ import {
   Box,
   Alert,
   Collapse,
+  Checkbox,
+  ButtonBase,
+  FormHelperText,
 } from "@mui/material";
 import { validateEmail, validatePassword } from "@/utils/auth";
-//import { signup } from "@/api/firebase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-//import { createUser } from "@/api/user";
 import { signup } from "@/api/user/auth";
 import { loginApi } from "@/app/admin/giris/actions";
+import { formatTurkishGsmNumber, isValidTurkishIdNumber } from "../utils";
 
 interface FormField {
   name: string;
@@ -40,9 +42,23 @@ const formFields: FormField[] = [
     validate: (value) =>
       !validateEmail(value) ? "Geçersiz e-posta adresi" : undefined,
   },
-  { name: "idNumber", label: "Tc Kimlik No", type: "text", required: false },
-
-  { name: "phone", label: "Telefon", type: "tel" },
+  {
+    name: "idNumber",
+    label: "Tc Kimlik No",
+    type: "text",
+    required: false,
+    validate: (value) =>
+      !!value && !isValidTurkishIdNumber(value)
+        ? "Geçersiz kimlik numarası."
+        : undefined,
+  },
+  {
+    name: "phone",
+    label: "Telefon",
+    type: "tel",
+    validate: (value) =>
+      !!value && !formatTurkishGsmNumber(value) ? "Geçersiz gsm numarası." : "",
+  },
   {
     name: "password",
     label: "Şifre",
@@ -72,13 +88,14 @@ const SignupFormClient = () => {
 
   const [formState, setFormState] = useState<
     Record<string, { value: string; error?: string }>
-    //Record<"values" | "errors", string[]>
   >(
     Object.fromEntries(
       formFields.map((field) => [field.name, { value: "", error: undefined }])
     )
   );
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [checked, setChecked] = useState(false);
+
   const [error, setError] = useState<boolean>(false);
   const isFormValid = useMemo(() => {
     return formFields.every((field) => {
@@ -90,19 +107,14 @@ const SignupFormClient = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    setFormState(
-      (prev) =>
-        name === "password" && prev.repassword.value === value
-          ? {
-              ...prev,
-              [name]: { value, error: undefined },
-              repassword: { value, error: undefined },
-            }
-          : { ...prev, [name]: { value, error: undefined } }
-      /*  ({
-      ...prev,
-      [name]: { value, error: undefined }, // Clear error on change
-    }) */
+    setFormState((prev) =>
+      name === "password" && prev.repassword.value === value
+        ? {
+            ...prev,
+            [name]: { value, error: undefined },
+            repassword: { value, error: undefined },
+          }
+        : { ...prev, [name]: { value, error: undefined } }
     );
   };
 
@@ -121,6 +133,9 @@ const SignupFormClient = () => {
     }));
   };
 
+  const handleChecked = (e: any) => {
+    setChecked(e.target.checked);
+  };
   const handleSignup = async () => {
     setSubmitted(true);
 
@@ -137,7 +152,6 @@ const SignupFormClient = () => {
       if (error) hasError = true;
       newFormState[field.name].error = error;
     });
-    console.log(hasError);
     if (!hasError) {
       // Submit the form
       let signUpResult;
@@ -145,7 +159,7 @@ const SignupFormClient = () => {
         signUpResult = await signup({
           email: formState.email.value,
           password: formState.password.value,
-          phone: formState.phone.value,
+          phone: formatTurkishGsmNumber(formState.phone.value) ?? "",
           firstName: formState.firstName.value,
           lastName: formState.lastName.value,
           idNumber: formState.idNumber.value,
@@ -153,7 +167,6 @@ const SignupFormClient = () => {
       } catch (e: any) {
         console.log(e);
         setError(true);
-        //setError(e.message.includes("already-in-use"));
         return;
       }
       if (!signUpResult) {
@@ -163,30 +176,7 @@ const SignupFormClient = () => {
         await loginApi(signUpResult);
         localStorage.setItem("user", JSON.stringify(signUpResult));
         router.push("/");
-
-        //router.push("/");
       }
-
-      /* let userSaved;
-      if (signUpResult) {
-        userSaved = await createUser({
-          firstName: formState.firstName.value,
-          lastName: formState.lastName.value,
-          email: formState.email.value,
-          phone: formState.phone.value,
-          password: formState.password.value,
-        });
-      } //else {}
-      if (userSaved) {
-        router.push("/");
-      } // else {}
- */
-      console.log(
-        "Form Submitted",
-        Object.fromEntries(
-          Object.entries(formState).map(([key, val]) => [key, val.value])
-        )
-      );
     } else {
       setFormState(newFormState);
     }
@@ -217,7 +207,6 @@ const SignupFormClient = () => {
             label={field.label}
             type={field.type}
             variant='standard'
-            //value={formState[field.name].value}
             defaultValue={""}
             onChange={handleInputChange}
             onBlur={() => validateField(field.name)}
@@ -226,13 +215,62 @@ const SignupFormClient = () => {
             helperText={submitted && formState[field.name].error}
           />
         ))}
+
+        <Box
+          sx={{
+            "& .MuiFormHelperText-root": {
+              pt: 0,
+              pl: 2,
+              m: 0,
+              bgcolor: "background.paper",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              color: "#6b707f",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Checkbox name='checked' value={checked} onChange={handleChecked} />
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Link href={"/uyelik-sozlesmesi"} title={""} passHref>
+                <ButtonBase
+                  sx={{
+                    color: "#007bff",
+                    "&:hover": { color: "primary.main" },
+                  }}
+                >
+                  {"Üyelik Sözleşmesi"}
+                </ButtonBase>
+              </Link>
+
+              <p>{"'ni kabul ediyorum."}</p>
+            </span>
+          </Box>
+          <FormHelperText
+            sx={{
+              display: submitted && !checked ? "block" : "none",
+              py: 0,
+              mt: -0.5,
+              color: "error.main",
+            }}
+          >
+            {"Seçim zorunlu."}
+          </FormHelperText>
+        </Box>
       </FormControl>
 
       <Collapse in={error}>
         <Alert
           severity='error'
           sx={{
-            //py: 0.8,
             py: 0.2,
             mx: "auto",
             mb: 2,

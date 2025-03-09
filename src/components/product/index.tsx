@@ -123,6 +123,7 @@ export const ProductMain: React.FC<any> = ({ data }) => {
                   height: "100%",
                   width: "auto",
                 }}
+                priority
               />
             </Box>
 

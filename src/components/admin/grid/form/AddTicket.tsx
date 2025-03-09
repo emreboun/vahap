@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { BoxCard } from "@/components/box";
 
 import { createTicket } from "@/api/products/tickets";
+import { validateDate } from "./utils";
 
 interface AddTicketFormProps {
   onClose?: () => void;
@@ -27,6 +28,7 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
   const [form, setForm] = useState<any>({ status: true });
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -42,6 +44,7 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
   };
 
   const handleSubmit = async () => {
+    setSubmitted(true);
     const { name, price, discount, date, url, location, capacity, status } =
       form;
 
@@ -49,7 +52,11 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
       const list = [];
       if (!name) list.push("name");
       if (!price || Number(price) <= 0) list.push("price");
+      if (!validateDate(date)) list.push("date");
+      if (!capacity || Number(capacity) <= 0) list.push("capacity");
+
       //if (!discount || Number(discount) <= 0) list.push("duration");
+      console.log(list);
       if (list.length > 0) {
         setErrors(list);
         return;
@@ -161,6 +168,11 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
             label={"Başlık"}
             onChange={handleChange}
             sx={{ flex: 1 }}
+            required={true}
+            error={submitted && errors.includes("name")}
+            helperText={
+              submitted && errors.includes("name") && "Bu alan zorunlu."
+            }
           />
 
           <TextField
@@ -170,6 +182,11 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
             onChange={handleChange}
             defaultValue={new Date().toISOString().slice(0, 16)}
             sx={{ flex: 1 }}
+            required={true}
+            error={submitted && errors.includes("date")}
+            helperText={
+              submitted && errors.includes("date") && "Bu alan zorunlu."
+            }
           />
         </Box>
 
@@ -219,7 +236,6 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
                 justifyContent: "center",
                 gap: 2,
                 py: 0,
-                //px: { xs: 2, sm: 3, md: 4 },
                 minWidth: { xs: 150, sm: 160, md: 180 },
               }}
             >
@@ -238,6 +254,11 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
               type={"number"}
               sx={{ flex: 1 }}
               onChange={handleChange}
+              required={true}
+              error={submitted && errors.includes("capacity")}
+              helperText={
+                submitted && errors.includes("capacity") && "Bu alan zorunlu."
+              }
             />
           </Box>
 
@@ -254,6 +275,11 @@ const AddTicket: React.FC<AddTicketFormProps> = ({ onClose }) => {
               type={"number"}
               sx={{ flex: 1 }}
               onChange={handleChange}
+              required={true}
+              error={submitted && errors.includes("price")}
+              helperText={
+                submitted && errors.includes("price") && "Bu alan zorunlu."
+              }
             />
 
             <TextField

@@ -15,10 +15,15 @@ export async function middleware(req: NextRequest) {
       const loginUrl = new URL("/admin/giris", req.url);
       return NextResponse.redirect(loginUrl);
     }
-  } else if (pathname.startsWith("/admin/login")) {
-    if (valid && valid.role !== "user") {
-      const adminUrl = new URL("/admin", req.url);
-      return NextResponse.redirect(adminUrl);
+  } else if (pathname.startsWith("/admin/giris")) {
+    if (valid) {
+      if (valid.role !== "user") {
+        const adminUrl = new URL("/admin", req.url);
+        return NextResponse.redirect(adminUrl);
+      } else {
+        const homeUrl = new URL("/", req.url);
+        return NextResponse.redirect(homeUrl);
+      }
     }
   }
 

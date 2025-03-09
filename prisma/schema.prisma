@@ -29,6 +29,7 @@ model Account {
   permissions UserLectureAccess[]
   addresses   Address[]
   cartItems   CartItem[]
+  token       PasswordResetToken?  
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -255,4 +256,16 @@ model CartItem {
 
   @@unique([cartId, productId])
   @@map("cart_items")
+}
+
+
+//
+
+model PasswordResetToken {
+  token     String    @id
+  userId    String    @db.Uuid  @unique  @map("user_id")
+  user      Account   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime  @map("expires_at")
+
+  @@map("user_pass_tokens")
 }

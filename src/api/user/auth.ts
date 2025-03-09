@@ -58,6 +58,7 @@ export const login = async (email: string, password: string) => {
     role,
     purchases = [],
     addresses = [],
+    permissions = [],
   } = user;
 
   return {
@@ -71,6 +72,7 @@ export const login = async (email: string, password: string) => {
       role,
       purchases,
       addresses,
+      permissions,
     },
   };
 };

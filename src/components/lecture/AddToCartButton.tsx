@@ -56,9 +56,9 @@ const AddToCartButton: React.FC<any> = ({ data }) => {
           display: "flex",
           alignItems: "center",
           gap: 1.6,
-          position: "relative",
+          /*  position: "relative",
           right: { xs: -14, sm: -8, md: 0 },
-          bottom: 0,
+          bottom: 0, */
         }}
       >
         <Box

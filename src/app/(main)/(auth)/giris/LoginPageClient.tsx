@@ -14,11 +14,12 @@ import {
   Alert,
 } from "@mui/material";
 import { validateEmail, validatePassword } from "@/utils/auth";
-//import { login, sendPasswordResetEmail_ } from "@/api/firebase";
-//import { getUser } from "@/api/firebase/user";
+
 import { loginApi } from "@/app/admin/giris/actions";
 import { login } from "@/api/user/auth";
 import { useCart } from "@/components/cart/CartProvider";
+import { sendEmail } from "@/api/user/email";
+import { TemporaryMessage } from "@/components/temporary";
 
 type ErrorType = "email" | "password" | "main" | "" | undefined;
 
@@ -44,7 +45,7 @@ export const LoginPageClient = ({
   const [errors, setErrors] = useState<ErrorType[]>([]);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
-  //const [error, setError] = useState<boolean>(false);
+  const [forgot, setForgot] = useState<boolean>(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
@@ -71,7 +72,17 @@ export const LoginPageClient = ({
   };
 
   const handleForgotPassword = async () => {
-    //await sendPasswordResetEmail_(form.email);
+    if (!validateEmail(form.email)) {
+      setErrors((prev) => [...prev.filter((p) => p !== "email"), "email"]);
+      setSubmitted(true);
+      return;
+    }
+
+    const result = await sendEmail(form.email, "resetPass");
+    if (!!result) {
+      setForgot(true);
+    }
+    console.log(result);
   };
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -118,32 +129,7 @@ export const LoginPageClient = ({
       setDisabled(true);
       return;
     }
-
-    /*  let userResult;
-    if (loginResult) {
-      try {
-        userResult = await getUser(loginResult.user.uid);
-        //localStorage.setItem("account", JSON.stringify(loginResult));
-      } catch (error: unknown) {
-        console.error(error);
-        setDisabled(true);
-        return;
-      }
-    }
-
-    if (userResult) {
-      localStorage.setItem("user", JSON.stringify(userResult));
-      router.push("/");
-    } */
   };
-
-  /* const handleGoogleLogin = () => {
-    signInWithGoogle().catch().then();
-  };
-
-  const handleFacebookLogin = () => {
-    signInWithFacebook().catch().then();
-  }; */
 
   return (
     <>
@@ -209,9 +195,14 @@ export const LoginPageClient = ({
             color: "#9e9e9e",
           }}
           onClick={handleForgotPassword}
+          disabled={forgot}
         >
           {"Şİfremİ Unuttum"}
         </Button>
+
+        <Collapse in={forgot} mountOnEnter unmountOnExit>
+          <TemporaryMessage message={"Şifre yenileme e-postası gönderildi."} />
+        </Collapse>
 
         <Collapse in={disabled}>
           <Alert severity='error'>{"Giriş bilgileri hatalı."} </Alert>

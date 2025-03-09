@@ -1,13 +1,14 @@
 "use client";
 
 import { useToggle } from "@/hooks/useToggle";
-import React, { createContext, useCallback, useContext, useState } from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import React, { createContext, useCallback, useContext } from "react";
 
 interface SidebarContextProps {
   sidebar: string | null;
   onSidebar: (sidebar: string) => void;
   dropdown: boolean;
-  handleDropdown: (val?: boolean) => void; //Dispatch<SetStateAction<boolean>>;
+  handleDropdown: (val?: boolean) => void;
 }
 
 const SidebarContext = createContext<SidebarContextProps | undefined>(
@@ -16,55 +17,60 @@ const SidebarContext = createContext<SidebarContextProps | undefined>(
 
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
-  if (context === undefined) {
-    throw new Error("sidebar provider");
+  if (!context) {
+    throw new Error("Sidebar provider is missing");
   }
   return context;
 };
 
 interface SidebarProviderProps {
   children: React.ReactNode;
-  //active?: boolean;
 }
 
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({
   children,
-  //active = false,
 }) => {
-  const [sidebar, setSidebar] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const sidebar = searchParams.get("menu");
   const [dropdown, , setDropdown] = useToggle();
+
+  const updateURL = useCallback(
+    (menu: string | null) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (menu) {
+        params.set("menu", menu);
+      } else {
+        params.delete("menu");
+      }
+
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [pathname, router, searchParams]
+  );
 
   const onSidebar = useCallback(
     (val: string) => {
-      setSidebar((prev) => (prev === val ? "" : val));
+      updateURL(sidebar === val ? null : val);
       setDropdown(false);
     },
-    [setDropdown]
+    [sidebar, setDropdown, updateURL]
   );
 
   const handleDropdown = useCallback(
     (val?: boolean) => {
-      setDropdown((prev) => {
-        if (val === undefined) {
-          setSidebar(null);
-
-          return !prev;
-        } else {
-          return val;
-        }
-      });
+      setDropdown(val ?? !dropdown);
+      if (val === undefined) updateURL(null);
     },
-    [setDropdown]
+    [dropdown, setDropdown, updateURL]
   );
 
   return (
     <SidebarContext.Provider
-      value={{
-        sidebar,
-        onSidebar,
-        dropdown,
-        handleDropdown,
-      }}
+      value={{ sidebar, onSidebar, dropdown, handleDropdown }}
     >
       {children}
     </SidebarContext.Provider>

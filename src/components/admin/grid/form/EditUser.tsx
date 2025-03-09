@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Divider,
   FormControl,
   List,
   ListItem,
@@ -20,6 +21,7 @@ import { SearchBar } from "@/components/search/SearchBar";
 import { searchLectures } from "@/api/lectures";
 import { formatDuration } from "@/utils/data";
 import { grantUserAccess } from "@/api/lectures/access";
+import { VerifiedRounded } from "@mui/icons-material";
 
 interface EditUserFormProps {
   onClose?: () => void;
@@ -53,16 +55,12 @@ const EditUser: React.FC<EditUserFormProps> = ({ data, onClose }) => {
         delete req[key];
       }
     });
-    if (lectures.length !== permissions.length) {
-      const lectureIds = lectures
-        /*  .filter((lect) =>
-          permissions.some((perm: any) => perm.lecture.id === lect.id)
-        ) */
-        .map((lect) => lect.id);
-      console.log(id);
-      console.log(lectureIds);
+    if (lectures.length > 0) {
+      const lectureIds = lectures.map((lect) => lect.id);
       const resultAccess = await grantUserAccess(id, lectureIds);
-      console.log(resultAccess);
+      if (!resultAccess) {
+        return;
+      }
     }
     const result = await updateUser(id, req);
 
@@ -73,7 +71,7 @@ const EditUser: React.FC<EditUserFormProps> = ({ data, onClose }) => {
 
   const [searchResult, setSearchResult] = useState<any[]>([]);
   const [lectures, setLectures] = useState<any[]>(
-    permissions.map((perm: any) => perm.lecture)
+    [] //permissions.map((perm: any) => perm.lecture)
   );
 
   const onSearch = useCallback(
@@ -83,12 +81,14 @@ const EditUser: React.FC<EditUserFormProps> = ({ data, onClose }) => {
       } else {
         const resultList = await searchLectures(text);
         const res = resultList.filter(
-          (item) => !lectures.some((l) => l.slug === item.slug)
+          (item) =>
+            !permissions.some((perm: any) => perm.lecture.slug === item.slug) &&
+            !lectures.some((lect: any) => lect.slug === item.slug)
         );
         setSearchResult(res);
       }
     },
-    [lectures]
+    [permissions, lectures]
   );
 
   const handleAddLecture = (lectureData: any) => {
@@ -235,10 +235,30 @@ const EditUser: React.FC<EditUserFormProps> = ({ data, onClose }) => {
               }}
             >
               <List>
-                {lectures.map((lecture: any) => (
-                  <ListItem key={lecture.slug}>{lecture.name}</ListItem>
+                {permissions.map((perm: any) => (
+                  <ListItem key={perm.lecture.slug}>
+                    {perm.lecture.name}
+                  </ListItem>
                 ))}
               </List>
+
+              {lectures.length > 0 && (
+                <>
+                  <Divider />
+                  <List sx={{ py: 0 }}>
+                    {lectures.map((lecture: any) => (
+                      <ListItem
+                        key={lecture.slug}
+                        sx={{ color: "secondary.main", gap: 1 }}
+                      >
+                        <VerifiedRounded />
+                        <>{lecture.name}</>
+                      </ListItem>
+                    ))}
+                  </List>
+                  <Divider sx={{ mb: 2.2 }} />
+                </>
+              )}
 
               <BoxCard title={"Yeni Erişim Ver"}>
                 <SearchBar onSearch={onSearch} />

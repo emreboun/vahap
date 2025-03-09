@@ -147,6 +147,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
               width: "100%",
               height: "auto",
             }}
+            priority
           />
         </Box>
 

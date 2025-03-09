@@ -4,7 +4,7 @@ export const jwtConfig = {
 };
 
 export const appConfig = {
-  url: process.env.SITE_URL ?? "http://127.0.0.1:3000",
+  url: process.env.NEXT_PUBLIC_APP_URL ?? "http://127.0.0.1:3000",
 };
 
 export const iyzicoConfig = {

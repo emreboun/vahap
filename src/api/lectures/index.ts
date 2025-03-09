@@ -140,7 +140,6 @@ export const createLecture = async (
       introVideo,
       thumbnail,
       status,
-      //order: Number(order),
       minElo: Number(minElo),
       maxElo: Number(maxElo),
       duration: Number(duration),
@@ -151,7 +150,6 @@ export const createLecture = async (
         price: Number(price),
         discount: discount ? Number(discount) : undefined,
         status,
-        //imgUrl: thumbnail,
       },
     });
 
@@ -252,24 +250,9 @@ export const searchLectures = async (query: string) => {
             mode: "insensitive",
           },
         },
-
-        /* {
-          tags: {
-            some: {
-              name: {
-                contains: searchTerm,
-                mode: "insensitive",
-              },
-            },
-          },
-        }, */
       ],
     },
-    include: {
-      //nodes: true,
-      //tags: true,
-      //metadata: true,
-    },
+    include: {},
   });
   return result; //sortByRelevance(result, searchTerm);
 };

@@ -46,7 +46,16 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               pt: { xs: 0.2, sm: 0.5 },
               pr: { xs: 3, sm: 4, md: 5, lg: 6 },
               pl: { xs: 3, md: 5 },
-              pb: { xs: 0.2, sm: 0 },
+              pb: {
+                xs: hasAccess
+                  ? 0.2
+                  : name.length > 48
+                    ? 4.8
+                    : name.length > 32
+                      ? 6.4
+                      : 0.2,
+                sm: 0,
+              },
             }}
           >
             <Typography
@@ -56,7 +65,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
                   "Montserrat, Playfair Display, Montserrat, Lexend, sans-serif",
                 fontSize: { xs: 17, sm: 20, md: 22 },
                 fontWeight: 600,
-                letterSpacing: { xs: -0.5, sm: -0.4, md: -0.3 },
+                letterSpacing: { xs: -0.9, sm: -0.4, md: -0.3 },
                 pl: { xs: 0, md: 1 },
                 pt: { xs: 2, sm: 2.5 },
                 pb: { xs: 2, sm: 2.5 },
@@ -65,7 +74,20 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               {name}
             </Typography>
 
-            {!hasAccess && <AddToCartButton data={data} />}
+            {!hasAccess && (
+              <Box
+                sx={{
+                  position: {
+                    xs: name.length > 32 ? "absolute" : "",
+                    sm: "relative",
+                  },
+                  bottom: { xs: name.length > 32 ? 5 : 0, sm: 0 },
+                  right: { xs: name.length > 32 ? 10 : 0, sm: 0 },
+                }}
+              >
+                <AddToCartButton data={data} />
+              </Box>
+            )}
           </Box>
 
           <Divider sx={{ display: { xs: "none", sm: "block" }, mx: 4 }} />

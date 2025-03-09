@@ -1,4 +1,3 @@
-import { Paper } from "@mui/material";
 import PaymentClient from "../../../components/payment/iyzico/PaymentClient";
 
 import type { Metadata } from "next";

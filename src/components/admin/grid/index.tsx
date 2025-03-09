@@ -91,9 +91,14 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
   };
 
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    if (["products", "lectures", "tickets"].includes(table?.toString() ?? ""))
+    return;
+    /* if (
+      ["products", "lectures", "tickets", "users"].includes(
+        table?.toString() ?? ""
+      )
+    )
       return;
-    setRowModesModel(newRowModesModel);
+    setRowModesModel(newRowModesModel); */
   };
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
@@ -279,6 +284,7 @@ export const GridCore: React.FC<GridCoreProps> = ({ type, data }) => {
             sx={{
               ml: "5px",
             }}
+            disabled={table === "tickets" /* || table === "users" */}
           />,
         ];
       }
