@@ -139,7 +139,8 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
           }}
         >
           <Image
-            src={thumbnail ?? `/thumbnail_main.jpg`}
+            src={`/thumbnail_main.jpg`}
+            //src={thumbnail ?? `/thumbnail_main.jpg`}
             alt={`${name} Resim - Thumbnail`}
             height={180}
             width={320}
