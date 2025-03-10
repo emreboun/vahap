@@ -60,34 +60,36 @@ export const CartList = () => {
                     height: { xs: 120, sm: 140 },
                   }}
                 >
-                  {item.product.imgUrl ? (
-                    <Image
-                      src={`/thumbnail_main.jpg`}
-                      //src={item.product.imgUrl}
-                      alt=''
-                      width={160}
-                      height={100}
-                      style={{
-                        height: "100%",
-                        width: "auto",
-                        borderRadius: 3,
-                      }}
-                      priority
-                    />
-                  ) : (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: { xs: 140, sm: 160 },
-                        bgcolor: "#ddd",
-                        borderRadius: 1,
-                      }}
-                    >
-                      <OndemandVideoRounded color={"primary"} />
-                    </Box>
-                  )}
+                  {
+                    /* item.product.imgUrl */ true ? (
+                      <Image
+                        src={`/thumbnail_main.jpg`}
+                        //src={item.product.imgUrl}
+                        alt=''
+                        width={160}
+                        height={100}
+                        style={{
+                          height: "100%",
+                          width: "auto",
+                          borderRadius: 3,
+                        }}
+                        priority
+                      />
+                    ) : (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: { xs: 140, sm: 160 },
+                          bgcolor: "#ddd",
+                          borderRadius: 1,
+                        }}
+                      >
+                        <OndemandVideoRounded color={"primary"} />
+                      </Box>
+                    )
+                  }
                 </Box>
 
                 <Box

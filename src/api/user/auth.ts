@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
 import { userService } from ".";
+import { sendEmail } from "./email";
 
 export const signup = async (data: {
   email: string;
@@ -20,8 +21,9 @@ export const signup = async (data: {
     phone: data.phone,
     idNumber: data.idNumber,
   });
-  const { id, idNumber, email, firstName, lastName, phone, role } = user;
 
+  const { id, idNumber, email, firstName, lastName, phone, role } = user;
+  sendEmail(email, "signup");
   return { id, idNumber, email, firstName, lastName, phone, role };
 };
 

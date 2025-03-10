@@ -9,7 +9,7 @@ export const Form: React.FC = () => {
     <>
       <Box
         component={"a"}
-        href={"mailto:vahapsanal@hotmail.com"}
+        href={"mailto:gmvahap@gmail.com"}
         sx={{
           bgcolor: "primary.main",
           borderRadius: 1,

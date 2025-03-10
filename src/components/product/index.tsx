@@ -14,6 +14,7 @@ import {
 import { formatDuration } from "@/utils/data";
 import { turkcetarih_formati } from "@/utils";
 import Link from "next/link";
+import LectureContent from "../lecture/LectureContent";
 
 export const ProductMain: React.FC<any> = ({ data }) => {
   const {
@@ -93,7 +94,8 @@ export const ProductMain: React.FC<any> = ({ data }) => {
           >
             <Box sx={{ display: { xs: "flex", md: "none" }, px: 4, py: 1 }}>
               <Image
-                src={thumbnail ?? "/thumbnail_main.jpg"}
+                src={"/thumbnail_main.jpg"}
+                //src={thumbnail ?? "/thumbnail_main.jpg"}
                 alt={"Ürün Resmi"}
                 height={360}
                 width={640}
@@ -115,7 +117,8 @@ export const ProductMain: React.FC<any> = ({ data }) => {
               }}
             >
               <Image
-                src={thumbnail ?? "/thumbnail_main.jpg"}
+                src={"/thumbnail_main.jpg"}
+                //src={thumbnail ?? "/thumbnail_main.jpg"}
                 alt={"Ürün Resmi"}
                 height={360}
                 width={640}
@@ -382,110 +385,141 @@ export const ProductMain: React.FC<any> = ({ data }) => {
             </Box>
           </Box>
 
+          <Box
+            sx={{
+              px: { xs: 3.5, sm: 4.5, md: 6, lg: 7 },
+              pt: 2,
+              pb: 3,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1,
+              whiteSpace: "break-spaces",
+            }}
+          >
+            <LectureContent markdown={data.description} />
+          </Box>
+
           <>
             {lectures?.length > 0 && (
-              <Box
-                sx={{
-                  mt: { xs: 2, md: 3 },
-                  display: "grid",
-                  gridTemplateColumns: {
-                    md: "repeat(2,1fr)",
-                    sm: "repeat(1,1fr)",
-                    xs: "repeat(1,1fr)",
-                  },
-                  gap: { xs: 3, sm: 3.2, md: 3.6, lg: 2.4 },
-                  px: { xs: 0, sm: 4, md: 8 },
-                }}
-              >
-                {lectures.map((lec: any) => (
-                  <Link
-                    key={lec.lecture.id}
-                    href={`/egitimler/${lec.lecture.slug}`}
-                  >
-                    <Paper
-                      sx={{
-                        px: 1.5,
-                        py: 2,
-                        boxShadow: 1,
-                        border: "1px solid rgb(128,128,128,0.1)",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 0.5,
-                        "&:hover": {
-                          boxShadow: 3,
-                          transform: "scale(1.02)",
-                          "& .lecture-title": {
-                            color: "primary.main",
-                          },
-                        },
-                      }}
-                      elevation={0}
-                    >
-                      <Typography sx={{ pl: 0.5 }} className={"lecture-title"}>
-                        {lec.lecture.name}
-                      </Typography>
+              <>
+                <Typography
+                  variant={"h5"}
+                  sx={{ my: { xs: 2, md: 3 }, px: { xs: 4, sm: 6, md: 10 } }}
+                >
+                  {"Eğitimler"}
+                </Typography>
 
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 0.8 }}
+                <Box
+                  sx={{
+                    mt: { xs: 2, md: 3 },
+                    display: "grid",
+                    gridTemplateColumns: {
+                      md: "repeat(2,1fr)",
+                      sm: "repeat(1,1fr)",
+                      xs: "repeat(1,1fr)",
+                    },
+                    gap: { xs: 3, sm: 3.2, md: 3.6, lg: 2.4 },
+                    px: { xs: 2, sm: 4, md: 8 },
+                  }}
+                >
+                  {lectures.map((lec: any) => (
+                    <Link
+                      key={lec.lecture.id}
+                      href={`/egitimler/${lec.lecture.slug}`}
+                    >
+                      <Paper
+                        sx={{
+                          px: 1.5,
+                          py: 2,
+                          boxShadow: 1,
+                          border: "1px solid rgb(128,128,128,0.1)",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 0.5,
+                          "&:hover": {
+                            boxShadow: 3,
+                            transform: "scale(1.02)",
+                            "& .lecture-title": {
+                              color: "primary.main",
+                            },
+                          },
+                        }}
+                        elevation={0}
                       >
+                        <Typography
+                          sx={{ pl: 0.5 }}
+                          className={"lecture-title"}
+                        >
+                          {lec.lecture.name}
+                        </Typography>
+
                         <Box
                           sx={{
                             display: "flex",
                             alignItems: "center",
-                            gap: 0.2,
+                            gap: 0.8,
                           }}
                         >
-                          <TimerOutlined
-                            sx={{ fontSize: 19, color: "primary.main" }}
-                          />
-
-                          <Typography
-                            color={"textSecondary"}
-                            fontSize={{ xs: 13, md: 14 }}
-                            letterSpacing={{
-                              xs: -0.7,
-                              sm: -0.6,
-                              md: -0.5,
-                            }}
-                            className={"limitedLine"}
-                          >
-                            {formatDuration(lec.lecture.duration)}
-                          </Typography>
-                        </Box>
-
-                        {lec.lecture.resources.length > 0 && (
                           <Box
                             sx={{
                               display: "flex",
                               alignItems: "center",
                               gap: 0.2,
-                              minHeight: 22,
                             }}
                           >
-                            <>
-                              <AttachFileRounded
-                                sx={{ fontSize: 19, color: "primary.main" }}
-                              />
-                              <Typography
-                                color={"textSecondary"}
-                                fontSize={{ xs: 13, md: 14 }}
-                                letterSpacing={{
-                                  xs: -0.7,
-                                  sm: -0.6,
-                                  md: -0.5,
-                                }}
-                                className={"limitedLine"}
-                              >
-                                {`${lec.lecture.resources.length} Döküman`}
-                              </Typography>
-                            </>
+                            <TimerOutlined
+                              sx={{ fontSize: 19, color: "primary.main" }}
+                            />
+
+                            <Typography
+                              color={"textSecondary"}
+                              fontSize={{ xs: 13, md: 14 }}
+                              letterSpacing={{
+                                xs: -0.7,
+                                sm: -0.6,
+                                md: -0.5,
+                              }}
+                              className={"limitedLine"}
+                            >
+                              {formatDuration(lec.lecture.duration)}
+                            </Typography>
                           </Box>
-                        )}
-                      </Box>
-                    </Paper>
-                  </Link>
-                ))}
-              </Box>
+
+                          {lec.lecture.resources.length > 0 && (
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 0.2,
+                                minHeight: 22,
+                              }}
+                            >
+                              <>
+                                <AttachFileRounded
+                                  sx={{ fontSize: 19, color: "primary.main" }}
+                                />
+                                <Typography
+                                  color={"textSecondary"}
+                                  fontSize={{ xs: 13, md: 14 }}
+                                  letterSpacing={{
+                                    xs: -0.7,
+                                    sm: -0.6,
+                                    md: -0.5,
+                                  }}
+                                  className={"limitedLine"}
+                                >
+                                  {`${lec.lecture.resources.length} Döküman`}
+                                </Typography>
+                              </>
+                            </Box>
+                          )}
+                        </Box>
+                      </Paper>
+                    </Link>
+                  ))}
+                </Box>
+              </>
             )}
           </>
         </Box>

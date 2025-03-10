@@ -24,14 +24,14 @@ interface MembershipProps {
 
 export const Membership: React.FC<MembershipProps> = ({ auth }) => {
   const path = usePathname();
-  const { onMenu } = useMenu();
+  const { menu, onMenu } = useMenu();
   const { state } = useCart();
   const { items } = state;
 
   const isEmpty = items.length === 0;
 
   const handleCart = () => {
-    onMenu("cart");
+    onMenu(menu === "cart" ? null : "cart");
   };
   return (
     <>

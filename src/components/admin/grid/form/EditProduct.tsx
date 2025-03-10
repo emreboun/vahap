@@ -354,7 +354,7 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
             >
               <List sx={{ py: 0, width: "100%", alignItems: "stretch" }}>
                 {data.lectures?.map((item: any) => (
-                  <ListItem key={item.id}>
+                  <ListItem key={item.lecture.id}>
                     <Typography sx={{ minWidth: { xs: 320 }, flex: 1 }}>
                       {item.lecture.name}
                     </Typography>
@@ -367,7 +367,7 @@ const EditProduct: React.FC<EditProductProps> = ({ data }) => {
                   </ListItem>
                 ))}
                 {lectures.map((item: any) => (
-                  <ListItem key={item.id}>
+                  <ListItem key={item.lecture.id}>
                     <Typography sx={{ minWidth: { xs: 160 } }}>
                       {item.name}
                     </Typography>

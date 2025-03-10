@@ -53,7 +53,9 @@ export const LectureMain: React.FC<LectureMainProps> = ({
                     ? 4.8
                     : name.length > 32
                       ? 6.4
-                      : 0.2,
+                      : name.length > 24
+                        ? 4.8
+                        : 0.2,
                 sm: 0,
               },
             }}
@@ -78,7 +80,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               <Box
                 sx={{
                   position: {
-                    xs: name.length > 32 ? "absolute" : "relative",
+                    xs: name.length > 24 ? "absolute" : "relative",
                     sm: "relative",
                   },
                   bottom: { xs: name.length > 32 ? 5 : 0, sm: 0 },
@@ -114,6 +116,7 @@ export const LectureMain: React.FC<LectureMainProps> = ({
               flexDirection: "column",
               alignItems: "center",
               gap: 1,
+              whiteSpace: "break-spaces",
             }}
           >
             <LectureContent markdown={data.description} />

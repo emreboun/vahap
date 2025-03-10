@@ -8,7 +8,6 @@ import {
   Phone,
   SignalCellularAltRounded,
   TimerOutlined,
-  EditLocation,
 } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import Link from "next/link";

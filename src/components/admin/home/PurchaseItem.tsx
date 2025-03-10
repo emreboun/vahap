@@ -1,3 +1,4 @@
+import { formatDate, turkcetarih_formati } from "@/utils";
 import { Box, Typography } from "@mui/material";
 
 interface PurchaseItemProps {
@@ -5,7 +6,7 @@ interface PurchaseItemProps {
 }
 
 const PurchaseItem: React.FC<PurchaseItemProps> = ({ item }) => {
-  const { product, user } = item;
+  const { product, user, purchasedAt } = item;
   const { email } = user;
   const { name, price, discount } = product;
   return (
@@ -14,37 +15,62 @@ const PurchaseItem: React.FC<PurchaseItemProps> = ({ item }) => {
         sx={{
           width: "100%",
           display: "flex",
-          justifyContent: "flex-end",
+          flexDirection: "column",
+          //justifyContent: "flex-end",
           gap: 1.5,
           //position: "relative",
           //right: -6,
         }}
       >
-        <Typography
-          sx={{ flex: 2, wordBreak: "break-word" }}
-          fontSize={14}
-          letterSpacing={-0.2}
-          className='limitedLine'
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: { xs: "flex-start", sm: "center" },
+            justifyContent: "space-between",
+          }}
         >
-          {email}
-        </Typography>
-
-        <Typography
-          sx={{ flex: 1 }}
-          fontSize={14}
-          letterSpacing={-0.2}
-          className='limitedLine2'
+          <Typography
+            sx={{ flex: 2, wordBreak: "break-word" }}
+            fontSize={14}
+            letterSpacing={-0.2}
+            className='limitedLine'
+          >
+            {email}
+          </Typography>
+          <Typography
+            sx={{ wordBreak: "break-word" }}
+            fontSize={14}
+            letterSpacing={-0.2}
+            className='limitedLine'
+          >
+            {`${formatDate(purchasedAt, undefined, { showWeekday: true })}`}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          {name}
-        </Typography>
-        <Typography
-          sx={{ minWidth: 50 }}
-          fontSize={14}
-          letterSpacing={-0.2}
-          className='limitedLine'
-        >
-          {`${price - discount} TL`}
-        </Typography>
+          <Typography
+            sx={{ flex: 1 }}
+            fontSize={14}
+            letterSpacing={-0.2}
+            className='limitedLine2'
+          >
+            {name}
+          </Typography>
+          <Typography
+            sx={{ minWidth: 50 }}
+            fontSize={14}
+            letterSpacing={-0.2}
+            className='limitedLine'
+          >
+            {`${price - discount} TL`}
+          </Typography>
+        </Box>
       </Box>
     </>
   );
